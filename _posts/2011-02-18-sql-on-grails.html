@@ -1,0 +1,27 @@
+---
+layout: post
+status: publish
+published: true
+title: Grails上执行SQL
+author: Doni
+author_login: D
+author_email: donilan.word@gmail.com
+wordpress_id: 132
+wordpress_url: http://blog.sincerad.com/?p=132
+date: '2011-02-18 09:58:35 +0800'
+date_gmt: '2011-02-18 09:58:35 +0800'
+categories:
+- Groovy
+tags:
+- Groovy
+- SQL
+comments: []
+---
+{% highlight groovy %}
+import groovy.sql.Sql
+import org.codehaus.groovy.grails.commons.ConfigurationHolder
+String sqlFilePath = 'path/to/your/script.sql'
+String sqlString = new File(sqlFilePath).text
+def sql = Sql.newInstance(ConfigurationHolder.config.dataSource.url, ConfigurationHolder.config.dataSource.username, ConfigurationHolder.config.dataSource.password, ConfigurationHolder.config.dataSource.driverClassName)
+sql.execute(sqlString)
+{% endhighlight %}

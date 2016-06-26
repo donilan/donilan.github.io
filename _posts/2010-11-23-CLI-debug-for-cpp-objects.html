@@ -1,0 +1,52 @@
+---
+layout: post
+status: publish
+published: true
+title: C++/CLI程序的Debug/Trace相关对象
+author: Doni
+author_login: D
+author_email: donilan.word@gmail.com
+wordpress_id: 55
+wordpress_url: http://blog.sincerad.com/?p=55
+date: '2010-11-23 07:33:35 +0800'
+date_gmt: '2010-11-23 07:33:35 +0800'
+categories:
+- C/C++
+- Debug
+tags:
+- C/C++
+- debug
+comments: []
+---
+{% highlight cpp %}
+#include <iostream>
+using namespace System;
+using System::Diagnostics::Debug;
+using System::Diagnostics::TraceSwitch;
+using System::Diagnostics::TextWriterTraceListener;
+int main(array<System::String ^> ^args)
+{
+  //输出监听，输出到控制台
+  TextWriterTraceListener^ listener = gcnew TextWriterTraceListener(Console::Out);
+  Debug::Listeners->Add(listener);
+  //跟踪开关
+  TraceSwitch^ traceCtrl = gcnew TraceSwitch(L"Test", L"Traces Test operations");
+  //System::Diagnostics::TraceLevel::Off;
+  //System::Diagnostics::TraceLevel::Error;
+  //System::Diagnostics::TraceLevel::Info;
+  //System::Diagnostics::TraceLevel::Verbose;
+  //System::Diagnostics::TraceLevel::Warning;
+  traceCtrl->Level = System::Diagnostics::TraceLevel::Info;
+  int i = 0;
+  if(traceCtrl->TraceInfo) {
+    Debug::Write(++i + L" Write: This is a debug message!\n");
+    Debug::Write(++i + L" Write: This is a debug message!\n", L"INFO");
+    Debug::WriteLine(++i + L"WriteLine: This is a debug message!");
+    Debug::WriteIf(true, ++i + L" WriteIf: This is a debug message!\n");
+    Debug::WriteIf(true, ++i + L" WriteIf: This is a debug message!\n", L"INFO");
+    Debug::Print(++i + L" Print: This is a debug message!\n");
+  }
+  system("pause");
+    return 0;
+}
+{% endhighlight %}

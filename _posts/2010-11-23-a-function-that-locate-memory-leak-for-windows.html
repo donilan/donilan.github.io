@@ -1,0 +1,81 @@
+---
+layout: post
+status: publish
+published: true
+title: windows下用于定位内存泄漏的函数
+author: Doni
+author_login: D
+author_email: donilan.word@gmail.com
+wordpress_id: 51
+wordpress_url: http://blog.sincerad.com/?p=51
+date: '2010-11-23 05:26:14 +0800'
+date_gmt: '2010-11-23 05:26:14 +0800'
+categories:
+- C/C++
+- Debug
+tags:
+- C/C++
+- debug
+comments: []
+---
+<p>函数原型:<br />
+{% highlight c %}
+int reportType,
+int reportMode
+{% endhighlight %}
+
+<table width="100%">
+<tbody>
+<tr>
+<th>Report type</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>_CRT_WARN</td>
+<td>Warnings, messages, and information that does not need immediate attention.</td>
+</tr>
+<tr>
+<td>_CRT_ERROR</td>
+<td>Errors, unrecoverable problems, and issues that require immediate attention.</td>
+</tr>
+<tr>
+<td>_CRT_ASSERT</td>
+<td>Assertion failures (asserted expressions that evaluate to&nbsp;FALSE).</td>
+</tr>
+</tbody>
+</table>
+<table width="100%">
+<tbody>
+<tr>
+<th>Report mode</th>
+<th>_CrtDbgReport behavior</th>
+</tr>
+<tr>
+<td>_CRTDBG_MODE_DEBUG</td>
+<td>Writes the message to the debugger's output window.</td>
+</tr>
+<tr>
+<td>_CRTDBG_MODE_FILE</td>
+<td>Writes the message to a user-supplied file handle.&nbsp;_CrtSetReportFile&nbsp;should be called to define the specific file or stream to use as the destination.</td>
+</tr>
+<tr>
+<td>_CRTDBG_MODE_WNDW</td>
+<td>Creates a message box to display the message along with the&nbsp;Abort,&nbsp;Retry, and&nbsp;Ignore&nbsp;buttons.</td>
+</tr>
+<tr>
+<td>_CRTDBG_REPORT_MODE</td>
+<td>Returns&nbsp;reportMode&nbsp;for the specified&nbsp;reportType:
+<p>1&nbsp;&nbsp;&nbsp;_CRTDBG_MODE_FILE
+<p>2&nbsp;&nbsp;&nbsp;_CRTDBG_MODE_DEBUG
+<p>4&nbsp;&nbsp;&nbsp;_CRTDBG_MODE_WNDW</td>
+</tr>
+</tbody>
+</table>
+例子:
+{% highlight cpp %}
+_CrtSetDbgFlag( _CRTDBG_LEAK_CHECK_DF | _CRTDBG_ALLOC_MEM_DF);
+_CrtSetReportMode( _CRT_ASSERT, _CRTDBG_MODE_FILE | _CRTDBG_MODE_WNDW );
+_CrtSetReportFile( _CRT_ASSERT, _CRTDBG_FILE_STDERR );
+{% endhighlight %}
+
+<p>本函数的CSDN介绍:<a href="http://msdn.microsoft.com/en-us/library/1y71x448(VS.80).aspx">http://msdn.microsoft.com/en-us/library/1y71x448(VS.80).aspx</a>

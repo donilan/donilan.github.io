@@ -1,0 +1,135 @@
+---
+layout: post
+status: publish
+published: true
+title: 一些Ubuntu下的简单Shell命令
+author: Doni
+author_login: D
+author_email: donilan.word@gmail.com
+wordpress_id: 39
+wordpress_url: http://blog.sincerad.com/?p=39
+date: '2010-11-23 01:53:31 +0800'
+date_gmt: '2010-11-23 01:53:31 +0800'
+categories:
+- Linux
+- Shell
+tags:
+- Bash
+- Shell
+- Linux
+comments: []
+---
+{% highlight ruby %}
+#挂载ISO文件:
+sudo mount -t iso9660 -o loop,utf8 xxx.iso /mnt/iso
+#显示系统运行时间:
+uptime
+#查看到某一个域名的路由情况:
+tracepath baidu.cn
+#设置日期:
+date -s mm/dd/yy
+#增加 rar 软件压缩和解压缩支持 :
+sudo apt-get install rar unrar
+#根据字符串匹配来查看文件部分内容:
+grep 字符串 文件名
+#增加解 cab 文件支持 :
+sudo apt-get install cabextract
+#查看内核:
+uname -a
+#清除僵死进程:
+ps -eal | awk '{ if ($2 == "Z") {print $4}}' | sudo kill -9
+#如何使用命令关闭显示器 :
+xset dpms force off
+#批量缩小图片到30%:
+for i in *; do convert -resize 30%x30% $1 sm-$1; done
+#批量转换jpg到png:
+for i in *; do convert $i `echo $i | sed -e 's/jpg$/png/'`; done
+#解压缩 xxx.tar.gz :
+tar -zxvf xxx.tar.gz
+#临时重启一个服务:
+/etc/init.d/服务名 restart
+#分区挂载:
+sudo mount -t 文件系统类型 (-o nls=utf8 或 -o iocharset=utf8) 设备路经 访问路经
+#察看当前网络连接状况以及程序 :
+sudo netstat -atnp
+#查看在会话设置的启动程序:
+ls ~/.config/autostart
+#显示不包含字符串的文件名:
+grep -L -r 字符串 路径
+#控制台下显示中文 :
+sudo apt-get install zhcon;zhcon --utf8 --drv=vga
+#清除已删除包的残馀配置文件:
+dpkg -l |grep ^rc|awk '{print $2}' |sudo xargs dpkg -P
+#设置电脑的时区为上海:
+sudo cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+#统计当前目录下所有jpg文件的尺寸:
+find . -name *.jpg -exec wc -c {} \;|awk '{print $1}'|awk '{a+=$1}END{print a}'
+#转换目录到iso文件
+mkisofs dirname -o isofile.iso
+#查看Home目录的大小
+df -h /home
+#查看系统modules
+ls /lib/modules/$(uname -r)/kernel/
+##网络硬件配置
+sysctl -a
+##查看ipv4的配置
+ls /etc/sys/net/ipv4/
+##修改某个ipv4的配置
+echo "1" > /proc/sys/net/ipv4/icmp_echo_ignore_broadcasts
+##开启系统转发功能
+echo "1" > /proc/sys/net/ipv4/ip_forward
+##从 /dev/hda（第一个 IDE 盘） 上读取前 512 个字节的内容，并将其写入 mbr.bin 文件中。
+dd if=/dev/hda of=mbr.bin bs=512 count=1
+##以十六进制和 ASCII 码格式打印二进制文件的内容
+od -xa mbr.bin
+##以ASCII码格式打印起始j到结束N的内容
+od -x mbr.bin -j 446 -N 64
+##查看磁盘的使用情况以及文件系统被挂载的位置
+df -lh
+##获得机器中所有的硬盘的分区情况
+fdisk -l
+##查看分区信息
+cat /proc/partitions
+##查看支持的文件系统
+cat /proc/filesystems
+##改变系统的时区（Java默认会用到）
+tzselect
+##默认时区环境变量
+export TZ='Asia/Shanghai'
+##改变系统显示时区的时间
+cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+##当文件改变时执行脚本
+while inotifywait -e modify /tmp/myfile; do firefox; done
+##解决vps使用java时内存不足
+export _JAVA_OPTIONS="-Xms20m -Xmx64m -XX:MinHeapFreeRatio=20 -XX:MaxHeapFreeRatio=40 -XX:NewSize=10m -XX:MaxNewSize=10m -XX:SurvivorRatio=6 -XX:TargetSurvivorRatio=80 -XX:+CMSClassUnloadingEnabled -XX:+CMSPermGenSweepingEnabled"
+##将opera的源地址加入到ubuntu的源里
+wget -O - http://deb.opera.com/archive.key | sudo apt-key add -
+##弹出cdrom
+eject
+##找出正在使用这个目录/文件的进程或者socket, 添加参数-k可以杀死这些进程
+fuser /path/to/display
+##共享终端，客户端使用screen -x foo即可连接在一起（同一台机器上）
+screen -S foo
+##建立C++ 的tags给emacs用
+find -name "*.h" -or -name "*.cpp" | xargs etags --members --language=c++
+##方法2
+find -name "*.cpp" -exec etags -a {} ;
+##方法3
+find . -name "*.[chCH]" -print | etags -
+##把所有换行符替换为空格
+sed ':a;N;$!ba;s/\n/ /g'
+##监视文件变化后运行程序
+while inotifywait -e modify /tmp/myfile; do firefox; done
+##在后台运行程序，退出登录后，并不结束程序 :
+nohup 程序 &
+##convert to decimal, set ibase to 16
+echo "ibase=16; FFF"|bc
+##convert to hexadecimal, set obase to 16
+echo "obase=16; 10"|bc
+##改变系统使用的时区
+dpkg-reconfigure tzdata
+##检查串口
+setserial -g /dev/ttyS[0123]
+## 链接两个串口
+sudo socat PTY,link=/dev/ttyS0 PTY,link=/dev/ttyS1
+{% endhighlight %}

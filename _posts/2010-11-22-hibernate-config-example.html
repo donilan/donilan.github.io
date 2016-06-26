@@ -1,0 +1,41 @@
+---
+layout: post
+status: publish
+published: true
+title: 一个基本HIbernate3.0.5配置,XML格式
+author: Doni
+author_login: D
+author_email: donilan.word@gmail.com
+wordpress_id: 22
+wordpress_url: http://blog.sincerad.com/?p=22
+date: '2010-11-22 11:26:11 +0800'
+date_gmt: '2010-11-22 11:26:11 +0800'
+categories:
+- JAVA
+- Hibernate
+tags:
+- JAVA
+- Hibernate
+comments: []
+---
+{% highlight ruby %}
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+    <property name="hibernate.connection.password">sa</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost/hibernate</property>
+    <property name="hibernate.connection.username">root</property>
+    <property name="connection.pool_size">1</property>
+    <property name="current_session_context_class">thread</property>
+    <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+    <property name="show_sql">true</property>
+    <property name="hbm2ddl.auto">update</property>
+    <mapping resource="org/idea/test/hibernate/event/Event.hbm.xml"/>
+  </session-factory>
+</hibernate-configuration>
+{% endhighlight %}
