@@ -48,7 +48,7 @@ comments: []
 </project>
 {% endhighlight %}
     其中为了解决中文问题还需要一个itextasian的中文字库包，网上有很多介绍中文问题的解决方案，千篇一律的，本人不断去尝试，最后发现问题在于这个中文包上，这个中文包有多个版本，由不同组织维护，不是每个都合适JasperReports用。下面附上一个能正常的itextasian包和一个maven安装这个包到本地的脚本。
-<a href='http://blog.sincerad.com/wp-content/uploads/2012/11/itextasian.zip'>下载itextasian-1.0</a>
+<a href='/uploads/2012/11/itextasian.zip'>下载itextasian-1.0</a>
 {% highlight bash %}
 mvn install:install-file -Dfile=/path/to/itextasian-1.0.jar -DgroupId=com.lowagie -DartifactId=itextasian -Dversion=1.0 -Dpackaging=jar
 {% endhighlight %}
