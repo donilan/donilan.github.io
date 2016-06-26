@@ -24,31 +24,31 @@ comments: []
 # 如果没有安装curl
 sudo yum install curl
 curl -L get.rvm.io | bash -s stable
-[&#47;bash]
+[/bash]
 安装完RVM后，加载RVM环境
 [bash]
-# 我是用Root用户安装的，我的rvm环境配置文件会再&#47;etc&#47;profile.d下
-source &#47;etc&#47;profile.d&#47;rvm.sh
-[&#47;bash]
+# 我是用Root用户安装的，我的rvm环境配置文件会再/etc/profile.d下
+source /etc/profile.d/rvm.sh
+[/bash]
 接着安装RVM的依赖
 [bash]
 yum install libyaml-devel -y
 rvm requirements
-[&#47;bash]
+[/bash]
 依赖解决了之后继续安装一些通用的工具,使用rvmsudo来安装
 [bash]
 rvmsudo yum install -y gcc-c++ patch readline readline-devel zlib zlib-devel libyaml-devel libffi-devel openssl-devel make bzip2 autoconf automake libtool bison iconv-devel
-[&#47;bash]
+[/bash]
 到这里的话，RVM应该安装成功了，然后就是安装Ruby了，这里选择的是1.9.2（这里下载有可能会失败的，试多几次吧。）
 [bash]
 rvm install 1.9.2
-[&#47;bash]
+[/bash]
 一堆下载、解压、编译、安装后，应该会提示一些信息，建议看看吧，接着设置默认的版本。
 [bash]
 rvm use 1.9.2 --default
-[&#47;bash]
+[/bash]
 最后把最新的Ruby gems安装上
 [bash]
 rvm rubygems current
-[&#47;bash]</p>
+[/bash]</p>
 <p>All done.</p>

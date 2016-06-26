@@ -21,34 +21,34 @@ tags:
 - smbfs
 comments: []
 ---
-<p><strong>假设环境：<&#47;strong></p>
+<p><strong>假设环境：</strong></p>
 <ol>
-<li>windows系统为：windows xp<&#47;li>
-<li>Window ip 地址: 192.168.1.2<&#47;li>
-<li>共享的目录名称为：share<&#47;li>
-<li>假设window下的用户名和密码为：admin&#47;pass<&#47;li>
-<li>Linux环境为:Ubuntu Linux<&#47;li>
-<li>当前在Linux下使用的用户为：doni<&#47;li>
-<&#47;ol>
+<li>windows系统为：windows xp</li>
+<li>Window ip 地址: 192.168.1.2</li>
+<li>共享的目录名称为：share</li>
+<li>假设window下的用户名和密码为：admin/pass</li>
+<li>Linux环境为:Ubuntu Linux</li>
+<li>当前在Linux下使用的用户为：doni</li>
+</ol>
 首先我们需要安装smbfs
 [bash]
 $sudo apt-get install smbfs
-[&#47;bash]
+[/bash]
 然后挂载
 [bash]
-$sudo mount &#47;&#47;192.168.1.2&#47;share &#47;path&#47;to&#47;your&#47;mount&#47;dir -o uid=doni,username=admin,password=pass,iocharset=utf8
-[&#47;bash]
+$sudo mount //192.168.1.2/share /path/to/your/mount/dir -o uid=doni,username=admin,password=pass,iocharset=utf8
+[/bash]
 下面是-o参数详解，-o是附加参数</p>
 <ol>
-<li>其中uid的作用，设置挂载后用哪个linux用户为此挂载的拥有者，非常重要，如果我们用sudo挂载，一般拥有者就是root。<&#47;li>
-<li>username,password这个应该不需要解析了，就是windows的用户，如果共享没有设置用户的话，可以不加这两个参数。<&#47;li>
-<li>iocharset设置字符集，主要用来解决乱码问题。<&#47;li>
-<&#47;ol>
+<li>其中uid的作用，设置挂载后用哪个linux用户为此挂载的拥有者，非常重要，如果我们用sudo挂载，一般拥有者就是root。</li>
+<li>username,password这个应该不需要解析了，就是windows的用户，如果共享没有设置用户的话，可以不加这两个参数。</li>
+<li>iocharset设置字符集，主要用来解决乱码问题。</li>
+</ol>
 [bash]
 #取消挂载
-$sudo umount &#47;&#47;192.168.1.2&#47;share
-[&#47;bash]</p>
-<p><strong>另外一种方法<&#47;strong>
+$sudo umount //192.168.1.2/share
+[/bash]</p>
+<p><strong>另外一种方法</strong>
 [bash]
-$sudo mount -t cifs -o uid=doni &#47;&#47;192.168.1.2&#47;share &#47;path&#47;to&#47;your&#47;mount&#47;dir
-[&#47;bash]</p>
+$sudo mount -t cifs -o uid=doni //192.168.1.2/share /path/to/your/mount/dir
+[/bash]</p>

@@ -22,66 +22,66 @@ comments: []
 以下是emacs学习记录</p>
 <ol>
 <li>
-		<strong>Hello wolrd.<&#47;strong></p>
-<p>首先进入Emacs的*Backtrace*缓冲区, C-x C-b 选择它进入，输入以下代码。<&#47;p>
+		<strong>Hello wolrd.</strong></p>
+<p>首先进入Emacs的*Backtrace*缓冲区, C-x C-b 选择它进入，输入以下代码。</p>
 		[text]
 			(message "Hello world") ;; 可以用C-j 或者C-x C-e执行
-		[&#47;text]
-	<&#47;li></p>
+		[/text]
+	</li></p>
 <li>
-		<strong>定义函数.<&#47;strong>
+		<strong>定义函数.</strong>
 		[text]
 			(defun test-fun( a b )
 				(+ a b))
 			(message (test-fun 1 2) ;;结果为3
-		[&#47;text]
-	<&#47;li></p>
+		[/text]
+	</li></p>
 <li>
-		<strong>选择并缩排<&#47;strong></p>
-<p>C-@为选择的开始，游动光标就可以选择某一区域，再用M-C-\就可以自动缩排。<&#47;p>
-	<&#47;li></p>
+		<strong>选择并缩排</strong></p>
+<p>C-@为选择的开始，游动光标就可以选择某一区域，再用M-C-\就可以自动缩排。</p>
+	</li></p>
 <li>
-<p>函数buffer-name, buffer-file-name, 变量fill-column<&#47;p>
+<p>函数buffer-name, buffer-file-name, 变量fill-column</p>
 		[text]
 		(message "The name of this buffer is: %s \n and The name of this buffer file name is: %s \n and the value of fill-column is: %d"
 			(buffer-name)
 	 		(buffer-file-name)
 	 		fill-column)
-		[&#47;text]
-	<&#47;li></p>
+		[/text]
+	</li></p>
 <li>
-<p>判断变量是否为0，是否为列表.<&#47;p>
+<p>判断变量是否为0，是否为列表.</p>
 		[text]
 		(zerop 0) ; t
 		(zerop 1) ; nil
 		(listp ()) ; t
 		(listp 1) ; nil
-		[&#47;text]
-	<&#47;li></p>
+		[/text]
+	</li></p>
 <li>
-<p>设置变量，两个方法结果一样.<&#47;p>
+<p>设置变量，两个方法结果一样.</p>
 		[text]
 		(set 'list-val '(val1 val2))
 		(setq list-val '(val1 val2))
-		[&#47;text]
-	<&#47;li></p>
+		[/text]
+	</li></p>
 <li>
-<p>buffer 操作, current-buffer(当前buffer), other-buffer(上次访问的buffer), switch-to-buffer(切换buffer), set-buffer(设置buffer).<&#47;p>
+<p>buffer 操作, current-buffer(当前buffer), other-buffer(上次访问的buffer), switch-to-buffer(切换buffer), set-buffer(设置buffer).</p>
 		[text]
 		(swithc-to-buffer (other-buffer))
 		(set-buffer (current-buffer))
-		[&#47;text]
-	<&#47;li></p>
+		[/text]
+	</li></p>
 <li>
-<p>光标位置<&#47;p>
+<p>光标位置</p>
 		[text]
 		(point) ; 当前光标位置
 		(point-min) ; 最小光标值，一般都会是1
 		(point-max) ; 最大光标值
-		[&#47;text]
-	<&#47;li></p>
+		[/text]
+	</li></p>
 <li>
-<p>定义函数和调用函数.<&#47;p>
+<p>定义函数和调用函数.</p>
 		[text]
 		;; 定义函数
 		(defun plus (number1 number2)
@@ -89,6 +89,6 @@ comments: []
   			(+ number1 number2))
 		;;调用函数
 		(plus 1 1)</p>
-<p>		[&#47;text]
-	<&#47;li>
-<&#47;ol></p>
+<p>		[/text]
+	</li>
+</ol></p>

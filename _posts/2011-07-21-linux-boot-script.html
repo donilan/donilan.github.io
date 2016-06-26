@@ -18,12 +18,12 @@ comments: []
 ---
 <p>脚本必须实现start stop restart等参数调用
 [bash]
-sudo chmod +x &#47;etc&#47;init.d&#47;scriptName
+sudo chmod +x /etc/init.d/scriptName
 sudo update-rc.d scriptName defaults
-[&#47;bash]
+[/bash]
 脚本例子
 [bash]
-#! &#47;bin&#47;sh
+#! /bin/sh
 ### BEGIN INIT INFO
 # Provides:          scriptName
 # Required-Start:    $all
@@ -35,26 +35,26 @@ sudo update-rc.d scriptName defaults
 ### END INIT INFO</p>
 <p># Author: Doni</p>
 <p># Do NOT "set -e"</p>
-<p>PATH=&#47;sbin:&#47;usr&#47;sbin:&#47;bin:&#47;usr&#47;bin
+<p>PATH=/sbin:/usr/sbin:/bin:/usr/bin
 DESC="..."
 NAME=binFileName
-DAEMON=&#47;usr&#47;bin&#47;binFileName
-PIDFILE=&#47;var&#47;run&#47;$NAME.pid
-SCRIPTNAME=&#47;etc&#47;init.d&#47;$NAME
-CONFIG_FILE=&#47;etc&#47;path&#47;to&#47;configFile</p>
+DAEMON=/usr/bin/binFileName
+PIDFILE=/var/run/$NAME.pid
+SCRIPTNAME=/etc/init.d/$NAME
+CONFIG_FILE=/etc/path/to/configFile</p>
 <p># Exit if the package is not installed
 [ -x "$DAEMON" ] || exit 0</p>
 <p># Read configuration variable file if it is present
-[ -r &#47;etc&#47;default&#47;$NAME ] && . &#47;etc&#47;default&#47;$NAME</p>
+[ -r /etc/default/$NAME ] && . /etc/default/$NAME</p>
 <p># Load the VERBOSE setting and other rcS variables
-. &#47;lib&#47;init&#47;vars.sh</p>
+. /lib/init/vars.sh</p>
 <p># Define LSB log_* functions.
 # Depend on lsb-base (>= 3.0-6) to ensure that this file is present.
-. &#47;lib&#47;lsb&#47;init-functions</p>
+. /lib/lsb/init-functions</p>
 <p># If the daemon is not enabled, give the user a warning and then exit,
 # unless we are stopping the daemon
 if [ "$START" != "yes" -a "$1" != "stop" ]; then
-        log_warning_msg "To enable $NAME, edit &#47;etc&#47;default&#47;$NAME and set START=yes"
+        log_warning_msg "To enable $NAME, edit /etc/default/$NAME and set START=yes"
         exit 0
 fi</p>
 <p># Process configuration
@@ -66,7 +66,7 @@ DAEMON_ARGS="-q -b $FCGI_HOST:$FCGI_PORT -c $CONFIG_FILE"</p>
         #   0 if daemon has been started
         #   1 if daemon was already running
         #   2 if daemon could not be started
-        start-stop-daemon --start --quiet --pidfile $PIDFILE --exec $DAEMON --test > &#47;dev&#47;null \
+        start-stop-daemon --start --quiet --pidfile $PIDFILE --exec $DAEMON --test > /dev/null \
                 || return 1
         start-stop-daemon --start --quiet --pidfile $PIDFILE --exec $DAEMON \
                 --background --make-pidfile --chuid $EXEC_AS_USER --startas $DAEMON -- \
@@ -80,7 +80,7 @@ DAEMON_ARGS="-q -b $FCGI_HOST:$FCGI_PORT -c $CONFIG_FILE"</p>
         #   1 if daemon was already stopped
         #   2 if daemon could not be stopped
         #   other if a failure occurred
-        start-stop-daemon --stop --quiet --retry=TERM&#47;30&#47;KILL&#47;5 --pidfile $PIDFILE > &#47;dev&#47;null # --name $DAEMON
+        start-stop-daemon --stop --quiet --retry=TERM/30/KILL/5 --pidfile $PIDFILE > /dev/null # --name $DAEMON
         RETVAL="$?"
         [ "$RETVAL" = 2 ] && return 2
         # Wait for children to finish too if this is a daemon that forks
@@ -89,7 +89,7 @@ DAEMON_ARGS="-q -b $FCGI_HOST:$FCGI_PORT -c $CONFIG_FILE"</p>
         # that waits for the process to drop all resources that could be
         # needed by services started subsequently.  A last resort is to
         # sleep for some time.
-        start-stop-daemon --stop --quiet --oknodo --retry=0&#47;30&#47;KILL&#47;5 --exec $DAEMON
+        start-stop-daemon --stop --quiet --oknodo --retry=0/30/KILL/5 --exec $DAEMON
         [ "$?" = 2 ] && return 2
         # Many daemons don't delete their pidfiles when they exit.
         rm -f $PIDFILE
@@ -135,4 +135,4 @@ case "$1" in
         exit 3
         ;;
 esac
-[&#47;bash]</p>
+[/bash]</p>

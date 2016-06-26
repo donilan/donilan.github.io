@@ -32,154 +32,154 @@ comments:
   date_gmt: '2011-01-21 03:02:38 +0800'
   content: Very powerful editor.
 ---
-<p><h3>Vim Zen coding Plugin 安装：<&#47;h3></p>
+<p><h3>Vim Zen coding Plugin 安装：</h3></p>
 <ul>
 <li>
-			下载：<a href="">Github<&#47;a><br &#47;>
-		<&#47;li></p>
+			下载：<a href="">Github</a><br />
+		</li></p>
 <li>
-			安装：将下载的文件解压，然后复制到vimfiles目录或者.vim目录(如果有)下即可<br &#47;>
-		<&#47;li></p>
+			安装：将下载的文件解压，然后复制到vimfiles目录或者.vim目录(如果有)下即可<br />
+		</li></p>
 <li>使用：
 <ol>
 <li>
-<p>Expand Abbreviation，输入Zen coding格式语句，然后按 Ctrl+y,然后再按","，要注意先后顺序。<&#47;p>
+<p>Expand Abbreviation，输入Zen coding格式语句，然后按 Ctrl+y,然后再按","，要注意先后顺序。</p>
 					Example: 输入div>p#foo$*3>a 然后按<c-y>+,。
 					[html]</p>
 <div>
 <p id="foo1">
-          <a href=""><&#47;a>
-      <&#47;p></p>
+          <a href=""></a>
+      </p></p>
 <p id="foo2">
-          <a href=""><&#47;a>
-      <&#47;p></p>
+          <a href=""></a>
+      </p></p>
 <p id="foo3">
-          <a href=""><&#47;a>
-      <&#47;p>
-  <&#47;div>
-					[&#47;html]
-				<&#47;li></p>
+          <a href=""></a>
+      </p>
+  </div>
+					[/html]
+				</li></p>
 <li>
 					Wrap with Abbreviation,先输入几行数据。
 					[text]
 					item1
 					item2
 					item3
-					[&#47;text]
+					[/text]
 					然后再用选择模式"V"把要包含的数据选择上，然后再输入<c-y>+,最后输入一句Zen code ul>li*
 					[html]</p>
 <ul>
-<li>test1<&#47;li>
-<li>test2<&#47;li>
-<li>test3<&#47;li>
-  <&#47;ul>
-					[&#47;html]
-				<&#47;li></p>
+<li>test1</li>
+<li>test2</li>
+<li>test3</li>
+  </ul>
+					[/html]
+				</li></p>
 <li>
 					Balance Tag Inward,输入<c-y>+d插入模式。
-				<&#47;li></p>
+				</li></p>
 <li>
 					Balance Tag Outward,输入<c-y>+D插入模式。
-				<&#47;li></p>
+				</li></p>
 <li>
 					Go to Next Edit Point,输入<c-y>+n跳到下一个编辑点。
-				<&#47;li></p>
+				</li></p>
 <li>
 					Go to Previous Edit Point,输入<c-y>+N跳到上一个编辑点。
-				<&#47;li></p>
+				</li></p>
 <li>
-					Update <img> Size <br &#47;>
+					Update <img> Size <br />
 					移动光标到img标签中。然后输入<c-y>+i编辑属性。
-				<&#47;li></p>
+				</li></p>
 <li>
-					Merge Lines <br &#47;>
+					Merge Lines <br />
 					选择需要组合成一行的所有数据，例如以下选择所有"
 <li>"标签。
 					[html]</p>
 <ul>
-<li class="list1"><&#47;li>
-<li class="list2"><&#47;li>
-<li class="list3"><&#47;li>
-					<&#47;ul>
-					[&#47;html]
+<li class="list1"></li>
+<li class="list2"></li>
+<li class="list3"></li>
+					</ul>
+					[/html]
 					然后输入"J"。
 					[html]</p>
 <ul>
-<li class="list1"><&#47;li>
-<li class="list2"><&#47;li>
-<li class="list3"><&#47;li>
-					<&#47;ul>
-					[&#47;html]
-				<&#47;li></p>
+<li class="list1"></li>
+<li class="list2"></li>
+<li class="list3"></li>
+					</ul>
+					[/html]
+				</li></p>
 <li>
-					Remove Tag <br &#47;>
+					Remove Tag <br />
 					[html]</p>
-<div class="foo"><a >光标在这里<&#47;a><&#47;div>
-					[&#47;html]
+<div class="foo"><a >光标在这里</a></div>
+					[/html]
 					移动光标到标签块，然后输入<c-y&gt+k。
 					[html]</p>
-<div class="foo"><&#47;div>
-					[&#47;html]
+<div class="foo"></div>
+					[/html]
 					然后再输入<c-y>+j则连div也清除了。
-				<&#47;li></p>
+				</li></p>
 <li>
-					Split&#47;Join Tag <br &#47;>
+					Split/Join Tag <br />
 					[html]</p>
-<div class="foo">光标放到这里<&#47;div>
-					[&#47;html]
+<div class="foo">光标放到这里</div>
+					[/html]
 					输入<c-y&gt+j
 					[html]</p>
-<div class="foo" &#47;>
-					[&#47;html]
-				<&#47;li></p>
+<div class="foo" />
+					[/html]
+				</li></p>
 <li>
-					Toggle Comment <br &#47;>
+					Toggle Comment <br />
 					移动光变到块内
 					[html]</p>
 <div>
 						Hello world!
-					<&#47;div>
-					[&#47;html]
-					输入<c-y&gt+&#47;
+					</div>
+					[/html]
+					输入<c-y&gt+/
 					[html]
 					<!--
 <div>
 						Hello World!
-					<&#47;div> -->
-					[&#47;html]
+					</div> -->
+					[/html]
 					再次输入取消注释
-				<&#47;li></p>
+				</li></p>
 <li>
-					Make auchor from URL <br &#47;>
+					Make auchor from URL <br />
 					移动光标到URL
 					[text]
-					http:&#47;&#47;www.google.com
-					[&#47;text]
+					http://www.google.com
+					[/text]
 					输入<c-y>+a
 					[html]
-					<a href="http:&#47;&#47;www.google.com"><&#47;a>
-					[&#47;html]
-				<&#47;li></p>
+					<a href="http://www.google.com"></a>
+					[/html]
+				</li></p>
 <li>
-					Make quoted text from URL <br &#47;>
+					Make quoted text from URL <br />
 					移动光标到URL
 					[text]
-					http:&#47;&#47;www.google.com
-					[&#47;text]
+					http://www.google.com
+					[/text]
 					输入<c-y>+A
 					[html]</p>
 <blockquote class="quote"><p>
-	<a href="http:&#47;&#47;www.google.com&#47;">Google<&#47;a><br &#47;></p>
-<p>...<&#47;p>
-	<cite>http:&#47;&#47;www.google.com&#47;<&#47;cite>
-<&#47;blockquote></p>
-<p>					[&#47;html]
-				<&#47;li></p>
+	<a href="http://www.google.com/">Google</a><br /></p>
+<p>...</p>
+	<cite>http://www.google.com/</cite>
+</blockquote></p>
+<p>					[/html]
+				</li></p>
 <li>
-					Enable zencoding.vim for language you using. <br &#47;>
+					Enable zencoding.vim for language you using. <br />
 					自定义你使用的语言。
 					[bash]
-  # cat >> ~&#47;.vimrc
+  # cat >> ~/.vimrc
   let g:user_zen_settings = {
   \  'php' : {
   \    'extends' : 'html',
@@ -192,12 +192,12 @@ comments:
   \    'extends' : 'html',
   \  },
   \}
-					[&#47;bash]
-				<&#47;li>
-			<&#47;ol></p>
-<p>		<&#47;li>
-	<&#47;ul></p>
-<p><&#47;p></p>
+					[/bash]
+				</li>
+			</ol></p>
+<p>		</li>
+	</ul></p>
+<p></p></p>
 <div>
-<a href="https:&#47;&#47;github.com&#47;mattn&#47;zencoding-vim&#47;raw&#47;master&#47;TUTORIAL" target="_blank">Vim zen coding 教程<&#47;a>
-<&#47;div></p>
+<a href="https://github.com/mattn/zencoding-vim/raw/master/TUTORIAL" target="_blank">Vim zen coding 教程</a>
+</div></p>

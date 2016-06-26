@@ -21,32 +21,32 @@ comments: []
 public static long FORTY_THREE_YEAR = 1000l * 60l * 60l * 24l * 365l * 43l;
 public static java.util.concurrent.atomic.AtomicInteger increment = new java.util.concurrent.atomic.AtomicInteger(0);
 public static int MAX_INCREMENT = 99999;
-&#47;**
+/**
  * 生成唯一id
- *&#47;
+ */
 public static synchronized long generateId() {
-	&#47;&#47; 减去43年
+	// 减去43年
 	long prefix = (System.currentTimeMillis() - FORTY_THREE_YEAR) * MAX_INCREMENT;
-	&#47;&#47; 加上自增值
+	// 加上自增值
 	prefix += increment.getAndIncrement();
 	if(increment.get() > MAX_INCREMENT)
 		increment.set(0);
 	return prefix;
 }
-[&#47;java]</p>
+[/java]</p>
 <p>再附上一个单元测试方法
 [java]
 @Test
 public final void testUnique() throws InterruptedException {
-	&#47;&#47; 性能计算
+	// 性能计算
 	long startTime = System.currentTimeMillis();
-	&#47;&#47; 线程数
+	// 线程数
 	final int threadLen = 20;
-	&#47;&#47; 每个线程生成的id数
+	// 每个线程生成的id数
 	final int genernateIdPreThread = 200000;
-	&#47;&#47; 使用map记录重复的id
+	// 使用map记录重复的id
 	final Map<Long, Integer> counter = new ConcurrentHashMap<Long, Integer>();
-	&#47;&#47; 处理线程
+	// 处理线程
 	Thread threads[] = new Thread[threadLen];
 	for(int i = 0 ; i < threadLen; ++i) {
 		threads[i] = new Thread(new Runnable() {</p>
@@ -67,12 +67,12 @@ public final void testUnique() throws InterruptedException {
 		});
 		threads[i].start();
 	}
-	&#47;&#47;等待所有线程结束
+	//等待所有线程结束
 	for(Thread t: threads)
 		t.join();
 	System.out.printf("总耗时 %d ms, 一共生成了[%d]个id\n", System.currentTimeMillis() - startTime, counter.size());
 }
-[&#47;java]</p>
+[/java]</p>
 <p>测试结果如下：
 线程[16]已经执行完毕，没有发现重复id
 线程[30]已经执行完毕，没有发现重复id

@@ -21,21 +21,21 @@ tags:
 comments: []
 ---
 <p>[java]
-new java.net.URL("https:&#47;&#47;any_https_website.com").openConnection().getInputStream();
-[&#47;java]
+new java.net.URL("https://any_https_website.com").openConnection().getInputStream();
+[/java]
 如果在Java里面试图连接Https的网站或者其它ssl链接的话，可能会报这样的一个错误。
 javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target</p>
 <p>这个错误的原因（个人想法）是，没有找到匹配的本地证书，如果你使用浏览器去浏览一个Https网站，一般浏览器会询问你是否通过验证，然后保存证书，但是Java里面没有这步骤，那么就需要手工处理了。
-一般java的本地证书会保存在,Windows: %JAVA_HOME%&#47;jre&#47;lib&#47;security&#47;cacerts, Ubuntu Linux: &#47;etc&#47;ssl&#47;certs&#47;java&#47;casers。</p>
+一般java的本地证书会保存在,Windows: %JAVA_HOME%/jre/lib/security/cacerts, Ubuntu Linux: /etc/ssl/certs/java/casers。</p>
 <p>导入方法很简单，首先你需要下载证书，在浏览器中查看链接中的https证书，如下
-<a href="http:&#47;&#47;blog.sincerad.com&#47;wp-content&#47;uploads&#47;2011&#47;10&#47;step1.jpg">
-	<img src="http:&#47;&#47;blog.sincerad.com&#47;wp-content&#47;uploads&#47;2011&#47;10&#47;step1-300x32.jpg" alt="链接中的url" title="google的https链接" width="300" height="32" class="alignnone size-medium wp-image-185" &#47;><&#47;a>
-<a href="http:&#47;&#47;blog.sincerad.com&#47;wp-content&#47;uploads&#47;2011&#47;10&#47;step2.jpg"><img src="http:&#47;&#47;blog.sincerad.com&#47;wp-content&#47;uploads&#47;2011&#47;10&#47;step2-300x251.jpg" alt="google的https证书" title="google的https证书" width="300" height="251" class="alignnone size-medium wp-image-186" &#47;><&#47;a></p>
+<a href="http://blog.sincerad.com/wp-content/uploads/2011/10/step1.jpg">
+	<img src="http://blog.sincerad.com/wp-content/uploads/2011/10/step1-300x32.jpg" alt="链接中的url" title="google的https链接" width="300" height="32" class="alignnone size-medium wp-image-185" /></a>
+<a href="http://blog.sincerad.com/wp-content/uploads/2011/10/step2.jpg"><img src="http://blog.sincerad.com/wp-content/uploads/2011/10/step2-300x251.jpg" alt="google的https证书" title="google的https证书" width="300" height="251" class="alignnone size-medium wp-image-186" /></a></p>
 <p>然后导出证书到文件中，这样我们就得到证书了。
-<a href="http:&#47;&#47;blog.sincerad.com&#47;wp-content&#47;uploads&#47;2011&#47;10&#47;step3.jpg"><img src="http:&#47;&#47;blog.sincerad.com&#47;wp-content&#47;uploads&#47;2011&#47;10&#47;step3-234x300.jpg" alt="导出google的https证书" title="导出google的https证书" width="234" height="300" class="alignnone size-medium wp-image-187" &#47;><&#47;a></p>
+<a href="http://blog.sincerad.com/wp-content/uploads/2011/10/step3.jpg"><img src="http://blog.sincerad.com/wp-content/uploads/2011/10/step3-234x300.jpg" alt="导出google的https证书" title="导出google的https证书" width="234" height="300" class="alignnone size-medium wp-image-187" /></a></p>
 <p>得到证书后，我们需要把证书导入到java的证书集合中。
 [bash]
  keytool -import -alias 别名（用于查看证书或者删除证书用） -file 下载的证书文件 -keystore 保存位置，java的证书集合
  Enter keystore password:  (输入导入密码)
-[&#47;bash]</p>
+[/bash]</p>
 <p>只要添加证书的https网站就可以用java程序访问了。</p>

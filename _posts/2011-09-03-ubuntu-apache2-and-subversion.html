@@ -24,7 +24,7 @@ comments: []
 <p>编译mod_dav_svn.so
 [bash]
 # 因为要获取一个模块需要很多源码..所以到临时文件里面处理
-$ cd &#47;tmp
+$ cd /tmp
 # 获取源码
 $ apt-get source subversion
 # 解决依赖
@@ -32,9 +32,9 @@ $ sudo apt-get build-dep subversion
 # 进到源码目录
 $ cd subversion
 # 生成配置文件
-$ sudo .&#47;configure --with-ssl --with-apxs=&#47;usr&#47;bin&#47;apxs2
+$ sudo ./configure --with-ssl --with-apxs=/usr/bin/apxs2
 # 编译文件
 $ sudo make
 # 复制文件到apache2 modules下
-$ cp subversion&#47;mod_dav_svn&#47;.libs&#47;mod_dav_svn.so &#47;usr&#47;lib&#47;apache2&#47;modules&#47;
-[&#47;bash]</p>
+$ cp subversion/mod_dav_svn/.libs/mod_dav_svn.so /usr/lib/apache2/modules/
+[/bash]</p>

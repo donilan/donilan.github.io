@@ -22,60 +22,60 @@ comments: []
 <p>maven pom.xml依赖配置
 [xml]
 <dependency>
-	<groupId>javax.transaction<&#47;groupId>
-	<artifactId>jta<&#47;artifactId>
-	<version>1.1<&#47;version>
-<&#47;dependency>
+	<groupId>javax.transaction</groupId>
+	<artifactId>jta</artifactId>
+	<version>1.1</version>
+</dependency>
 <dependency>
-	<groupId>net.sf.ehcache<&#47;groupId>
-	<artifactId>ehcache<&#47;artifactId>
-	<version>2.7.4<&#47;version>
-<&#47;dependency>
-[&#47;xml]</p>
+	<groupId>net.sf.ehcache</groupId>
+	<artifactId>ehcache</artifactId>
+	<version>2.7.4</version>
+</dependency>
+[/xml]</p>
 <p>ehcache.xml配置
 [xml]
 <?xml version="1.0" encoding="UTF-8"?>
-<ehcache xmlns:xsi="http:&#47;&#47;www.w3.org&#47;2001&#47;XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="http:&#47;&#47;ehcache.org&#47;ehcache.xsd"
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd"
 	updateCheck="false"></p>
-<p>	<diskStore path="java.io.tmpdir&#47;EhCacheSpringAnnotationsExampleApp" &#47;></p>
+<p>	<diskStore path="java.io.tmpdir/EhCacheSpringAnnotationsExampleApp" /></p>
 <p>	<defaultCache eternal="false" maxElementsInMemory="1000"
 		overflowToDisk="false" diskPersistent="false" timeToIdleSeconds="0"
-		timeToLiveSeconds="10" memoryStoreEvictionPolicy="LRU" &#47;></p>
+		timeToLiveSeconds="10" memoryStoreEvictionPolicy="LRU" /></p>
 <p>	<cache name="tenSecond" eternal="false" maxElementsInMemory="1000"
 		overflowToDisk="false" diskPersistent="false" timeToIdleSeconds="0"
-		timeToLiveSeconds="10" memoryStoreEvictionPolicy="LRU" &#47;></p>
+		timeToLiveSeconds="10" memoryStoreEvictionPolicy="LRU" /></p>
 <p>	<cache name="oneMin" eternal="false" maxElementsInMemory="1000"
 		overflowToDisk="false" diskPersistent="false" timeToIdleSeconds="0"
-		timeToLiveSeconds="60" memoryStoreEvictionPolicy="LRU" &#47;></p>
+		timeToLiveSeconds="60" memoryStoreEvictionPolicy="LRU" /></p>
 <p>	<cache name="oneHour" eternal="false" maxElementsInMemory="1000"
 		overflowToDisk="false" diskPersistent="false" timeToIdleSeconds="0"
-		timeToLiveSeconds="3600" memoryStoreEvictionPolicy="LRU" &#47;>
-<&#47;ehcache>
-[&#47;xml]</p>
+		timeToLiveSeconds="3600" memoryStoreEvictionPolicy="LRU" />
+</ehcache>
+[/xml]</p>
 <p>spring配置
 [xml]
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http:&#47;&#47;www.springframework.org&#47;schema&#47;beans"
-	xmlns:xsi="http:&#47;&#47;www.w3.org&#47;2001&#47;XMLSchema-instance" xmlns:context="http:&#47;&#47;www.springframework.org&#47;schema&#47;context"
-	xmlns:aop="http:&#47;&#47;www.springframework.org&#47;schema&#47;aop"
-	xmlns:p="http:&#47;&#47;www.springframework.org&#47;schema&#47;p"
-	xmlns:cache="http:&#47;&#47;www.springframework.org&#47;schema&#47;cache"</p>
-<p>	xsi:schemaLocation="http:&#47;&#47;www.springframework.org&#47;schema&#47;beans
-        http:&#47;&#47;www.springframework.org&#47;schema&#47;beans&#47;spring-beans-3.0.xsd
-        http:&#47;&#47;www.springframework.org&#47;schema&#47;context
-        http:&#47;&#47;www.springframework.org&#47;schema&#47;context&#47;spring-context-3.0.xsd
-        http:&#47;&#47;www.springframework.org&#47;schema&#47;cache
-        http:&#47;&#47;www.springframework.org&#47;schema&#47;cache&#47;spring-cache.xsd"></p>
-<p>	<cache:annotation-driven &#47;>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:cache="http://www.springframework.org/schema/cache"</p>
+<p>	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd
+        http://www.springframework.org/schema/cache
+        http://www.springframework.org/schema/cache/spring-cache.xsd"></p>
+<p>	<cache:annotation-driven />
 	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager"
-             p:cache-manager-ref="ehcache"&#47;>
+             p:cache-manager-ref="ehcache"/>
 	<!-- EhCache library setup -->
 	<bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"
-             p:config-location="classpath:ehcache.xml" p:shared="true"&#47;>
-	 <bean class="com.ii2d.CacheBean" &#47;>
-<&#47;beans>
-[&#47;xml]
+             p:config-location="classpath:ehcache.xml" p:shared="true"/>
+	 <bean class="com.ii2d.CacheBean" />
+</beans>
+[/xml]
 测试类
 [java]
 package com.ii2d;</p>
@@ -86,7 +86,7 @@ package com.ii2d;</p>
 		return val++;
 	}</p>
 <p>}</p>
-<p>[&#47;java]</p>
+<p>[/java]</p>
 <p>单元测试
 [java]
 package com.ii2d;</p>
@@ -97,7 +97,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;</p>
 <p>@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:com&#47;createw&#47;acc&#47;cache&#47;application-context.xml")
+@ContextConfiguration(locations = "classpath:com/createw/acc/cache/application-context.xml")
 public class EhCacheTests {</p>
 <p>	@Resource CacheBean cacheBean;</p>
 <p>	@Test
@@ -110,4 +110,4 @@ public class EhCacheTests {</p>
 		}
 	}
 }
-[&#47;java]</p>
+[/java]</p>

@@ -22,10 +22,10 @@ SET RENAME_FILE=jpg
 SET _date=%date: =0%
 SET _time=%time: =0%
 SET CURRENT_DATE=%_date:~0,4%_%_date:~5,2%_%_date:~8,2%_%_time:~0,2%%_time:~3,2%
-for &#47;f "delims=" %%i in ('dir &#47;b *.%RENAME_FILE%') do (
+for /f "delims=" %%i in ('dir /b *.%RENAME_FILE%') do (
 	if not "%%~ni"=="%~n0" (
 		if !a! LSS 10 (ren "%%i" "%CURRENT_DATE%_00!a!.%RENAME_FILE%") else if !a! LSS 100 (ren "%%i" "%CURRENT_DATE%_0!a!.%RENAME_FILE%") else ren "%%i" "%CURRENT_DATE%_!a!.%RENAME_FILE%"
-		set &#47;a a+=1
+		set /a a+=1
 	)
 )
-[&#47;bash]</p>
+[/bash]</p>

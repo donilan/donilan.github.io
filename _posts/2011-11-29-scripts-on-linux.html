@@ -20,7 +20,7 @@ tags:
 comments: []
 ---
 <p>[bash]
-#!&#47;bin&#47;bash
+#!/bin/bash
 # 使用 script 來添加用户
 groupadd groupName
 for username in u1 u2 u3 u4 u5
@@ -28,9 +28,9 @@ do
 	useradd -g groupName $username
 	echo "password" | passwd --stdin $username
 done
-[&#47;bash]</p>
+[/bash]</p>
 <p>[bash]
-#!&#47;bin&#47;sh
+#!/bin/sh
 ## 为svn初始化一个项目
 if [ $# != 1 ]
 then
@@ -39,40 +39,40 @@ then
     exit 1
 fi</p>
 <p>BASE_DIR=$(dirname "$0")
-JAVA_PROJECT_DIR=$BASE_DIR&#47;java
+JAVA_PROJECT_DIR=$BASE_DIR/java
 echo "Base java project dir is $JAVA_PROJECT_DIR"</p>
-<p>for i in "$1" "$1&#47;trunk" "$1&#47;tags" "$1&#47;branches"
+<p>for i in "$1" "$1/trunk" "$1/tags" "$1/branches"
 do
     svn mkdir $i
 done
 svn -ci -m 'Create project $1 by $0'
-[&#47;bash]</p>
+[/bash]</p>
 <p>[bash]
-#!&#47;bin&#47;sh
+#!/bin/sh
 # 利用sendmail发送html邮件.
 #
 (
 echo "From: d@sincerad.com"
 echo "To: d@sincerad.com"
 echo "MIME-Version: 1.0"
-echo "Content-Type: multipart&#47;mixed;"
+echo "Content-Type: multipart/mixed;"
 echo ' boundary="BOUNDARY"'
 echo "Subject: Test Message"
 echo ""
 echo "This is a MIME-encapsulated message"
 echo "--BOUNDARY"
-echo "Content-Type: text&#47;plain"
+echo "Content-Type: text/plain"
 echo ""
 echo "This is what someone would see without an HTML capable mail client."
 echo ""
 echo "--BOUNDARY"
-echo "Content-Type: text&#47;html"
+echo "Content-Type: text/html"
 echo ""
 echo "<html>
 <body bgcolor='black'></p>
-<blockquote><p><font color='green'>GREEN<&#47;font> <font color='white'>WHITE<&#47;font> <font color='red'>RED<&#47;font><&#47;blockquote>
-<&#47;body>
-<&#47;html>"
+<blockquote><p><font color='green'>GREEN</font> <font color='white'>WHITE</font> <font color='red'>RED</font></blockquote>
+</body>
+</html>"
 echo "--BOUNDARY"
 ) | sendmail -t
-[&#47;bash]</p>
+[/bash]</p>

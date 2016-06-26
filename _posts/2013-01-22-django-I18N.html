@@ -22,11 +22,11 @@ comments: []
 <p>今天被Django的i18n折磨了一天了，没想到最后还是路径的问题。废话不说，本来打算写日志，但后来想着想着就直接写成脚本了。
 保存以下脚本为 i18n-test.sh，然后运行就可以。(ps:只在ubuntu 下测试过.)
 [bash]
-#!&#47;usr&#47;bin&#47;env sh</p>
+#!/usr/bin/env sh</p>
 <p>PROJECT_NAME=i18ntest
-SETTINGS_FILE=$PROJECT_NAME&#47;settings.py
-URLS_FILE=$PROJECT_NAME&#47;urls.py
-PROJECT_HOME=`pwd`&#47;$PROJECT_NAME
+SETTINGS_FILE=$PROJECT_NAME/settings.py
+URLS_FILE=$PROJECT_NAME/urls.py
+PROJECT_HOME=`pwd`/$PROJECT_NAME
 LANGUAGE=zh_CN</p>
 <p>if [ -d $PROJECT_NAME ]
 then
@@ -42,17 +42,17 @@ django-admin.py startproject $PROJECT_NAME</p>
 cd $PROJECT_NAME</p>
 <p>## Create an app and add to settings file.
 django-admin.py startapp app
-sed -i "&#47;'django.contrib.admindocs'&#47;a\	'app'," $SETTINGS_FILE</p>
+sed -i "/'django.contrib.admindocs'/a\	'app'," $SETTINGS_FILE</p>
 <p>## Add sqlite3 support for session use.
 ## 增加数据库配置，使用sqlite3,数据库文件名为test.db
-sed -i -e "s&#47;django.db.backends.&#47;&sqlite3&#47;g " \
-    -e "s&#47;'NAME':\s*'&#47;&test.db&#47;g" $SETTINGS_FILE</p>
+sed -i -e "s/django.db.backends./&sqlite3/g " \
+    -e "s/'NAME':\s*'/&test.db/g" $SETTINGS_FILE</p>
 <p>## Add locale middleware for i18n.
 ## 加入i18n的middleware，一定要在Session middleware之后
-sed -i "&#47;SessionMiddleware&#47;a\	'django.middleware.locale.LocaleMiddleware'," \
+sed -i "/SessionMiddleware/a\	'django.middleware.locale.LocaleMiddleware'," \
     $SETTINGS_FILE</p>
 <p>## Add url pattern for app view name index.
-sed -i "&#47;admin.site.urls&#47;a\    url(r'^$', 'app.views.index')," $URLS_FILE</p>
+sed -i "/admin.site.urls/a\    url(r'^$', 'app.views.index')," $URLS_FILE</p>
 <p>## Enter app dir to make locale files.
 cd app</p>
 <p>## First add a view.
@@ -66,11 +66,11 @@ echo "$TMP" >> views.py</p>
 <p>## Make locale file
 mkdir locale
 django-admin.py makemessages -l $LANGUAGE
-sed -i -e '&#47;Hello world&#47;{n;s&#47;""&#47;"Hello Chinese!"&#47;;}' \
-    locale&#47;$LANGUAGE&#47;LC_MESSAGES&#47;django.po
+sed -i -e '/Hello world/{n;s/""/"Hello Chinese!"/;}' \
+    locale/$LANGUAGE/LC_MESSAGES/django.po
 django-admin.py compilemessages</p>
 <p>## Run app server
 cd $PROJECT_HOME
 yes 'no' | python manage.py syncdb
 python manage.py runserver</p>
-<p>[&#47;bash]</p>
+<p>[/bash]</p>

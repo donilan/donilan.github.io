@@ -16,10 +16,10 @@ categories:
 tags: []
 comments: []
 ---
-<p>需要使用JDK自带的工具 <a href="http:&#47;&#47;download.oracle.com&#47;javase&#47;1.4.2&#47;docs&#47;tooldocs&#47;windows&#47;keytool.html" target="_blank">Keytool(点击进入工具使用方法)<&#47;a> <br &#47;>
-<a href="http:&#47;&#47;tomcat.apache.org&#47;tomcat-5.5-doc&#47;ssl-howto.html" target="_blank">Tomcat官方文档<&#47;a> <br &#47;>
-<br &#47;></p>
-<p>证书的基本信息<&#47;p>
+<p>需要使用JDK自带的工具 <a href="http://download.oracle.com/javase/1.4.2/docs/tooldocs/windows/keytool.html" target="_blank">Keytool(点击进入工具使用方法)</a> <br />
+<a href="http://tomcat.apache.org/tomcat-5.5-doc/ssl-howto.html" target="_blank">Tomcat官方文档</a> <br />
+<br /></p>
+<p>证书的基本信息</p>
 [bash]
 $keytool -genkey -alias tomcat -keypass changeit -keyalg RSA</p>
 <p>Enter keystore password:  changeit
@@ -37,14 +37,14 @@ What is the two-letter country code for this unit?
   [Unknown]:  US
 Is CN=localhost, OU=Information Systems, O=Pacific Disaster Center, L=Kihei, ST=HI, C=US correct?
   [no]:  yes</p>
-<p>[&#47;bash]</p>
-<p>输出证书文件<&#47;p>
+<p>[/bash]</p>
+<p>输出证书文件</p>
 [bash]
 $keytool -export -alias tomcat -keypass changeit -file server.crt</p>
 <p>Enter keystore password: changeit
 Certificate stored in file <server.crt>
-[&#47;bash]</p>
-<p>生成公共密匙<&#47;p>
+[/bash]</p>
+<p>生成公共密匙</p>
 [bash]
 $keytool -import -file server.crt -keypass changeit -keystore cacerts</p>
 <p>Enter keystore password: changeit
@@ -57,8 +57,8 @@ MD5: CC:3B:FB:FB:AE:12:AD:FB:3E:D 5:98:CB:2E:3B:0A:AD
 SHA1: A1:16:80:68:39:C7:58:EA:2F:48:59:AA:1D:73:5F:56:78:CE:A4:CE
 Trust this certificate? [no]: yes
 Certificate was added to keystore</p>
-<p>[&#47;bash]</p>
-<p>Tomcat配置<&#47;p>
+<p>[/bash]</p>
+<p>Tomcat配置</p>
 [xml]
 <Connector protocol="org.apache.coyote.http11.Http11NioProtocol"
            port="8443" minSpareThreads="5" maxSpareThreads="75"
@@ -66,7 +66,7 @@ Certificate was added to keystore</p>
            acceptCount="100"  maxThreads="200"
            scheme="https" secure="true" SSLEnabled="true"
            clientAuth="false" sslProtocol="TLS"
-           keystoreFile="&#47;path&#47;to&#47;.keystore"
+           keystoreFile="/path/to/.keystore"
            keystorePass="changeit"
-           truststoreFile="&#47;path&#47;to&#47;cacerts" &#47;>
-[&#47;xml]</p>
+           truststoreFile="/path/to/cacerts" />
+[/xml]</p>
