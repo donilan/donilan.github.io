@@ -21,8 +21,8 @@ tags:
 - SSHD
 comments: []
 ---
-<p>Chroot jail(根目录监狱)，感觉这个名字不是一般的霸气，实际用途也是很厉害，它是用来限制登陆的用户只能访问指定的一个根目录，而不能往回退，也就是说CD ..无效。</p>
-<p>在服务器端必须安装sshd服务，应该没有Linux不开启的吧（按我目前了解的，几乎没有），最好检查一下有没有nologin这个功能。
+Chroot jail(根目录监狱)，感觉这个名字不是一般的霸气，实际用途也是很厉害，它是用来限制登陆的用户只能访问指定的一个根目录，而不能往回退，也就是说CD ..无效。
+在服务器端必须安装sshd服务，应该没有Linux不开启的吧（按我目前了解的，几乎没有），最好检查一下有没有nologin这个功能。
 [bash]
 # 我的服务器是在/usr/sbin/nologin
 whereis nologin
@@ -32,8 +32,8 @@ whereis nologin
 # 原来的配置应该是这样子的，不同的Linux发行版可能有点不一样
 # Subsystem sftp /usr/lib/openssh/sftp-server
 # 改为以下的样子
-Subsystem sftp internal-sftp</p>
-<p># 这个Match配置可以是接着Group，也可以是User，我这里的组名是group1,用户名是user1
+Subsystem sftp internal-sftp
+# 这个Match配置可以是接着Group，也可以是User，我这里的组名是group1,用户名是user1
 # Match Group group1
 # 以下是我现在用的配置
 Match User user1
@@ -63,6 +63,6 @@ chmod 755 /home/user1
 mkdir /home/user1/writable
 chown user1:group1 /home/user1/writable
 chmod ug+rwx /home/user1/writable
-[/bash]</p>
-<p>另外还可以使用rssh和scponly来实现，它们也各自有有缺点，目前还没有一种觉得最好的方案。</p>
-<p>全文完。</p>
+[/bash]
+另外还可以使用rssh和scponly来实现，它们也各自有有缺点，目前还没有一种觉得最好的方案。
+全文完。

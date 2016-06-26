@@ -19,9 +19,9 @@ tags:
 - Websphere MQ
 comments: []
 ---
-<p>服务器已经搭建完成了，上一篇<a href="http://blog.sincerad.com/archives/328">Linux下安装WebsphereMQ7.5</a>日志中已经记录了如何安装Websphere MQ，现在接着使用Spring JMS与Webphere MQ集成。</p>
-<p>先要解决的是依赖包，spring的可以在maven上找到，但jms和ibm的mq就要找回来了。</p>
-<p>[xml]
+服务器已经搭建完成了，上一篇<a href="http://blog.sincerad.com/archives/328">Linux下安装WebsphereMQ7.5</a>日志中已经记录了如何安装Websphere MQ，现在接着使用Spring JMS与Webphere MQ集成。
+先要解决的是依赖包，spring的可以在maven上找到，但jms和ibm的mq就要找回来了。
+[xml]
 <dependencies>
 	<dependency>
 		<groupId>org.springframework</groupId>
@@ -51,9 +51,9 @@ comments: []
 		<scope>test</scope>
 	</dependency>
 </dependencies>
-[/xml]</p>
-<p>然后就是MQ和jms，可以在MQServiesSDK rpm包安装后得到，路径一般会在/opt/mqm/java/lib/下。
-会用到以下的一些包：</p>
+[/xml]
+然后就是MQ和jms，可以在MQServiesSDK rpm包安装后得到，路径一般会在/opt/mqm/java/lib/下。
+会用到以下的一些包：
 <ul>
 <li>com.ibm.mq.headers.jar</li>
 <li>com.ibm.mq.jar</li>
@@ -63,15 +63,15 @@ comments: []
 <li>com.ibm.mqjms.jar</li>
 <li>jms.jar</li>
 </ul>
-OK！依赖包已经解决，现在弄一个监听类，用于订阅MQ的topic。</p>
-<p>[java]
-package com.ii2d.mq;</p>
-<p>import javax.jms.JMSException;
+OK！依赖包已经解决，现在弄一个监听类，用于订阅MQ的topic。
+[java]
+package com.ii2d.mq;
+import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
-import javax.jms.TextMessage;</p>
-<p>public class MessageListenerForTest implements MessageListener {</p>
-<p>	@Override
+import javax.jms.TextMessage;
+public class MessageListenerForTest implements MessageListener {
+	@Override
 	public void onMessage(Message message) {
 		if (message instanceof TextMessage) {
 			try {
@@ -85,8 +85,8 @@ import javax.jms.TextMessage;</p>
 		}
 	}
 }
-[/java]</p>
-<p>接着是Spring上的配置，我这里把配置写入到application-context-mq.xml。
+[/java]
+接着是Spring上的配置，我这里把配置写入到application-context-mq.xml。
 [xml]
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
@@ -95,34 +95,34 @@ import javax.jms.TextMessage;</p>
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 			   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 			   http://www.springframework.org/schema/jms
-               http://www.springframework.org/schema/jms/spring-jms.xsd"></p>
-<p>	<!-- MQ链接工厂对象 -->
+               http://www.springframework.org/schema/jms/spring-jms.xsd">
+	<!-- MQ链接工厂对象 -->
 	<bean id="topicConnectionFactory" class="com.ibm.mq.jms.MQTopicConnectionFactory">
-		<!-- MQ服务器地址 --></p>
+		<!-- MQ服务器地址 -->
 <property name="hostName" value="127.0.0.1" />
-		<!-- 端口 --></p>
+		<!-- 端口 -->
 <property name="port" value="1414" />
-		<!-- MQ消息队列管理器 --></p>
+		<!-- MQ消息队列管理器 -->
 <property name="queueManager" value="QM1" />
-		<!-- MQ通道 --></p>
+		<!-- MQ通道 -->
 <property name="channel" value="SYSTEM.DEF.SVRCONN" />
-		<!-- 链接方式 --></p>
+		<!-- 链接方式 -->
 <property name="transportType" value="1" /><!-- TCP -->
-	</bean></p>
-<p>	<!-- MQ Topic模板 -->
+	</bean>
+	<!-- MQ Topic模板 -->
 	<!-- 发布消息 jmsTopicTemplate.convertAndSend("topic://test", "Hello world!"); -->
 	<bean id="jmsTopicTemplate" class="org.springframework.jms.core.JmsTemplate">
 		<constructor-arg ref="topicConnectionFactory" />
-		<!-- Topic 需要加入 --></p>
+		<!-- Topic 需要加入 -->
 <property name="pubSubDomain" value="true" />
-	</bean></p>
-<p>	<!-- 消息监听器1 -->
+	</bean>
+	<!-- 消息监听器1 -->
 	<bean id="messageListener" class="com.ii2d.mq.MessageListenerForTest" />
 	<!-- 消息监听器2 -->
-	<bean id="messageListener2" class="com.ii2d.mq.MessageListenerForTest" /></p>
-<p>	<!-- 把监听器加入到Spring消息监听管理容器 -->
+	<bean id="messageListener2" class="com.ii2d.mq.MessageListenerForTest" />
+	<!-- 把监听器加入到Spring消息监听管理容器 -->
 	<bean id="jmsContainer"
-		class="org.springframework.jms.listener.DefaultMessageListenerContainer"></p>
+		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
 <property name="connectionFactory" ref="topicConnectionFactory" />
 <property name="destinationName" value="topic://test" />
 <property name="messageListener" ref="messageListener" />
@@ -130,33 +130,33 @@ import javax.jms.TextMessage;</p>
 	</bean>
 	<!-- 把监听器加入到Spring消息监听管理容器 -->
 	<bean id="jmsContainer2"
-		class="org.springframework.jms.listener.DefaultMessageListenerContainer"></p>
+		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
 <property name="connectionFactory" ref="topicConnectionFactory" />
 <property name="destinationName" value="topic://test" />
 <property name="messageListener" ref="messageListener2" />
 <property name="pubSubDomain" value="true" />
 	</bean>
 </beans>
-[/xml]</p>
-<p>然后我们建立一个单元测试，来测试一下是否成功。
+[/xml]
+然后我们建立一个单元测试，来测试一下是否成功。
 [java]
-package com.ii2d.mq;</p>
-<p>import javax.annotation.Resource;
-import javax.jms.JMSException;</p>
-<p>import org.junit.Test;
+package com.ii2d.mq;
+import javax.annotation.Resource;
+import javax.jms.JMSException;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.jms.JmsException;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;</p>
-<p>@RunWith(SpringJUnit4ClassRunner.class)
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:application-context-mq.xml")
 public class TemplateTopicTests {
 	@Resource
-	JmsTemplate template;</p>
-<p>	@Test
+	JmsTemplate template;
+	@Test
 	public void testPubSub() throws JmsException, JMSException {
 		template.convertAndSend("topic://topic1", "Hello world");
 	}
 }
-[/java]</p>
+[/java]

@@ -19,7 +19,7 @@ tags:
 - EhCache
 comments: []
 ---
-<p>maven pom.xml依赖配置
+maven pom.xml依赖配置
 [xml]
 <dependency>
 	<groupId>javax.transaction</groupId>
@@ -31,43 +31,43 @@ comments: []
 	<artifactId>ehcache</artifactId>
 	<version>2.7.4</version>
 </dependency>
-[/xml]</p>
-<p>ehcache.xml配置
+[/xml]
+ehcache.xml配置
 [xml]
 <?xml version="1.0" encoding="UTF-8"?>
 <ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd"
-	updateCheck="false"></p>
-<p>	<diskStore path="java.io.tmpdir/EhCacheSpringAnnotationsExampleApp" /></p>
-<p>	<defaultCache eternal="false" maxElementsInMemory="1000"
+	updateCheck="false">
+	<diskStore path="java.io.tmpdir/EhCacheSpringAnnotationsExampleApp" />
+	<defaultCache eternal="false" maxElementsInMemory="1000"
 		overflowToDisk="false" diskPersistent="false" timeToIdleSeconds="0"
-		timeToLiveSeconds="10" memoryStoreEvictionPolicy="LRU" /></p>
-<p>	<cache name="tenSecond" eternal="false" maxElementsInMemory="1000"
+		timeToLiveSeconds="10" memoryStoreEvictionPolicy="LRU" />
+	<cache name="tenSecond" eternal="false" maxElementsInMemory="1000"
 		overflowToDisk="false" diskPersistent="false" timeToIdleSeconds="0"
-		timeToLiveSeconds="10" memoryStoreEvictionPolicy="LRU" /></p>
-<p>	<cache name="oneMin" eternal="false" maxElementsInMemory="1000"
+		timeToLiveSeconds="10" memoryStoreEvictionPolicy="LRU" />
+	<cache name="oneMin" eternal="false" maxElementsInMemory="1000"
 		overflowToDisk="false" diskPersistent="false" timeToIdleSeconds="0"
-		timeToLiveSeconds="60" memoryStoreEvictionPolicy="LRU" /></p>
-<p>	<cache name="oneHour" eternal="false" maxElementsInMemory="1000"
+		timeToLiveSeconds="60" memoryStoreEvictionPolicy="LRU" />
+	<cache name="oneHour" eternal="false" maxElementsInMemory="1000"
 		overflowToDisk="false" diskPersistent="false" timeToIdleSeconds="0"
 		timeToLiveSeconds="3600" memoryStoreEvictionPolicy="LRU" />
 </ehcache>
-[/xml]</p>
-<p>spring配置
+[/xml]
+spring配置
 [xml]
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:p="http://www.springframework.org/schema/p"
-	xmlns:cache="http://www.springframework.org/schema/cache"</p>
-<p>	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	xmlns:cache="http://www.springframework.org/schema/cache"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context-3.0.xsd
         http://www.springframework.org/schema/cache
-        http://www.springframework.org/schema/cache/spring-cache.xsd"></p>
-<p>	<cache:annotation-driven />
+        http://www.springframework.org/schema/cache/spring-cache.xsd">
+	<cache:annotation-driven />
 	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager"
              p:cache-manager-ref="ehcache"/>
 	<!-- EhCache library setup -->
@@ -78,29 +78,29 @@ comments: []
 [/xml]
 测试类
 [java]
-package com.ii2d;</p>
-<p>import org.springframework.cache.annotation.Cacheable;</p>
-<p>public class CacheBean {</p>
-<p>	static int val = 0;</p>
-<p>	@Cacheable("tenSecond") public int method4test(int id) {
+package com.ii2d;
+import org.springframework.cache.annotation.Cacheable;
+public class CacheBean {
+	static int val = 0;
+	@Cacheable("tenSecond") public int method4test(int id) {
 		return val++;
-	}</p>
-<p>}</p>
-<p>[/java]</p>
-<p>单元测试
+	}
+}
+[/java]
+单元测试
 [java]
-package com.ii2d;</p>
-<p>import java.util.Random;</p>
-<p>import javax.annotation.Resource;</p>
-<p>import org.junit.Test;
+package com.ii2d;
+import java.util.Random;
+import javax.annotation.Resource;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;</p>
-<p>@RunWith(SpringJUnit4ClassRunner.class)
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:com/createw/acc/cache/application-context.xml")
-public class EhCacheTests {</p>
-<p>	@Resource CacheBean cacheBean;</p>
-<p>	@Test
+public class EhCacheTests {
+	@Resource CacheBean cacheBean;
+	@Test
 	public void testCache() throws InterruptedException {
 		Random r = new Random(System.currentTimeMillis());
 		for(int i = 0; i < 100; ++i) {
@@ -110,4 +110,4 @@ public class EhCacheTests {</p>
 		}
 	}
 }
-[/java]</p>
+[/java]

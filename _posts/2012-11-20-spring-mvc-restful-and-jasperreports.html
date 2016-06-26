@@ -20,8 +20,8 @@ tags:
 - JasperReports
 comments: []
 ---
-<p>    首先来一份Maven的依赖配置，以下是本人用到的jasperReports版本和依赖。
-[xml]</p>
+    首先来一份Maven的依赖配置，以下是本人用到的jasperReports版本和依赖。
+[xml]
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 <properties>
@@ -46,25 +46,25 @@ comments: []
 		</dependency>
 	</dependencies>
 </project>
-[/xml]</p>
-<p>    其中为了解决中文问题还需要一个itextasian的中文字库包，网上有很多介绍中文问题的解决方案，千篇一律的，本人不断去尝试，最后发现问题在于这个中文包上，这个中文包有多个版本，由不同组织维护，不是每个都合适JasperReports用。下面附上一个能正常的itextasian包和一个maven安装这个包到本地的脚本。
+[/xml]
+    其中为了解决中文问题还需要一个itextasian的中文字库包，网上有很多介绍中文问题的解决方案，千篇一律的，本人不断去尝试，最后发现问题在于这个中文包上，这个中文包有多个版本，由不同组织维护，不是每个都合适JasperReports用。下面附上一个能正常的itextasian包和一个maven安装这个包到本地的脚本。
 <a href='http://blog.sincerad.com/wp-content/uploads/2012/11/itextasian.zip'>下载itextasian-1.0</a>
 [bash]
 mvn install:install-file -Dfile=/path/to/itextasian-1.0.jar -DgroupId=com.lowagie -DartifactId=itextasian -Dversion=1.0 -Dpackaging=jar
-[/bash]</p>
-<p>    接着就是Spring mvc了，因为本人本来只是用spring mvc没有把jasperReports加入到项目，为了保留原来的配置和最少更改代码来加入JasperReports，所以可能用了一些不太好的整合方式，废话还是少说，先发一个org.springframework.web.servlet.View的实现类。
+[/bash]
+    接着就是Spring mvc了，因为本人本来只是用spring mvc没有把jasperReports加入到项目，为了保留原来的配置和最少更改代码来加入JasperReports，所以可能用了一些不太好的整合方式，废话还是少说，先发一个org.springframework.web.servlet.View的实现类。
 [java]
-package com.createw.scs.utils;</p>
-<p>import java.util.HashMap;
-import java.util.Map;</p>
-<p>import org.springframework.web.servlet.view.jasperreports.AbstractJasperReportsView;
+package com.createw.scs.utils;
+import java.util.HashMap;
+import java.util.Map;
+import org.springframework.web.servlet.view.jasperreports.AbstractJasperReportsView;
 import org.springframework.web.servlet.view.jasperreports.JasperReportsCsvView;
 import org.springframework.web.servlet.view.jasperreports.JasperReportsHtmlView;
 import org.springframework.web.servlet.view.jasperreports.JasperReportsMultiFormatView;
 import org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView;
-import org.springframework.web.servlet.view.jasperreports.JasperReportsXlsView;</p>
-<p>public class JasperView extends JasperReportsMultiFormatView {</p>
-<p>	public JasperView() {
+import org.springframework.web.servlet.view.jasperreports.JasperReportsXlsView;
+public class JasperView extends JasperReportsMultiFormatView {
+	public JasperView() {
 		super();
 		Map<String, Class<? extends AbstractJasperReportsView>> map = new HashMap<String, Class<? extends AbstractJasperReportsView>>(4);
 		map.put("csv", JasperReportsCsvView.class);
@@ -87,8 +87,8 @@ public JasperReportsMultiFormatView() {
 	this.formatMappings.put("html", JasperReportsHtmlView.class);
 	this.formatMappings.put("pdf", JasperReportsPdfView.class);
 	this.formatMappings.put("xls", JasperReportsXlsView.class);
-}</p>
-<p>/**
+}
+/**
  * Set the mappings of format discriminators to view class names.
  * The default mappings are:
  *
@@ -114,18 +114,18 @@ public void setFormatMappings(Map<String, Class<? extends AbstractJasperReportsV
 [xml]
 <beans>
 	<!-- Jasper Report -->
-    <bean id="jasperReportsViewResolver" class="org.springframework.web.servlet.view.jasperreports.JasperReportsViewResolver"></p>
+    <bean id="jasperReportsViewResolver" class="org.springframework.web.servlet.view.jasperreports.JasperReportsViewResolver">
 <property name="requestContextAttribute" value="rc"/>
-<p>        <!-- 这是原来应该用的配置 -->
+        <!-- 这是原来应该用的配置 -->
         <!--
 <property name="viewClass" value="org.springframework.web.servlet.view.jasperreports.JasperReportsMultiFormatView"/>-->
-        <!-- 换成上面写的继承类 --></p>
+        <!-- 换成上面写的继承类 -->
 <property name="viewClass" value="com.createw.scs.utils.JasperView" />
-<p>        <!-- 查找编译好的jasperReports文件 --></p>
+        <!-- 查找编译好的jasperReports文件 -->
 <property name="prefix" value="/WEB-INF/report/"/>
 <property name="suffix" value=".jasper"/>
-<p>        <!-- dataSources参数的key --></p>
-<property name="reportDataKey"><value>datasource</value></property></p>
+        <!-- dataSources参数的key -->
+<property name="reportDataKey"><value>datasource</value></property>
 <property name="exporterParameters">
 <map>
             <!-- 这个参数比较重要，对于生成html时，jasperReport查找图片的位置 -->
@@ -140,8 +140,8 @@ public void setFormatMappings(Map<String, Class<? extends AbstractJasperReportsV
             </entry>
         </map>
         </property>
-    </bean></p>
-<p>	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver"></p>
+    </bean>
+	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
 <property name="mediaTypes">
 <map>
 				<entry key="json" value="application/json" />
@@ -150,18 +150,18 @@ public void setFormatMappings(Map<String, Class<? extends AbstractJasperReportsV
 				<!-- 这个也是一个关键点，因为访问地址默认会转为.html去查找view，而设置了这个的时候，当访问到xxx.xhtml的时候，默认的view就不会处理了。 -->
 				<entry key="xhtml" value="text/xhtml" />
 			</map>
-		</property></p>
+		</property>
 <property name="defaultViews">
 <list>
 				<!-- JSON处理,处理xxx.json view -->
 				<bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" />
 			</list>
-		</property></p>
+		</property>
 <property name="viewResolvers">
 <list>
 				<bean class="org.springframework.web.servlet.view.BeanNameViewResolver" />
 				<!-- 默认处理 -->
-				<bean class="org.springframework.web.servlet.view.UrlBasedViewResolver"></p>
+				<bean class="org.springframework.web.servlet.view.UrlBasedViewResolver">
 <property name="viewClass"
 						value="org.springframework.web.servlet.view.JstlView" />
 <property name="prefix" value="/WEB-INF/jsp/" />
@@ -171,24 +171,24 @@ public void setFormatMappings(Map<String, Class<? extends AbstractJasperReportsV
 		</property>
 	</bean>
 </beans>
-[/xml]</p>
-<p>好了，配置大致就这样完成了。最后加多份Controller代码。
+[/xml]
+好了，配置大致就这样完成了。最后加多份Controller代码。
 [java]
-package com.ii2d.controller;</p>
-<p>import java.lang.reflect.Array;
+package com.ii2d.controller;
+import java.lang.reflect.Array;
 import java.util.HashMap;
-import java.util.Map;</p>
-<p>import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;</p>
-<p>import org.apache.commons.dbcp.BasicDataSource;
+import java.util.Map;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;</p>
-<p>import com.ii2d.dbase.util.DDateUtils;</p>
-<p>/**
+import org.springframework.web.servlet.ModelAndView;
+import com.ii2d.dbase.util.DDateUtils;
+/**
  * JasperReports Controller，用户处理JasperReports的请求，
  * 请求会根据用户访问的后缀来判断使用哪种生成方式，可接受的
  * 请问方式有xhtml(因为html已经被默认的view处理了。)、pdf、xls。<br>
@@ -197,10 +197,10 @@ import org.springframework.web.servlet.ModelAndView;</p>
  */
 @RequestMapping("/jasper")
 @Controller
-public class JasperController {</p>
-<p>	@Resource
-	private BasicDataSource scsDataSource;</p>
-<p>	/**
+public class JasperController {
+	@Resource
+	private BasicDataSource scsDataSource;
+	/**
 	 * 主要的处理类
 	 * 请求例子: <br>
 	 * http://example.com/jasper/reports/someReport.xhtml<br>
@@ -217,8 +217,8 @@ public class JasperController {</p>
 		param.put("format", format);
 		param.put("datasource", scsDataSource);
 		return new ModelAndView(reportName, param);
-	}</p>
-<p>	/**
+	}
+	/**
 	 * 这个方法主要是把一些请求参数的类型转换。<br>
 	 * 例如:<br>
 	 * 10000会自动转换为java.lang.Long<br>
@@ -232,11 +232,11 @@ public class JasperController {</p>
 		for(Object obj: request.getParameterMap().entrySet()) {
 			Map.Entry en = (Map.Entry) obj;
 			String key = (String)en.getKey();
-			Object valueObj = en.getValue();</p>
-<p>			if(valueObj instanceof String[]) {
+			Object valueObj = en.getValue();
+			if(valueObj instanceof String[]) {
 				valueObj = Array.get(valueObj, 0);
-			}</p>
-<p>			if(valueObj instanceof String) {
+			}
+			if(valueObj instanceof String) {
 				String valueStr = (String)valueObj;
 				if(StringUtils.isNumeric(valueStr)) {
 					valueObj = Long.valueOf(valueStr);
@@ -247,11 +247,11 @@ public class JasperController {</p>
 						valueObj = d;
 					}
 				}
-			}</p>
-<p>			param.put(key, valueObj);
+			}
+			param.put(key, valueObj);
 		}
 		return param;
 	}
 }
-[/java]</p>
-<p>全文完。</p>
+[/java]
+全文完。

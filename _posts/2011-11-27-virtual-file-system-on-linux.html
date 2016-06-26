@@ -16,7 +16,7 @@ categories:
 tags: []
 comments: []
 ---
-<p>[bash]
+[bash]
 ##创建一个10M的空文件
 $ dd if=/dev/zero of=/tmp/file.img bs=1M count=10
 ##将一个循环设备与这个文件关联起来
@@ -27,4 +27,4 @@ $ mke2fs -c /dev/loop0
 $ mkdir /mnt/point
 ##挂载文件系统
 $ mount -t ext2 /dev/loop0 /mnt/point
-[/bash]</p>
+[/bash]

@@ -19,7 +19,7 @@ tags:
 - Script
 comments: []
 ---
-<p>[bash]
+[bash]
 #!/bin/bash
 # 使用 script 來添加用户
 groupadd groupName
@@ -28,8 +28,8 @@ do
 	useradd -g groupName $username
 	echo "password" | passwd --stdin $username
 done
-[/bash]</p>
-<p>[bash]
+[/bash]
+[bash]
 #!/bin/sh
 ## 为svn初始化一个项目
 if [ $# != 1 ]
@@ -37,17 +37,17 @@ then
     echo "Usage: $0
 <project name>"
     exit 1
-fi</p>
-<p>BASE_DIR=$(dirname "$0")
+fi
+BASE_DIR=$(dirname "$0")
 JAVA_PROJECT_DIR=$BASE_DIR/java
-echo "Base java project dir is $JAVA_PROJECT_DIR"</p>
-<p>for i in "$1" "$1/trunk" "$1/tags" "$1/branches"
+echo "Base java project dir is $JAVA_PROJECT_DIR"
+for i in "$1" "$1/trunk" "$1/tags" "$1/branches"
 do
     svn mkdir $i
 done
 svn -ci -m 'Create project $1 by $0'
-[/bash]</p>
-<p>[bash]
+[/bash]
+[bash]
 #!/bin/sh
 # 利用sendmail发送html邮件.
 #
@@ -69,10 +69,10 @@ echo "--BOUNDARY"
 echo "Content-Type: text/html"
 echo ""
 echo "<html>
-<body bgcolor='black'></p>
-<blockquote><p><font color='green'>GREEN</font> <font color='white'>WHITE</font> <font color='red'>RED</font></blockquote>
+<body bgcolor='black'>
+<blockquote><font color='green'>GREEN</font> <font color='white'>WHITE</font> <font color='red'>RED</font></blockquote>
 </body>
 </html>"
 echo "--BOUNDARY"
 ) | sendmail -t
-[/bash]</p>
+[/bash]

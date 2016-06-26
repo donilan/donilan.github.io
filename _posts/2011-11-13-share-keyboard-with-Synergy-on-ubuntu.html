@@ -19,49 +19,49 @@ tags:
 - Ubuntu
 comments: []
 ---
-<p><strong>环境</strong>
+<strong>环境</strong>
 计算机1: ubuntu 11.x, 计算机名称: d-notebook, ip: 192.168.1.1
-计算机2: window xp, 计算机名称: d-netbook, ip: 192.168.1.2</p>
-<p><strong>说明</strong>
-synergy在Linux下的服务器运行名称是synergys</p>
-<p>[bash]
+计算机2: window xp, 计算机名称: d-netbook, ip: 192.168.1.2
+<strong>说明</strong>
+synergy在Linux下的服务器运行名称是synergys
+[bash]
 section: screens
 d-notebook:
 d-netbook:
-end</p>
-<p>section: aliases
+end
+section: aliases
 d-netbook:
 192.168.1.2
 d-notebook:
 192.168.1.1
-end</p>
-<p>section: links
+end
+section: links
 d-netbook:
 left = d-notebook
 d-notebook:
 right = d-netbook
-end</p>
-<p>section: options
+end
+section: options
 screenSaverSync = false
 keystroke(f12) = lockCursorToScreen(toggle)
 endsection: screens
 d-notebook:
 d-netbook:
-end</p>
-<p>section: aliases
+end
+section: aliases
 d-netbook:
 192.168.1.2
 d-notebook:
 192.168.1.1
-end</p>
-<p>section: links
+end
+section: links
 d-netbook:
 left = d-notebook
 d-notebook:
 right = d-netbook
-end</p>
-<p>section: options
+end
+section: options
 screenSaverSync = false
 keystroke(f12) = lockCursorToScreen(toggle)
 end
-[/bash]</p>
+[/bash]

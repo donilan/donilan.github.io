@@ -18,9 +18,9 @@ tags:
 - centos
 comments: []
 ---
-<p>   自3年前看过两本关于Ruby的书外，基本没有再看Ruby的资料了，因这次有高人指点，又要重新学起Ruby了，他们解决了一个非常好的工具给我，RVM。这个工具可以虚拟一个指定版本的Ruby环境出来，就好象Python下的virtualenv差不多，不过操作起来不够virtualenv那么方便，但整体感觉还是不错的。
-   OK，由于CentOS的源是没有RVM的，所以需要download安装，但开发者已经为我们考虑周全了。所以可以通过一个简单的命令将问题解决。</p>
-<p>[bash]
+   自3年前看过两本关于Ruby的书外，基本没有再看Ruby的资料了，因这次有高人指点，又要重新学起Ruby了，他们解决了一个非常好的工具给我，RVM。这个工具可以虚拟一个指定版本的Ruby环境出来，就好象Python下的virtualenv差不多，不过操作起来不够virtualenv那么方便，但整体感觉还是不错的。
+   OK，由于CentOS的源是没有RVM的，所以需要download安装，但开发者已经为我们考虑周全了。所以可以通过一个简单的命令将问题解决。
+[bash]
 # 如果没有安装curl
 sudo yum install curl
 curl -L get.rvm.io | bash -s stable
@@ -50,5 +50,5 @@ rvm use 1.9.2 --default
 最后把最新的Ruby gems安装上
 [bash]
 rvm rubygems current
-[/bash]</p>
-<p>All done.</p>
+[/bash]
+All done.

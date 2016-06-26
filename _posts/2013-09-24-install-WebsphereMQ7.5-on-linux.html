@@ -18,19 +18,19 @@ tags:
 - Fedora
 comments: []
 ---
-<div>本人使用的环境是Fedora19 64位.</div></p>
-<div>在IBM官网上下载Websphere MQ7.5，然后解压下载包得到下列文件.</div></p>
-<div><img alt="" src="file:///C:/DOCUME~1/ADMINI~1/LOCALS~1/Temp/enhtmlclip/Image.png" /></div></p>
+<div>本人使用的环境是Fedora19 64位.</div>
+<div>在IBM官网上下载Websphere MQ7.5，然后解压下载包得到下列文件.</div>
+<div><img alt="" src="file:///C:/DOCUME~1/ADMINI~1/LOCALS~1/Temp/enhtmlclip/Image.png" /></div>
 <div>
-<p>[caption id="attachment_330" align="alignnone" width="300"]<a href="http://blog.sincerad.com/wp-content/uploads/2013/09/install_websphere_mq_1.png"><img class="size-medium wp-image-330" alt="Webshpere MQ7.5 解压列表" src="http://blog.sincerad.com/wp-content/uploads/2013/09/install_websphere_mq_1-300x138.png" width="300" height="138" /></a> Webshpere MQ7.5 解压列表[/caption]</p>
-<p></div></p>
-<div>## 接受IBM条款吧，你没有选择</div></p>
-<div>./mqlicense.sh --accept</div></p>
+[caption id="attachment_330" align="alignnone" width="300"]<a href="http://blog.sincerad.com/wp-content/uploads/2013/09/install_websphere_mq_1.png"><img class="size-medium wp-image-330" alt="Webshpere MQ7.5 解压列表" src="http://blog.sincerad.com/wp-content/uploads/2013/09/install_websphere_mq_1-300x138.png" width="300" height="138" /></a> Webshpere MQ7.5 解压列表[/caption]
+</div>
+<div>## 接受IBM条款吧，你没有选择</div>
+<div>./mqlicense.sh --accept</div>
 <div>
-<p>[caption id="attachment_329" align="alignnone" width="300"]<a href="http://blog.sincerad.com/wp-content/uploads/2013/09/install_websphere_mq_2.png"><img class="size-medium wp-image-329" alt="接受IBM Websphere MQ的条款" src="http://blog.sincerad.com/wp-content/uploads/2013/09/install_websphere_mq_2-300x269.png" width="300" height="269" /></a> 接受IBM Websphere MQ的条款[/caption]</p>
-<p>&nbsp;</p>
-<p>把下面的脚本保存成文件webspheremq_install.sh 即可简单的安装运行服务了。</p>
-<p></div></p>
+[caption id="attachment_329" align="alignnone" width="300"]<a href="http://blog.sincerad.com/wp-content/uploads/2013/09/install_websphere_mq_2.png"><img class="size-medium wp-image-329" alt="接受IBM Websphere MQ的条款" src="http://blog.sincerad.com/wp-content/uploads/2013/09/install_websphere_mq_2-300x269.png" width="300" height="269" /></a> 接受IBM Websphere MQ的条款[/caption]
+&nbsp;
+把下面的脚本保存成文件webspheremq_install.sh 即可简单的安装运行服务了。
+</div>
 <div><img alt="" src="file:///C:/DOCUME~1/ADMINI~1/LOCALS~1/Temp/enhtmlclip/Image(1).png" /></div>
 [bash]
 ## 安装运行环境
@@ -42,27 +42,27 @@ rpm -ivh MQSeriesSDK-7.5.0-2.x86_64.rpm
 ## 安装示例
 rpm -ivh MQSeriesSamples-7.5.0-2.x86_64.rpm
 ## 客户端
-rpm -ivh MQSeriesClient-7.5.0-2.x86_64.rpm</p>
-<p>## 修改用户mqm的进程最大数和文件打开最大数
-sed -i -e "$ i\mqm\thard\tnofile\t10240\nmqm\tsoft\tnofile\t10240\nmqm\thard\tnproc\t4096\nmqm\tsoft\tnproc\t4096\n" /etc/security/limits.conf</p>
-<p>## 修改共享内存
+rpm -ivh MQSeriesClient-7.5.0-2.x86_64.rpm
+## 修改用户mqm的进程最大数和文件打开最大数
+sed -i -e "$ i\mqm\thard\tnofile\t10240\nmqm\tsoft\tnofile\t10240\nmqm\thard\tnproc\t4096\nmqm\tsoft\tnproc\t4096\n" /etc/security/limits.conf
+## 修改共享内存
 echo 268435456 > /proc/sys/kernel/shmmax
 echo 4096 > /proc/sys/kernel/shmmni
-echo 2097152 > /proc/sys/kernel/shmall</p>
-<p>## 不解析
-echo 300 > /proc/sys/net/ipv4/tcp_keepalive_time</p>
-<p>## 不解析
-echo 524288 > /proc/sys/fs/file-max</p>
-<p>##估计是线程相关（本人也没有了解）
-echo 500 256000 250 1024 > /proc/sys/kernel/sem</p>
-<p>## 查看mqm用户的系统配置是否能足够运行MQ
-su mqm -c "/opt/mqm/bin/mqconfig"</p>
-<p>### 配置搞掂了，如果看到全部PASS
+echo 2097152 > /proc/sys/kernel/shmall
+## 不解析
+echo 300 > /proc/sys/net/ipv4/tcp_keepalive_time
+## 不解析
+echo 524288 > /proc/sys/fs/file-max
+##估计是线程相关（本人也没有了解）
+echo 500 256000 250 1024 > /proc/sys/kernel/sem
+## 查看mqm用户的系统配置是否能足够运行MQ
+su mqm -c "/opt/mqm/bin/mqconfig"
+### 配置搞掂了，如果看到全部PASS
 ## 然后创建一个默认的消息管理器, QM1 改为自己希望使用的
 su mqm -c "/opt/mqm/bin/crtmqm -q QM1"
 ## 启动 消息管理器
 su mqm -c "/opt/mqm/bin/strmqmq QM1"
 ## 启动 监听服务
-su mqm -c "nohup /opt/mqm/bin/runmqlsr -m QM1 -t TCP -p 1414 &amp;"</p>
-<p>echo Websphere MQ 7.5.0-2 is installed.
-[/bash]</p>
+su mqm -c "nohup /opt/mqm/bin/runmqlsr -m QM1 -t TCP -p 1414 &amp;"
+echo Websphere MQ 7.5.0-2 is installed.
+[/bash]

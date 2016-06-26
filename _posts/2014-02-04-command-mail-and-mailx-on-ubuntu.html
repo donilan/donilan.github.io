@@ -22,8 +22,8 @@ comments:
   date_gmt: '2014-07-31 08:40:24 +0800'
   content: 非常感谢你这篇文件，一直为sendmail发邮件的事折腾了一天，最后看到你这篇并解决了我的问题。Thanks。
 ---
-<p>mail/mailx这玩意网上的资料不是一般的少，而且都很简陋。因为在维护一个vps，而vps也有个小小的规定，不能乱发邮件，如果乱发的话直接把服务器Delete，真够狠。也就是说不要用sendmail服务来发。那好吧，运营商的霸王条款也只能接受了，就为了便宜的东西，忍了吧。那就用smtp服务通过邮件服务商来发。</p>
-<p>我怕中招，所以我把sendmail也删除了，因为上次已经中了一次了。
+mail/mailx这玩意网上的资料不是一般的少，而且都很简陋。因为在维护一个vps，而vps也有个小小的规定，不能乱发邮件，如果乱发的话直接把服务器Delete，真够狠。也就是说不要用sendmail服务来发。那好吧，运营商的霸王条款也只能接受了，就为了便宜的东西，忍了吧。那就用smtp服务通过邮件服务商来发。
+我怕中招，所以我把sendmail也删除了，因为上次已经中了一次了。
 [bash]
 # 停止服务
 service sendmail stop
@@ -56,4 +56,4 @@ root:auth_user_name@163.com:smtp.163.com
 OK，配置都搞掂了，来个Hello world试试看。
 [bash]
 echo hello world | mail -s "success!!!" some_test_email_address@163.com  -vv
-[/bash]</p>
+[/bash]

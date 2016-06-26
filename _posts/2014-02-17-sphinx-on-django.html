@@ -19,7 +19,7 @@ tags:
 - sphinx
 comments: []
 ---
-<p>直接到重点，安装sphinx
+直接到重点，安装sphinx
 [bash]
 easy_install sphinx
 [/bash]
@@ -38,16 +38,16 @@ tree
     |-- __init__.py
     |-- settings.py
     |-- urls.py
-    `-- wsgi.py</p>
-<p>1 directory, 5 files
+    `-- wsgi.py
+1 directory, 5 files
 </code>
 如果sphinx安装好以后，就可以初始化sphinx的文件了
 [bash]
 mkdir docs
 cd docs
 sphinx-quickstart
-### 一堆提示，一堆y/n选择，填项目名称，项目版本，作者之类的，一个个填吧。</p>
-<p>tree
+### 一堆提示，一堆y/n选择，填项目名称，项目版本，作者之类的，一个个填吧。
+tree
 [/bash]
 OK.也是，没有意外的话，会看到
 <code>
@@ -58,28 +58,28 @@ OK.也是，没有意外的话，会看到
 |-- make.bat
 |-- Makefile
 |-- _static
-`-- _templates</p>
-<p>3 directories, 4 files
+`-- _templates
+3 directories, 4 files
 </code>
 这时候要编辑一下index.rst文件，添加一行内容，打开index.rst文件，找到有一行 :maxdepth: 2, 在下面添加 mydocs.rst(这个想项目的module名字)。
 好了，接着写个脚本到项目的根目录，先回到项目的根目录，然后用编辑器建一个build_docs.sh脚本文件，并按照下面的内容编辑
 [bash]
-#!/usr/bin/env bash                                                             </p>
-<p># django的配置模块
+#!/usr/bin/env bash                                                             
+# django的配置模块
 export DJANGO_SETTINGS_MODULE="mydocs.settings"
 # 项目的路径
 export PYTHONPATH=`dirname "$(readlink -f "$0")"`
 # 输出的路径
-OUT_DIR=docs</p>
-<p># 生成代码的文档
-sphinx-apidoc -o $OUT_DIR -f $PYTHONPATH</p>
-<p># 生成html格式的文档
+OUT_DIR=docs
+# 生成代码的文档
+sphinx-apidoc -o $OUT_DIR -f $PYTHONPATH
+# 生成html格式的文档
 ( cd $OUT_DIR && make html )
 [/bash]
 先测试一下，是否可以运行
 [bash]
-chmod +x build_docs.sh</p>
-<p>./build_docs.sh
+chmod +x build_docs.sh
+./build_docs.sh
 [/bash]
 好了，编辑个代码看看，编辑mydocs/models.py。
 [python]
@@ -87,18 +87,18 @@ chmod +x build_docs.sh</p>
 """
 测试文档用的models
 ================
-"""</p>
-<p>from django.db import models</p>
-<p>class User(models.Model):
+"""
+from django.db import models
+class User(models.Model):
     """用户类"""
     username = models.CharField()
     """用户名"""
     password = models.CharField()
-    """密码"""</p>
-<p>[/python]
+    """密码"""
+[/python]
 到最后了，运行以下脚本，完成任务
 [bash]
 ./build_docs.sh
 chromium-browser docs/_build/html/mydocs.html
 [/bash]
-运气好的话，就可以看到文档了</p>
+运气好的话，就可以看到文档了

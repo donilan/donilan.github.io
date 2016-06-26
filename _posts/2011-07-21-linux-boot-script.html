@@ -16,7 +16,7 @@ categories:
 tags: []
 comments: []
 ---
-<p>脚本必须实现start stop restart等参数调用
+脚本必须实现start stop restart等参数调用
 [bash]
 sudo chmod +x /etc/init.d/scriptName
 sudo update-rc.d scriptName defaults
@@ -32,35 +32,35 @@ sudo update-rc.d scriptName defaults
 # Default-Stop:      0 1 6
 # Short-Description: ...
 # Description:      ...
-### END INIT INFO</p>
-<p># Author: Doni</p>
-<p># Do NOT "set -e"</p>
-<p>PATH=/sbin:/usr/sbin:/bin:/usr/bin
+### END INIT INFO
+# Author: Doni
+# Do NOT "set -e"
+PATH=/sbin:/usr/sbin:/bin:/usr/bin
 DESC="..."
 NAME=binFileName
 DAEMON=/usr/bin/binFileName
 PIDFILE=/var/run/$NAME.pid
 SCRIPTNAME=/etc/init.d/$NAME
-CONFIG_FILE=/etc/path/to/configFile</p>
-<p># Exit if the package is not installed
-[ -x "$DAEMON" ] || exit 0</p>
-<p># Read configuration variable file if it is present
-[ -r /etc/default/$NAME ] && . /etc/default/$NAME</p>
-<p># Load the VERBOSE setting and other rcS variables
-. /lib/init/vars.sh</p>
-<p># Define LSB log_* functions.
+CONFIG_FILE=/etc/path/to/configFile
+# Exit if the package is not installed
+[ -x "$DAEMON" ] || exit 0
+# Read configuration variable file if it is present
+[ -r /etc/default/$NAME ] && . /etc/default/$NAME
+# Load the VERBOSE setting and other rcS variables
+. /lib/init/vars.sh
+# Define LSB log_* functions.
 # Depend on lsb-base (>= 3.0-6) to ensure that this file is present.
-. /lib/lsb/init-functions</p>
-<p># If the daemon is not enabled, give the user a warning and then exit,
+. /lib/lsb/init-functions
+# If the daemon is not enabled, give the user a warning and then exit,
 # unless we are stopping the daemon
 if [ "$START" != "yes" -a "$1" != "stop" ]; then
         log_warning_msg "To enable $NAME, edit /etc/default/$NAME and set START=yes"
         exit 0
-fi</p>
-<p># Process configuration
+fi
+# Process configuration
 export PHP_FCGI_CHILDREN PHP_FCGI_MAX_REQUESTS
-DAEMON_ARGS="-q -b $FCGI_HOST:$FCGI_PORT -c $CONFIG_FILE"</p>
-<p>do_start()
+DAEMON_ARGS="-q -b $FCGI_HOST:$FCGI_PORT -c $CONFIG_FILE"
+do_start()
 {
         # Return
         #   0 if daemon has been started
@@ -72,8 +72,8 @@ DAEMON_ARGS="-q -b $FCGI_HOST:$FCGI_PORT -c $CONFIG_FILE"</p>
                 --background --make-pidfile --chuid $EXEC_AS_USER --startas $DAEMON -- \
                 $DAEMON_ARGS \
                 || return 2
-}</p>
-<p>do_stop()
+}
+do_stop()
 {
         # Return
         #   0 if daemon has been stopped
@@ -135,4 +135,4 @@ case "$1" in
         exit 3
         ;;
 esac
-[/bash]</p>
+[/bash]

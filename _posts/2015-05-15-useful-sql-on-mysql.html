@@ -18,23 +18,23 @@ tags:
 - mysql
 comments: []
 ---
-<p>导出数据库db_a的table_1结构到db_b的table_1
+导出数据库db_a的table_1结构到db_b的table_1
 [bash]
 mysqldump -uusername -ppassword --no-data --compact \
  db_a table_1 | mysql -uusername -ppassword db_b table_1;
-[/bash]</p>
-<p>找出每个数据库的存放数据大小
+[/bash]
+找出每个数据库的存放数据大小
 [sql]
 SELECT
  table_schema "Data Base Name",
  sum( data_length + index_length ) / 1024 / 1024 "Data Base Size in MB"
  FROM information_schema.TABLES
  GROUP BY table_schema;
-[/sql]</p>
-<p>找出指定的数据库"schema_name"的每一张表的存放数据大小
+[/sql]
+找出指定的数据库"schema_name"的每一张表的存放数据大小
 [sql]
 SELECT
  TABLE_NAME, table_rows, data_length, index_length,
  round(((data_length + index_length) / 1024 / 1024),2) "Size in MB" FROM information_schema.TABLES
  WHERE table_schema = "schema_name";
-[/sql]</p>
+[/sql]

@@ -19,10 +19,10 @@ tags:
 - Shortcuts
 comments: []
 ---
-<p>其实是非常简单，只是感觉不好找，所以记录下来了。</p>
-<p><strong>快捷键设置</strong>
-Settings -> Keyboard -> Shortcuts -> Custom Shortcuts -> + -> 输入 Name 和 Command ，然后点击Apply，最后点击快捷键的位置，输入快捷键即可。</p>
-<p><strong>笔记本盖合上时的动作处理</strong>
+其实是非常简单，只是感觉不好找，所以记录下来了。
+<strong>快捷键设置</strong>
+Settings -> Keyboard -> Shortcuts -> Custom Shortcuts -> + -> 输入 Name 和 Command ，然后点击Apply，最后点击快捷键的位置，输入快捷键即可。
+<strong>笔记本盖合上时的动作处理</strong>
 [bash]
 sudo sed -i -e '/#HandleLidSwitch.\+$/aHandleLidSwitch=lock' -e 's/HandleLidSwitch.\+$/HandleLidSwitch=lock/' /etc/systemd/logind.conf
-[/bash]</p>
+[/bash]
