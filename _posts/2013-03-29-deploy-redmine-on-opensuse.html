@@ -20,38 +20,38 @@ comments: []
 ---
 废话少说，直接进入正题。
 解决系统库依赖
-[bash]
+{% highlight bash %}
 zypper install mysql-community-server ruby libMagick++-devel libmysqld-devel libbz2-devel
-[/bash]
+{% endhighlight %}
 下载项目，可以到主页下载，这里是用git下载
-[bash]
+{% highlight bash %}
 GIT_SSL_NO_VERIFY=true git clone https://github.com/redmine/redmine
-[/bash]
+{% endhighlight %}
 创建mysql的数据库，因为我用mysql
-[bash]
+{% highlight bash %}
 echo "CREATE DATABASE redmine CHARACTER SET utf8;" | mysql -uusername -ppassword
-[/bash]
+{% endhighlight %}
 然后修改config/database.yml文件，我想一看就明白怎么改。
 安装redmine Ruby的依赖
-[bash]
+{% highlight bash %}
 gem install bundler
 ## 按自己实际情况
 cd $PATH_TO_REDMINE_PROJECT
 ## 安装项目里的依赖，只要部署时的依赖
 bundle install --without development test
-[/base]
+{% endhighlight %}
 一些初始化的工作
-[bash]
+{% highlight bash %}
 ## 生成密钥
 rake generate_secret_token
 ## 生成数据库的表
 RAILS_ENV=production rake db:migrate
 ## 生成一些基本的数据
 RAILS_ENV=production rake redmine:load_default_data
-[/bash]
+{% endhighlight %}
 都没有意外的话就可以启动项目了
-[bash]
+{% highlight bash %}
 ruby script/rails server webrick -e production
-[/bash]
+{% endhighlight %}
 如果是在本地启动的话，正常来说 http://localhost:3000 就可以访问了。
 全文完.

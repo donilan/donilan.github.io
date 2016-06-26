@@ -17,12 +17,12 @@ tags: []
 comments: []
 ---
 脚本必须实现start stop restart等参数调用
-[bash]
+{% highlight bash %}
 sudo chmod +x /etc/init.d/scriptName
 sudo update-rc.d scriptName defaults
-[/bash]
+{% endhighlight %}
 脚本例子
-[bash]
+{% highlight bash %}
 #! /bin/sh
 ### BEGIN INIT INFO
 # Provides:          scriptName
@@ -135,4 +135,4 @@ case "$1" in
         exit 3
         ;;
 esac
-[/bash]
+{% endhighlight %}

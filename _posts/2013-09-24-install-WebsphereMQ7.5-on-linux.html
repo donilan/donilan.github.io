@@ -32,7 +32,7 @@ comments: []
 把下面的脚本保存成文件webspheremq_install.sh 即可简单的安装运行服务了。
 </div>
 <div><img alt="" src="file:///C:/DOCUME~1/ADMINI~1/LOCALS~1/Temp/enhtmlclip/Image(1).png" /></div>
-[bash]
+{% highlight bash %}
 ## 安装运行环境
 rpm -ivh MQSeriesRuntime-7.5.0-2.x86_64.rpm
 ## 安装MQ服务
@@ -65,4 +65,4 @@ su mqm -c "/opt/mqm/bin/strmqmq QM1"
 ## 启动 监听服务
 su mqm -c "nohup /opt/mqm/bin/runmqlsr -m QM1 -t TCP -p 1414 &amp;"
 echo Websphere MQ 7.5.0-2 is installed.
-[/bash]
+{% endhighlight %}

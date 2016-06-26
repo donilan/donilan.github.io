@@ -16,10 +16,10 @@ tags: []
 comments: []
 ---
 163源镜像说明 http://mirrors.163.com/.help/fedora.html
-[bash]
+{% highlight bash %}
 ## 更新源的缓存，更新库
 sudo yum makecache && yum update &ndash;y && yum upgrade &ndash;y
 ## 解决不能显示桌面问题
 sudo yum install gnome-tweak-tool &ndash;y
-[/bash]
+{% endhighlight %}
 安装完后打开gnome-tweak-tool设置一下就可以显示桌面了。

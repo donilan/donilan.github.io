@@ -23,12 +23,12 @@ comments: []
 ---
 Chroot jail(根目录监狱)，感觉这个名字不是一般的霸气，实际用途也是很厉害，它是用来限制登陆的用户只能访问指定的一个根目录，而不能往回退，也就是说CD ..无效。
 在服务器端必须安装sshd服务，应该没有Linux不开启的吧（按我目前了解的，几乎没有），最好检查一下有没有nologin这个功能。
-[bash]
+{% highlight bash %}
 # 我的服务器是在/usr/sbin/nologin
 whereis nologin
-[/bash]
+{% endhighlight %}
 先修改服务器的sshd配置，一般地址在/etc/ssh/sshd_config，按以下的配置代码修改即可
-[bash]
+{% highlight bash %}
 # 原来的配置应该是这样子的，不同的Linux发行版可能有点不一样
 # Subsystem sftp /usr/lib/openssh/sftp-server
 # 改为以下的样子
@@ -44,16 +44,16 @@ Match User user1
       ForceCommand internal-sftp
       AllowTCPForwarding no
       X11Forwarding no
-[/bash]
+{% endhighlight %}
 配置搞定了，重启sshd服务
-[bash]
+{% highlight bash %}
 # debin类型
 service ssh restart
 # fedora之类的
 systemctl restart sshd
-[/bash]
+{% endhighlight %}
 再创建一个用户，然后修改目录权限
-[bash]
+{% highlight bash %}
 # 创建用户
 useradd -s /usr/sbin/nologin -d /home/user1 user1
 # 修改目录权限，Chroot jail中的目录拥有着必须是root，并且组和其它是不能写入
@@ -63,6 +63,6 @@ chmod 755 /home/user1
 mkdir /home/user1/writable
 chown user1:group1 /home/user1/writable
 chmod ug+rwx /home/user1/writable
-[/bash]
+{% endhighlight %}
 另外还可以使用rssh和scponly来实现，它们也各自有有缺点，目前还没有一种觉得最好的方案。
 全文完。

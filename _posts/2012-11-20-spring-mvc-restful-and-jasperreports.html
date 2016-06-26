@@ -21,7 +21,7 @@ tags:
 comments: []
 ---
     首先来一份Maven的依赖配置，以下是本人用到的jasperReports版本和依赖。
-[xml]
+{% highlight xml %}
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 <properties>
@@ -46,14 +46,14 @@ comments: []
 		</dependency>
 	</dependencies>
 </project>
-[/xml]
+{% endhighlight %}
     其中为了解决中文问题还需要一个itextasian的中文字库包，网上有很多介绍中文问题的解决方案，千篇一律的，本人不断去尝试，最后发现问题在于这个中文包上，这个中文包有多个版本，由不同组织维护，不是每个都合适JasperReports用。下面附上一个能正常的itextasian包和一个maven安装这个包到本地的脚本。
 <a href='http://blog.sincerad.com/wp-content/uploads/2012/11/itextasian.zip'>下载itextasian-1.0</a>
-[bash]
+{% highlight bash %}
 mvn install:install-file -Dfile=/path/to/itextasian-1.0.jar -DgroupId=com.lowagie -DartifactId=itextasian -Dversion=1.0 -Dpackaging=jar
-[/bash]
+{% endhighlight %}
     接着就是Spring mvc了，因为本人本来只是用spring mvc没有把jasperReports加入到项目，为了保留原来的配置和最少更改代码来加入JasperReports，所以可能用了一些不太好的整合方式，废话还是少说，先发一个org.springframework.web.servlet.View的实现类。
-[java]
+{% highlight java %}
 package com.createw.scs.utils;
 import java.util.HashMap;
 import java.util.Map;
@@ -74,9 +74,9 @@ public class JasperView extends JasperReportsMultiFormatView {
 		super.setFormatMappings(map);
 	}
 }
-[/java]
+{% endhighlight %}
     其实和JasperReportsMultiFormatView源码里面的构造函数代码差不多，其中差别在于map.put("xhtml", JasperReportsHtmlView.class),本人把原来的html换成xhtml了，这样做的目的是为了防止和Spring mvc的org.springframework.web.servlet.view.ContentNegotiatingViewResolver的处理起冲突。下面再附上部分JasperReportsMultiFormatView的源码。
-[java]
+{% highlight java %}
 /**
  * Creates a new <code>JasperReportsMultiFormatView</code> instance
  * with a default set of mappings.
@@ -109,9 +109,9 @@ public void setFormatMappings(Map<String, Class<? extends AbstractJasperReportsV
 	}
 	this.formatMappings = formatMappings;
 }
-[/java]
+{% endhighlight %}
      好了，关键部分了，就是spring mvc的配置了。
-[xml]
+{% highlight xml %}
 <beans>
 	<!-- Jasper Report -->
     <bean id="jasperReportsViewResolver" class="org.springframework.web.servlet.view.jasperreports.JasperReportsViewResolver">
@@ -171,9 +171,9 @@ public void setFormatMappings(Map<String, Class<? extends AbstractJasperReportsV
 		</property>
 	</bean>
 </beans>
-[/xml]
+{% endhighlight %}
 好了，配置大致就这样完成了。最后加多份Controller代码。
-[java]
+{% highlight java %}
 package com.ii2d.controller;
 import java.lang.reflect.Array;
 import java.util.HashMap;
@@ -253,5 +253,5 @@ public class JasperController {
 		return param;
 	}
 }
-[/java]
+{% endhighlight %}
 全文完。

@@ -20,7 +20,7 @@ tags:
 comments: []
 ---
 maven pom.xml依赖配置
-[xml]
+{% highlight xml %}
 <dependency>
 	<groupId>javax.transaction</groupId>
 	<artifactId>jta</artifactId>
@@ -31,9 +31,9 @@ maven pom.xml依赖配置
 	<artifactId>ehcache</artifactId>
 	<version>2.7.4</version>
 </dependency>
-[/xml]
+{% endhighlight %}
 ehcache.xml配置
-[xml]
+{% highlight xml %}
 <?xml version="1.0" encoding="UTF-8"?>
 <ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd"
@@ -52,9 +52,9 @@ ehcache.xml配置
 		overflowToDisk="false" diskPersistent="false" timeToIdleSeconds="0"
 		timeToLiveSeconds="3600" memoryStoreEvictionPolicy="LRU" />
 </ehcache>
-[/xml]
+{% endhighlight %}
 spring配置
-[xml]
+{% highlight xml %}
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
@@ -75,9 +75,9 @@ spring配置
              p:config-location="classpath:ehcache.xml" p:shared="true"/>
 	 <bean class="com.ii2d.CacheBean" />
 </beans>
-[/xml]
+{% endhighlight %}
 测试类
-[java]
+{% highlight java %}
 package com.ii2d;
 import org.springframework.cache.annotation.Cacheable;
 public class CacheBean {
@@ -86,9 +86,9 @@ public class CacheBean {
 		return val++;
 	}
 }
-[/java]
+{% endhighlight %}
 单元测试
-[java]
+{% highlight java %}
 package com.ii2d;
 import java.util.Random;
 import javax.annotation.Resource;
@@ -110,4 +110,4 @@ public class EhCacheTests {
 		}
 	}
 }
-[/java]
+{% endhighlight %}

@@ -20,7 +20,7 @@ comments: []
 <a href="http://tomcat.apache.org/tomcat-5.5-doc/ssl-howto.html" target="_blank">Tomcat官方文档</a> <br />
 <br />
 证书的基本信息
-[bash]
+{% highlight bash %}
 $keytool -genkey -alias tomcat -keypass changeit -keyalg RSA
 Enter keystore password:  changeit
 What is your first and last name?
@@ -37,15 +37,15 @@ What is the two-letter country code for this unit?
   [Unknown]:  US
 Is CN=localhost, OU=Information Systems, O=Pacific Disaster Center, L=Kihei, ST=HI, C=US correct?
   [no]:  yes
-[/bash]
+{% endhighlight %}
 输出证书文件
-[bash]
+{% highlight bash %}
 $keytool -export -alias tomcat -keypass changeit -file server.crt
 Enter keystore password: changeit
 Certificate stored in file <server.crt>
-[/bash]
+{% endhighlight %}
 生成公共密匙
-[bash]
+{% highlight bash %}
 $keytool -import -file server.crt -keypass changeit -keystore cacerts
 Enter keystore password: changeit
 Owner: CN=localhost, OU=Information Systems, O=Pacific Disaster Center, L=Kihei, ST=HI, C=US
@@ -57,9 +57,9 @@ MD5: CC:3B:FB:FB:AE:12:AD:FB:3E:D 5:98:CB:2E:3B:0A:AD
 SHA1: A1:16:80:68:39:C7:58:EA:2F:48:59:AA:1D:73:5F:56:78:CE:A4:CE
 Trust this certificate? [no]: yes
 Certificate was added to keystore
-[/bash]
+{% endhighlight %}
 Tomcat配置
-[xml]
+{% highlight xml %}
 <Connector protocol="org.apache.coyote.http11.Http11NioProtocol"
            port="8443" minSpareThreads="5" maxSpareThreads="75"
            enableLookups="true" disableUploadTimeout="true"
@@ -69,4 +69,4 @@ Tomcat配置
            keystoreFile="/path/to/.keystore"
            keystorePass="changeit"
            truststoreFile="/path/to/cacerts" />
-[/xml]
+{% endhighlight %}

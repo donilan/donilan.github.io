@@ -20,11 +20,15 @@ tags:
 - https
 comments: []
 ---
-[java]
+{% highlight java %}
 new java.net.URL("https://any_https_website.com").openConnection().getInputStream();
-[/java]
+{% endhighlight %}
 如果在Java里面试图连接Https的网站或者其它ssl链接的话，可能会报这样的一个错误。
-javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+javax.net.ssl.SSLHandshakeException:
+sun.security.validator.ValidatorException:
+PKIX path building failed:
+sun.security.provider.certpath.SunCertPathBuilderException:
+unable to find valid certification path to requested target
 这个错误的原因（个人想法）是，没有找到匹配的本地证书，如果你使用浏览器去浏览一个Https网站，一般浏览器会询问你是否通过验证，然后保存证书，但是Java里面没有这步骤，那么就需要手工处理了。
 一般java的本地证书会保存在,Windows: %JAVA_HOME%/jre/lib/security/cacerts, Ubuntu Linux: /etc/ssl/certs/java/casers。
 导入方法很简单，首先你需要下载证书，在浏览器中查看链接中的https证书，如下
@@ -34,8 +38,8 @@ javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: 
 然后导出证书到文件中，这样我们就得到证书了。
 <a href="http://blog.sincerad.com/wp-content/uploads/2011/10/step3.jpg"><img src="http://blog.sincerad.com/wp-content/uploads/2011/10/step3-234x300.jpg" alt="导出google的https证书" title="导出google的https证书" width="234" height="300" class="alignnone size-medium wp-image-187" /></a>
 得到证书后，我们需要把证书导入到java的证书集合中。
-[bash]
+{% highlight bash %}
  keytool -import -alias 别名（用于查看证书或者删除证书用） -file 下载的证书文件 -keystore 保存位置，java的证书集合
  Enter keystore password:  (输入导入密码)
-[/bash]
+{% endhighlight %}
 只要添加证书的https网站就可以用java程序访问了。

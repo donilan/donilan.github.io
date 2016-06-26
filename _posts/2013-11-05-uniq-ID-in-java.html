@@ -17,7 +17,7 @@ tags:
 comments: []
 ---
 原理很简单，用当前的毫秒数减去过去43年的毫秒数，目的是为了不让生成的数值那么大，然后再加上一个原子操作的自增数，即可实现。
-[java]
+{% highlight java %}
 public static long FORTY_THREE_YEAR = 1000l * 60l * 60l * 24l * 365l * 43l;
 public static java.util.concurrent.atomic.AtomicInteger increment = new java.util.concurrent.atomic.AtomicInteger(0);
 public static int MAX_INCREMENT = 99999;
@@ -33,9 +33,9 @@ public static synchronized long generateId() {
 		increment.set(0);
 	return prefix;
 }
-[/java]
+{% endhighlight %}
 再附上一个单元测试方法
-[java]
+{% highlight java %}
 @Test
 public final void testUnique() throws InterruptedException {
 	// 性能计算
@@ -72,7 +72,7 @@ public final void testUnique() throws InterruptedException {
 		t.join();
 	System.out.printf("总耗时 %d ms, 一共生成了[%d]个id\n", System.currentTimeMillis() - startTime, counter.size());
 }
-[/java]
+{% endhighlight %}
 测试结果如下：
 线程[16]已经执行完毕，没有发现重复id
 线程[30]已经执行完毕，没有发现重复id

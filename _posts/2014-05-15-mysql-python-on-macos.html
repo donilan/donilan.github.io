@@ -24,14 +24,14 @@ comments: []
 ---
 安装这个库的时候发现有一个警告导致安装不能进行下去，google了一下发现这个警告可以忽略的，所以就记下来以备以后有机会再看。
 下面是我遇到的错误信息:
-[bash]
+{% highlight bash %}
 cc -fno-strict-aliasing -fno-common -dynamic -arch x86_64 -arch i386 -g -Os -pipe -fno-common -fno-strict-aliasing -fwrapv -mno-fused-madd -DENABLE_DTRACE -DMACOSX -DNDEBUG -Wall -Wstrict-prototypes -Wshorten-64-to-32 -DNDEBUG -g -fwrapv -Os -Wall -Wstrict-prototypes -DENABLE_DTRACE -arch x86_64 -arch i386 -pipe -Dversion_info=(1,2,5,'final',1) -D__version__=1.2.5 -I/usr/local/Cellar/mysql/5.6.17_1/include/mysql -I/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7 -c _mysql.c -o build/temp.macosx-10.9-intel-2.7/_mysql.o -Os -g -fno-strict-aliasing
 clang: error: unknown argument: '-mno-fused-madd' [-Wunused-command-line-argument-hard-error-in-future]
 clang: note: this will be a hard error (cannot be downgraded to a warning) in the future
 error: command 'cc' failed with exit status 1
-[/bash]
+{% endhighlight %}
 只要在终端设置以下的环境变量，编译就能通过。
-[bash]
+{% highlight bash %}
 export CFLAGS=-Qunused-arguments
 export CPPFLAGS=-Qunused-arguments
-[/bash]
+{% endhighlight %}

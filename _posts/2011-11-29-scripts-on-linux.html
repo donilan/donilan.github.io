@@ -19,7 +19,7 @@ tags:
 - Script
 comments: []
 ---
-[bash]
+{% highlight bash %}
 #!/bin/bash
 # 使用 script 來添加用户
 groupadd groupName
@@ -28,8 +28,8 @@ do
 	useradd -g groupName $username
 	echo "password" | passwd --stdin $username
 done
-[/bash]
-[bash]
+{% endhighlight %}
+{% highlight bash %}
 #!/bin/sh
 ## 为svn初始化一个项目
 if [ $# != 1 ]
@@ -46,8 +46,8 @@ do
     svn mkdir $i
 done
 svn -ci -m 'Create project $1 by $0'
-[/bash]
-[bash]
+{% endhighlight %}
+{% highlight bash %}
 #!/bin/sh
 # 利用sendmail发送html邮件.
 #
@@ -75,4 +75,4 @@ echo "<html>
 </html>"
 echo "--BOUNDARY"
 ) | sendmail -t
-[/bash]
+{% endhighlight %}

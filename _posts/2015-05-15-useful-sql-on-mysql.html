@@ -19,10 +19,10 @@ tags:
 comments: []
 ---
 导出数据库db_a的table_1结构到db_b的table_1
-[bash]
+{% highlight bash %}
 mysqldump -uusername -ppassword --no-data --compact \
  db_a table_1 | mysql -uusername -ppassword db_b table_1;
-[/bash]
+{% endhighlight %}
 找出每个数据库的存放数据大小
 [sql]
 SELECT

@@ -21,7 +21,7 @@ comments: []
 ---
 今天被Django的i18n折磨了一天了，没想到最后还是路径的问题。废话不说，本来打算写日志，但后来想着想着就直接写成脚本了。
 保存以下脚本为 i18n-test.sh，然后运行就可以。(ps:只在ubuntu 下测试过.)
-[bash]
+{% highlight bash %}
 #!/usr/bin/env sh
 PROJECT_NAME=i18ntest
 SETTINGS_FILE=$PROJECT_NAME/settings.py
@@ -73,4 +73,4 @@ django-admin.py compilemessages
 cd $PROJECT_HOME
 yes 'no' | python manage.py syncdb
 python manage.py runserver
-[/bash]
+{% endhighlight %}

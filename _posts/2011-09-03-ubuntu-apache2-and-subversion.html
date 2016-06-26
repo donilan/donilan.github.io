@@ -22,7 +22,7 @@ tags:
 comments: []
 ---
 编译mod_dav_svn.so
-[bash]
+{% highlight bash %}
 # 因为要获取一个模块需要很多源码..所以到临时文件里面处理
 $ cd /tmp
 # 获取源码
@@ -37,4 +37,4 @@ $ sudo ./configure --with-ssl --with-apxs=/usr/bin/apxs2
 $ sudo make
 # 复制文件到apache2 modules下
 $ cp subversion/mod_dav_svn/.libs/mod_dav_svn.so /usr/lib/apache2/modules/
-[/bash]
+{% endhighlight %}

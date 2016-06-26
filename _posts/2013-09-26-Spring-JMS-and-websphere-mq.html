@@ -21,7 +21,7 @@ comments: []
 ---
 服务器已经搭建完成了，上一篇<a href="http://blog.sincerad.com/archives/328">Linux下安装WebsphereMQ7.5</a>日志中已经记录了如何安装Websphere MQ，现在接着使用Spring JMS与Webphere MQ集成。
 先要解决的是依赖包，spring的可以在maven上找到，但jms和ibm的mq就要找回来了。
-[xml]
+{% highlight xml %}
 <dependencies>
 	<dependency>
 		<groupId>org.springframework</groupId>
@@ -51,7 +51,7 @@ comments: []
 		<scope>test</scope>
 	</dependency>
 </dependencies>
-[/xml]
+{% endhighlight %}
 然后就是MQ和jms，可以在MQServiesSDK rpm包安装后得到，路径一般会在/opt/mqm/java/lib/下。
 会用到以下的一些包：
 <ul>
@@ -64,7 +64,7 @@ comments: []
 <li>jms.jar</li>
 </ul>
 OK！依赖包已经解决，现在弄一个监听类，用于订阅MQ的topic。
-[java]
+{% highlight java %}
 package com.ii2d.mq;
 import javax.jms.JMSException;
 import javax.jms.Message;
@@ -85,9 +85,9 @@ public class MessageListenerForTest implements MessageListener {
 		}
 	}
 }
-[/java]
+{% endhighlight %}
 接着是Spring上的配置，我这里把配置写入到application-context-mq.xml。
-[xml]
+{% highlight xml %}
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:jms="http://www.springframework.org/schema/jms" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -137,9 +137,9 @@ public class MessageListenerForTest implements MessageListener {
 <property name="pubSubDomain" value="true" />
 	</bean>
 </beans>
-[/xml]
+{% endhighlight %}
 然后我们建立一个单元测试，来测试一下是否成功。
-[java]
+{% highlight java %}
 package com.ii2d.mq;
 import javax.annotation.Resource;
 import javax.jms.JMSException;
@@ -159,4 +159,4 @@ public class TemplateTopicTests {
 		template.convertAndSend("topic://topic1", "Hello world");
 	}
 }
-[/java]
+{% endhighlight %}
