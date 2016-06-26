@@ -35,169 +35,169 @@ comments:
 <p><h3>Vim Zen coding Plugin 安装：<&#47;h3></p>
 <ul>
 <li>
-			下载：<a href="">Github<&#47;a><br &#47;><br />
+			下载：<a href="">Github<&#47;a><br &#47;>
 		<&#47;li></p>
 <li>
-			安装：将下载的文件解压，然后复制到vimfiles目录或者.vim目录(如果有)下即可<br &#47;><br />
+			安装：将下载的文件解压，然后复制到vimfiles目录或者.vim目录(如果有)下即可<br &#47;>
 		<&#47;li></p>
 <li>使用：
 <ol>
 <li>
-<p>Expand Abbreviation，输入Zen coding格式语句，然后按 Ctrl+y,然后再按","，要注意先后顺序。<&#47;p><br />
-					Example: 输入div>p#foo$*3>a 然后按<c-y>+,。<br />
+<p>Expand Abbreviation，输入Zen coding格式语句，然后按 Ctrl+y,然后再按","，要注意先后顺序。<&#47;p>
+					Example: 输入div>p#foo$*3>a 然后按<c-y>+,。
 					[html]</p>
 <div>
 <p id="foo1">
-          <a href=""><&#47;a><br />
+          <a href=""><&#47;a>
       <&#47;p></p>
 <p id="foo2">
-          <a href=""><&#47;a><br />
+          <a href=""><&#47;a>
       <&#47;p></p>
 <p id="foo3">
-          <a href=""><&#47;a><br />
-      <&#47;p><br />
-  <&#47;div><br />
-					[&#47;html]<br />
+          <a href=""><&#47;a>
+      <&#47;p>
+  <&#47;div>
+					[&#47;html]
 				<&#47;li></p>
 <li>
-					Wrap with Abbreviation,先输入几行数据。<br />
-					[text]<br />
-					item1<br />
-					item2<br />
-					item3<br />
-					[&#47;text]<br />
-					然后再用选择模式"V"把要包含的数据选择上，然后再输入<c-y>+,最后输入一句Zen code ul>li*<br />
+					Wrap with Abbreviation,先输入几行数据。
+					[text]
+					item1
+					item2
+					item3
+					[&#47;text]
+					然后再用选择模式"V"把要包含的数据选择上，然后再输入<c-y>+,最后输入一句Zen code ul>li*
 					[html]</p>
 <ul>
 <li>test1<&#47;li>
 <li>test2<&#47;li>
-<li>test3<&#47;li><br />
-  <&#47;ul><br />
-					[&#47;html]<br />
+<li>test3<&#47;li>
+  <&#47;ul>
+					[&#47;html]
 				<&#47;li></p>
 <li>
-					Balance Tag Inward,输入<c-y>+d插入模式。<br />
+					Balance Tag Inward,输入<c-y>+d插入模式。
 				<&#47;li></p>
 <li>
-					Balance Tag Outward,输入<c-y>+D插入模式。<br />
+					Balance Tag Outward,输入<c-y>+D插入模式。
 				<&#47;li></p>
 <li>
-					Go to Next Edit Point,输入<c-y>+n跳到下一个编辑点。<br />
+					Go to Next Edit Point,输入<c-y>+n跳到下一个编辑点。
 				<&#47;li></p>
 <li>
-					Go to Previous Edit Point,输入<c-y>+N跳到上一个编辑点。<br />
+					Go to Previous Edit Point,输入<c-y>+N跳到上一个编辑点。
 				<&#47;li></p>
 <li>
-					Update <img> Size <br &#47;><br />
-					移动光标到img标签中。然后输入<c-y>+i编辑属性。<br />
+					Update <img> Size <br &#47;>
+					移动光标到img标签中。然后输入<c-y>+i编辑属性。
 				<&#47;li></p>
 <li>
-					Merge Lines <br &#47;><br />
+					Merge Lines <br &#47;>
 					选择需要组合成一行的所有数据，例如以下选择所有"
-<li>"标签。<br />
+<li>"标签。
 					[html]</p>
 <ul>
 <li class="list1"><&#47;li>
 <li class="list2"><&#47;li>
-<li class="list3"><&#47;li><br />
-					<&#47;ul><br />
-					[&#47;html]<br />
-					然后输入"J"。<br />
+<li class="list3"><&#47;li>
+					<&#47;ul>
+					[&#47;html]
+					然后输入"J"。
 					[html]</p>
 <ul>
 <li class="list1"><&#47;li>
 <li class="list2"><&#47;li>
-<li class="list3"><&#47;li><br />
-					<&#47;ul><br />
-					[&#47;html]<br />
+<li class="list3"><&#47;li>
+					<&#47;ul>
+					[&#47;html]
 				<&#47;li></p>
 <li>
-					Remove Tag <br &#47;><br />
+					Remove Tag <br &#47;>
 					[html]</p>
-<div class="foo"><a >光标在这里<&#47;a><&#47;div><br />
-					[&#47;html]<br />
-					移动光标到标签块，然后输入<c-y&gt+k。<br />
+<div class="foo"><a >光标在这里<&#47;a><&#47;div>
+					[&#47;html]
+					移动光标到标签块，然后输入<c-y&gt+k。
 					[html]</p>
-<div class="foo"><&#47;div><br />
-					[&#47;html]<br />
-					然后再输入<c-y>+j则连div也清除了。<br />
+<div class="foo"><&#47;div>
+					[&#47;html]
+					然后再输入<c-y>+j则连div也清除了。
 				<&#47;li></p>
 <li>
-					Split&#47;Join Tag <br &#47;><br />
+					Split&#47;Join Tag <br &#47;>
 					[html]</p>
-<div class="foo">光标放到这里<&#47;div><br />
-					[&#47;html]<br />
-					输入<c-y&gt+j<br />
+<div class="foo">光标放到这里<&#47;div>
+					[&#47;html]
+					输入<c-y&gt+j
 					[html]</p>
 <div class="foo" &#47;>
-					[&#47;html]<br />
+					[&#47;html]
 				<&#47;li></p>
 <li>
-					Toggle Comment <br &#47;><br />
-					移动光变到块内<br />
+					Toggle Comment <br &#47;>
+					移动光变到块内
 					[html]</p>
 <div>
-						Hello world!<br />
-					<&#47;div><br />
-					[&#47;html]<br />
-					输入<c-y&gt+&#47;<br />
-					[html]<br />
+						Hello world!
+					<&#47;div>
+					[&#47;html]
+					输入<c-y&gt+&#47;
+					[html]
 					<!--
 <div>
-						Hello World!<br />
-					<&#47;div> --><br />
-					[&#47;html]<br />
-					再次输入取消注释<br />
+						Hello World!
+					<&#47;div> -->
+					[&#47;html]
+					再次输入取消注释
 				<&#47;li></p>
 <li>
-					Make auchor from URL <br &#47;><br />
-					移动光标到URL<br />
-					[text]<br />
-					http:&#47;&#47;www.google.com<br />
-					[&#47;text]<br />
-					输入<c-y>+a<br />
-					[html]<br />
-					<a href="http:&#47;&#47;www.google.com"><&#47;a><br />
-					[&#47;html]<br />
+					Make auchor from URL <br &#47;>
+					移动光标到URL
+					[text]
+					http:&#47;&#47;www.google.com
+					[&#47;text]
+					输入<c-y>+a
+					[html]
+					<a href="http:&#47;&#47;www.google.com"><&#47;a>
+					[&#47;html]
 				<&#47;li></p>
 <li>
-					Make quoted text from URL <br &#47;><br />
-					移动光标到URL<br />
-					[text]<br />
-					http:&#47;&#47;www.google.com<br />
-					[&#47;text]<br />
-					输入<c-y>+A<br />
+					Make quoted text from URL <br &#47;>
+					移动光标到URL
+					[text]
+					http:&#47;&#47;www.google.com
+					[&#47;text]
+					输入<c-y>+A
 					[html]</p>
 <blockquote class="quote"><p>
 	<a href="http:&#47;&#47;www.google.com&#47;">Google<&#47;a><br &#47;></p>
-<p>...<&#47;p><br />
-	<cite>http:&#47;&#47;www.google.com&#47;<&#47;cite><br />
+<p>...<&#47;p>
+	<cite>http:&#47;&#47;www.google.com&#47;<&#47;cite>
 <&#47;blockquote></p>
-<p>					[&#47;html]<br />
+<p>					[&#47;html]
 				<&#47;li></p>
 <li>
-					Enable zencoding.vim for language you using. <br &#47;><br />
-					自定义你使用的语言。<br />
-					[bash]<br />
-  # cat >> ~&#47;.vimrc<br />
-  let g:user_zen_settings = {<br />
-  \  'php' : {<br />
-  \    'extends' : 'html',<br />
-  \    'filters' : 'c',<br />
-  \  },<br />
-  \  'xml' : {<br />
-  \    'extends' : 'html',<br />
-  \  },<br />
-  \  'haml' : {<br />
-  \    'extends' : 'html',<br />
-  \  },<br />
-  \}<br />
-					[&#47;bash]<br />
-				<&#47;li><br />
+					Enable zencoding.vim for language you using. <br &#47;>
+					自定义你使用的语言。
+					[bash]
+  # cat >> ~&#47;.vimrc
+  let g:user_zen_settings = {
+  \  'php' : {
+  \    'extends' : 'html',
+  \    'filters' : 'c',
+  \  },
+  \  'xml' : {
+  \    'extends' : 'html',
+  \  },
+  \  'haml' : {
+  \    'extends' : 'html',
+  \  },
+  \}
+					[&#47;bash]
+				<&#47;li>
 			<&#47;ol></p>
-<p>		<&#47;li><br />
+<p>		<&#47;li>
 	<&#47;ul></p>
 <p><&#47;p></p>
 <div>
-<a href="https:&#47;&#47;github.com&#47;mattn&#47;zencoding-vim&#47;raw&#47;master&#47;TUTORIAL" target="_blank">Vim zen coding 教程<&#47;a><br />
+<a href="https:&#47;&#47;github.com&#47;mattn&#47;zencoding-vim&#47;raw&#47;master&#47;TUTORIAL" target="_blank">Vim zen coding 教程<&#47;a>
 <&#47;div></p>

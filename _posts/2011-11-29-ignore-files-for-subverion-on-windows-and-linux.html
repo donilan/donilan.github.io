@@ -25,19 +25,19 @@ tags:
 - svn:ignore
 comments: []
 ---
-<p>首先要找到配置文件的位置。<br />
-Linux下: &#47;home&#47;[username]&#47;.subversion&#47;config<br />
+<p>首先要找到配置文件的位置。
+Linux下: &#47;home&#47;[username]&#47;.subversion&#47;config
 Window下: C:\Documents and Settings\[username]\Application Data\Subversion\config</p>
-<p>找到# enable-auto-props = yes 属性把注释去掉<br />
-然后在底下（找到[auto-props]下面）添加要使用这个功能的文件<br />
+<p>找到# enable-auto-props = yes 属性把注释去掉
+然后在底下（找到[auto-props]下面）添加要使用这个功能的文件
 以java为例: *.java = svn:keywords=Author Date Id Rev URL</p>
-<p>还有全局忽略的设置<br />
+<p>还有全局忽略的设置
 [bash]</p>
-<p>##全局无视<br />
-[miscellany]<br />
+<p>##全局无视
+[miscellany]
 global-ignores = *.o *.lo *.la *.al .libs *.so *.so.[0-9]* *.a *.pyc *.pyo *.class .classpath .project .settings target *.war</p>
 <p>enable-auto-props = yes</p>
 <p>[auto-props]</p>
-<p>*.java = svn:keywords=Author Date Id Rev URL<br />
-*.groovy = svn:keywords=Author Date Id Rev URL<br />
+<p>*.java = svn:keywords=Author Date Id Rev URL
+*.groovy = svn:keywords=Author Date Id Rev URL
 [&#47;bash]</p>

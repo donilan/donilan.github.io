@@ -21,16 +21,16 @@ tags:
 - permission
 comments: []
 ---
-<p>说起来真是搞笑，为了一时方便打算把这个文件夹的权限都修改为当前我使用的用户，也就是说使用了以下这招：<br />
-[bash]<br />
-chown -R doni: /System/Library<br />
-[/bash]<br />
+<p>说起来真是搞笑，为了一时方便打算把这个文件夹的权限都修改为当前我使用的用户，也就是说使用了以下这招：
+[bash]
+chown -R doni: /System/Library
+[/bash]
 我修改后就觉得会有问题的了，所以我特意重启看看，果然。出事了，系统启动时现实的白色的苹果Logo，然后在logo下有个loading的标识，10分钟、20分钟、30分钟过去了，一直Load不完，我意识到问题出现了。然后试着重启看看，还是一样。</p>
 <p>唉。我错了。</p>
 <p>还好Unix的系统和Linux还是思想上是一致的，所以就查了一些关于启动时然系统输出信息的命令，在<a href="http://support.apple.com/kb/ht1533" title="苹果官网">苹果官网上</a>可以看到系统启动时是可以通过这些命令来做点事情的。</p>
-<p>最开始当然是需要找到原因，我看到了"Press Command-V during startup"（按住Command加大写V），可以切换到详细输出模式。果然能找到错误，它告诉我无法找到/var/db/BostCache.playlist这个文件，有点莫名奇妙了，好吧，我终于知道是出了问题了，还是试试把它还原看看吧。于是再次重启这次使用"Press Command-S during startup"）（按住Command加大写S），切换到单用户模式，也就是Linux的Init 3，就是用Root的用户登录到一个很基础的系统里面。根据它的提示，我需要修改它的文件必须输入两个命令，具体看它的提示吧（我忘记了，其中一个是/sbin/mount /，另外一个好像是/sbin/fsck**，真的忘记了），然后就开始还原。<br />
-[bash]<br />
-chown -R root: /System/Library<br />
-[/bash]<br />
+<p>最开始当然是需要找到原因，我看到了"Press Command-V during startup"（按住Command加大写V），可以切换到详细输出模式。果然能找到错误，它告诉我无法找到/var/db/BostCache.playlist这个文件，有点莫名奇妙了，好吧，我终于知道是出了问题了，还是试试把它还原看看吧。于是再次重启这次使用"Press Command-S during startup"）（按住Command加大写S），切换到单用户模式，也就是Linux的Init 3，就是用Root的用户登录到一个很基础的系统里面。根据它的提示，我需要修改它的文件必须输入两个命令，具体看它的提示吧（我忘记了，其中一个是/sbin/mount /，另外一个好像是/sbin/fsck**，真的忘记了），然后就开始还原。
+[bash]
+chown -R root: /System/Library
+[/bash]
 最后退出这个模式，exit.直接进入系统了，只能说我的运气好了，这样被救活了。</p>
 <p>PS：以上问题是我自己记得做了什么操作而使用的修正方法，就算症状相似也不要乱试，后果不可估计。</p>

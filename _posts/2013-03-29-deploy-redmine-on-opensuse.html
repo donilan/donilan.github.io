@@ -19,39 +19,39 @@ tags:
 comments: []
 ---
 <p>废话少说，直接进入正题。</p>
-<p>解决系统库依赖<br />
-[bash]<br />
-zypper install mysql-community-server ruby libMagick++-devel libmysqld-devel libbz2-devel<br />
+<p>解决系统库依赖
+[bash]
+zypper install mysql-community-server ruby libMagick++-devel libmysqld-devel libbz2-devel
 [&#47;bash]</p>
-<p>下载项目，可以到主页下载，这里是用git下载<br />
-[bash]<br />
-GIT_SSL_NO_VERIFY=true git clone https:&#47;&#47;github.com&#47;redmine&#47;redmine<br />
+<p>下载项目，可以到主页下载，这里是用git下载
+[bash]
+GIT_SSL_NO_VERIFY=true git clone https:&#47;&#47;github.com&#47;redmine&#47;redmine
 [&#47;bash]</p>
-<p>创建mysql的数据库，因为我用mysql<br />
-[bash]<br />
-echo "CREATE DATABASE redmine CHARACTER SET utf8;" | mysql -uusername -ppassword<br />
-[&#47;bash]<br />
+<p>创建mysql的数据库，因为我用mysql
+[bash]
+echo "CREATE DATABASE redmine CHARACTER SET utf8;" | mysql -uusername -ppassword
+[&#47;bash]
 然后修改config&#47;database.yml文件，我想一看就明白怎么改。</p>
-<p>安装redmine Ruby的依赖<br />
-[bash]<br />
+<p>安装redmine Ruby的依赖
+[bash]
 gem install bundler</p>
-<p>## 按自己实际情况<br />
+<p>## 按自己实际情况
 cd $PATH_TO_REDMINE_PROJECT</p>
-<p>## 安装项目里的依赖，只要部署时的依赖<br />
-bundle install --without development test<br />
+<p>## 安装项目里的依赖，只要部署时的依赖
+bundle install --without development test
 [&#47;base]</p>
-<p>一些初始化的工作<br />
-[bash]<br />
-## 生成密钥<br />
-rake generate_secret_token<br />
-## 生成数据库的表<br />
-RAILS_ENV=production rake db:migrate<br />
-## 生成一些基本的数据<br />
-RAILS_ENV=production rake redmine:load_default_data<br />
+<p>一些初始化的工作
+[bash]
+## 生成密钥
+rake generate_secret_token
+## 生成数据库的表
+RAILS_ENV=production rake db:migrate
+## 生成一些基本的数据
+RAILS_ENV=production rake redmine:load_default_data
 [&#47;bash]</p>
-<p>都没有意外的话就可以启动项目了<br />
-[bash]<br />
-ruby script&#47;rails server webrick -e production<br />
+<p>都没有意外的话就可以启动项目了
+[bash]
+ruby script&#47;rails server webrick -e production
 [&#47;bash]</p>
 <p>如果是在本地启动的话，正常来说 http:&#47;&#47;localhost:3000 就可以访问了。</p>
 <p>全文完.</p>

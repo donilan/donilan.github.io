@@ -19,60 +19,60 @@ tags:
 - Script
 comments: []
 ---
-<p>[bash]<br />
-#!&#47;bin&#47;bash<br />
-# 使用 script 來添加用户<br />
-groupadd groupName<br />
-for username in u1 u2 u3 u4 u5<br />
-do<br />
-	useradd -g groupName $username<br />
-	echo "password" | passwd --stdin $username<br />
-done<br />
+<p>[bash]
+#!&#47;bin&#47;bash
+# 使用 script 來添加用户
+groupadd groupName
+for username in u1 u2 u3 u4 u5
+do
+	useradd -g groupName $username
+	echo "password" | passwd --stdin $username
+done
 [&#47;bash]</p>
-<p>[bash]<br />
-#!&#47;bin&#47;sh<br />
-## 为svn初始化一个项目<br />
-if [ $# != 1 ]<br />
-then<br />
+<p>[bash]
+#!&#47;bin&#47;sh
+## 为svn初始化一个项目
+if [ $# != 1 ]
+then
     echo "Usage: $0
-<project name>"<br />
-    exit 1<br />
+<project name>"
+    exit 1
 fi</p>
-<p>BASE_DIR=$(dirname "$0")<br />
-JAVA_PROJECT_DIR=$BASE_DIR&#47;java<br />
+<p>BASE_DIR=$(dirname "$0")
+JAVA_PROJECT_DIR=$BASE_DIR&#47;java
 echo "Base java project dir is $JAVA_PROJECT_DIR"</p>
-<p>for i in "$1" "$1&#47;trunk" "$1&#47;tags" "$1&#47;branches"<br />
-do<br />
-    svn mkdir $i<br />
-done<br />
-svn -ci -m 'Create project $1 by $0'<br />
+<p>for i in "$1" "$1&#47;trunk" "$1&#47;tags" "$1&#47;branches"
+do
+    svn mkdir $i
+done
+svn -ci -m 'Create project $1 by $0'
 [&#47;bash]</p>
-<p>[bash]<br />
-#!&#47;bin&#47;sh<br />
-# 利用sendmail发送html邮件.<br />
-#<br />
-(<br />
-echo "From: d@sincerad.com"<br />
-echo "To: d@sincerad.com"<br />
-echo "MIME-Version: 1.0"<br />
-echo "Content-Type: multipart&#47;mixed;"<br />
-echo ' boundary="BOUNDARY"'<br />
-echo "Subject: Test Message"<br />
-echo ""<br />
-echo "This is a MIME-encapsulated message"<br />
-echo "--BOUNDARY"<br />
-echo "Content-Type: text&#47;plain"<br />
-echo ""<br />
-echo "This is what someone would see without an HTML capable mail client."<br />
-echo ""<br />
-echo "--BOUNDARY"<br />
-echo "Content-Type: text&#47;html"<br />
-echo ""<br />
-echo "<html><br />
+<p>[bash]
+#!&#47;bin&#47;sh
+# 利用sendmail发送html邮件.
+#
+(
+echo "From: d@sincerad.com"
+echo "To: d@sincerad.com"
+echo "MIME-Version: 1.0"
+echo "Content-Type: multipart&#47;mixed;"
+echo ' boundary="BOUNDARY"'
+echo "Subject: Test Message"
+echo ""
+echo "This is a MIME-encapsulated message"
+echo "--BOUNDARY"
+echo "Content-Type: text&#47;plain"
+echo ""
+echo "This is what someone would see without an HTML capable mail client."
+echo ""
+echo "--BOUNDARY"
+echo "Content-Type: text&#47;html"
+echo ""
+echo "<html>
 <body bgcolor='black'></p>
-<blockquote><p><font color='green'>GREEN<&#47;font> <font color='white'>WHITE<&#47;font> <font color='red'>RED<&#47;font><&#47;blockquote><br />
-<&#47;body><br />
-<&#47;html>"<br />
-echo "--BOUNDARY"<br />
-) | sendmail -t<br />
+<blockquote><p><font color='green'>GREEN<&#47;font> <font color='white'>WHITE<&#47;font> <font color='red'>RED<&#47;font><&#47;blockquote>
+<&#47;body>
+<&#47;html>"
+echo "--BOUNDARY"
+) | sendmail -t
 [&#47;bash]</p>

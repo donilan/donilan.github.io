@@ -28,27 +28,27 @@ comments: []
 <li>共享的目录名称为：share<&#47;li>
 <li>假设window下的用户名和密码为：admin&#47;pass<&#47;li>
 <li>Linux环境为:Ubuntu Linux<&#47;li>
-<li>当前在Linux下使用的用户为：doni<&#47;li><br />
-<&#47;ol><br />
-首先我们需要安装smbfs<br />
-[bash]<br />
-$sudo apt-get install smbfs<br />
-[&#47;bash]<br />
-然后挂载<br />
-[bash]<br />
-$sudo mount &#47;&#47;192.168.1.2&#47;share &#47;path&#47;to&#47;your&#47;mount&#47;dir -o uid=doni,username=admin,password=pass,iocharset=utf8<br />
-[&#47;bash]<br />
+<li>当前在Linux下使用的用户为：doni<&#47;li>
+<&#47;ol>
+首先我们需要安装smbfs
+[bash]
+$sudo apt-get install smbfs
+[&#47;bash]
+然后挂载
+[bash]
+$sudo mount &#47;&#47;192.168.1.2&#47;share &#47;path&#47;to&#47;your&#47;mount&#47;dir -o uid=doni,username=admin,password=pass,iocharset=utf8
+[&#47;bash]
 下面是-o参数详解，-o是附加参数</p>
 <ol>
 <li>其中uid的作用，设置挂载后用哪个linux用户为此挂载的拥有者，非常重要，如果我们用sudo挂载，一般拥有者就是root。<&#47;li>
 <li>username,password这个应该不需要解析了，就是windows的用户，如果共享没有设置用户的话，可以不加这两个参数。<&#47;li>
-<li>iocharset设置字符集，主要用来解决乱码问题。<&#47;li><br />
-<&#47;ol><br />
-[bash]<br />
-#取消挂载<br />
-$sudo umount &#47;&#47;192.168.1.2&#47;share<br />
+<li>iocharset设置字符集，主要用来解决乱码问题。<&#47;li>
+<&#47;ol>
+[bash]
+#取消挂载
+$sudo umount &#47;&#47;192.168.1.2&#47;share
 [&#47;bash]</p>
-<p><strong>另外一种方法<&#47;strong><br />
-[bash]<br />
-$sudo mount -t cifs -o uid=doni &#47;&#47;192.168.1.2&#47;share &#47;path&#47;to&#47;your&#47;mount&#47;dir<br />
+<p><strong>另外一种方法<&#47;strong>
+[bash]
+$sudo mount -t cifs -o uid=doni &#47;&#47;192.168.1.2&#47;share &#47;path&#47;to&#47;your&#47;mount&#47;dir
 [&#47;bash]</p>

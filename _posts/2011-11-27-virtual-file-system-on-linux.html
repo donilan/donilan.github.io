@@ -16,15 +16,15 @@ categories:
 tags: []
 comments: []
 ---
-<p>[bash]<br />
-##创建一个10M的空文件<br />
-$ dd if=&#47;dev&#47;zero of=&#47;tmp&#47;file.img bs=1M count=10<br />
-##将一个循环设备与这个文件关联起来<br />
-$ losetup &#47;dev&#47;loop0 &#47;tmp&#47;file.img<br />
-##创建文件系统<br />
-$ mke2fs -c &#47;dev&#47;loop0<br />
-##创建准备挂载的目录<br />
-$ mkdir &#47;mnt&#47;point<br />
-##挂载文件系统<br />
-$ mount -t ext2 &#47;dev&#47;loop0 &#47;mnt&#47;point<br />
+<p>[bash]
+##创建一个10M的空文件
+$ dd if=&#47;dev&#47;zero of=&#47;tmp&#47;file.img bs=1M count=10
+##将一个循环设备与这个文件关联起来
+$ losetup &#47;dev&#47;loop0 &#47;tmp&#47;file.img
+##创建文件系统
+$ mke2fs -c &#47;dev&#47;loop0
+##创建准备挂载的目录
+$ mkdir &#47;mnt&#47;point
+##挂载文件系统
+$ mount -t ext2 &#47;dev&#47;loop0 &#47;mnt&#47;point
 [&#47;bash]</p>

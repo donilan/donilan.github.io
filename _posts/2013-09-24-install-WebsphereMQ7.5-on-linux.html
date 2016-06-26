@@ -31,38 +31,38 @@ comments: []
 <p>&nbsp;</p>
 <p>把下面的脚本保存成文件webspheremq_install.sh 即可简单的安装运行服务了。</p>
 <p><&#47;div></p>
-<div><img alt="" src="file:&#47;&#47;&#47;C:&#47;DOCUME~1&#47;ADMINI~1&#47;LOCALS~1&#47;Temp&#47;enhtmlclip&#47;Image(1).png" &#47;><&#47;div><br />
-[bash]<br />
-## 安装运行环境<br />
-rpm -ivh MQSeriesRuntime-7.5.0-2.x86_64.rpm<br />
-## 安装MQ服务<br />
-rpm -ivh MQSeriesServer-7.5.0-2.x86_64.rpm<br />
-## 开发包<br />
-rpm -ivh MQSeriesSDK-7.5.0-2.x86_64.rpm<br />
-## 安装示例<br />
-rpm -ivh MQSeriesSamples-7.5.0-2.x86_64.rpm<br />
-## 客户端<br />
+<div><img alt="" src="file:&#47;&#47;&#47;C:&#47;DOCUME~1&#47;ADMINI~1&#47;LOCALS~1&#47;Temp&#47;enhtmlclip&#47;Image(1).png" &#47;><&#47;div>
+[bash]
+## 安装运行环境
+rpm -ivh MQSeriesRuntime-7.5.0-2.x86_64.rpm
+## 安装MQ服务
+rpm -ivh MQSeriesServer-7.5.0-2.x86_64.rpm
+## 开发包
+rpm -ivh MQSeriesSDK-7.5.0-2.x86_64.rpm
+## 安装示例
+rpm -ivh MQSeriesSamples-7.5.0-2.x86_64.rpm
+## 客户端
 rpm -ivh MQSeriesClient-7.5.0-2.x86_64.rpm</p>
-<p>## 修改用户mqm的进程最大数和文件打开最大数<br />
+<p>## 修改用户mqm的进程最大数和文件打开最大数
 sed -i -e "$ i\mqm\thard\tnofile\t10240\nmqm\tsoft\tnofile\t10240\nmqm\thard\tnproc\t4096\nmqm\tsoft\tnproc\t4096\n" &#47;etc&#47;security&#47;limits.conf</p>
-<p>## 修改共享内存<br />
-echo 268435456 > &#47;proc&#47;sys&#47;kernel&#47;shmmax<br />
-echo 4096 > &#47;proc&#47;sys&#47;kernel&#47;shmmni<br />
+<p>## 修改共享内存
+echo 268435456 > &#47;proc&#47;sys&#47;kernel&#47;shmmax
+echo 4096 > &#47;proc&#47;sys&#47;kernel&#47;shmmni
 echo 2097152 > &#47;proc&#47;sys&#47;kernel&#47;shmall</p>
-<p>## 不解析<br />
+<p>## 不解析
 echo 300 > &#47;proc&#47;sys&#47;net&#47;ipv4&#47;tcp_keepalive_time</p>
-<p>## 不解析<br />
+<p>## 不解析
 echo 524288 > &#47;proc&#47;sys&#47;fs&#47;file-max</p>
-<p>##估计是线程相关（本人也没有了解）<br />
+<p>##估计是线程相关（本人也没有了解）
 echo 500 256000 250 1024 > &#47;proc&#47;sys&#47;kernel&#47;sem</p>
-<p>## 查看mqm用户的系统配置是否能足够运行MQ<br />
+<p>## 查看mqm用户的系统配置是否能足够运行MQ
 su mqm -c "&#47;opt&#47;mqm&#47;bin&#47;mqconfig"</p>
-<p>### 配置搞掂了，如果看到全部PASS<br />
-## 然后创建一个默认的消息管理器, QM1 改为自己希望使用的<br />
-su mqm -c "&#47;opt&#47;mqm&#47;bin&#47;crtmqm -q QM1"<br />
-## 启动 消息管理器<br />
-su mqm -c "&#47;opt&#47;mqm&#47;bin&#47;strmqmq QM1"<br />
-## 启动 监听服务<br />
+<p>### 配置搞掂了，如果看到全部PASS
+## 然后创建一个默认的消息管理器, QM1 改为自己希望使用的
+su mqm -c "&#47;opt&#47;mqm&#47;bin&#47;crtmqm -q QM1"
+## 启动 消息管理器
+su mqm -c "&#47;opt&#47;mqm&#47;bin&#47;strmqmq QM1"
+## 启动 监听服务
 su mqm -c "nohup &#47;opt&#47;mqm&#47;bin&#47;runmqlsr -m QM1 -t TCP -p 1414 &amp;"</p>
-<p>echo Websphere MQ 7.5.0-2 is installed.<br />
+<p>echo Websphere MQ 7.5.0-2 is installed.
 [&#47;bash]</p>

@@ -16,123 +16,123 @@ categories:
 tags: []
 comments: []
 ---
-<p>脚本必须实现start stop restart等参数调用<br />
-[bash]<br />
-sudo chmod +x &#47;etc&#47;init.d&#47;scriptName<br />
-sudo update-rc.d scriptName defaults<br />
-[&#47;bash]<br />
-脚本例子<br />
-[bash]<br />
-#! &#47;bin&#47;sh<br />
-### BEGIN INIT INFO<br />
-# Provides:          scriptName<br />
-# Required-Start:    $all<br />
-# Required-Stop:     $all<br />
-# Default-Start:     2 3 4 5<br />
-# Default-Stop:      0 1 6<br />
-# Short-Description: ...<br />
-# Description:      ...<br />
+<p>脚本必须实现start stop restart等参数调用
+[bash]
+sudo chmod +x &#47;etc&#47;init.d&#47;scriptName
+sudo update-rc.d scriptName defaults
+[&#47;bash]
+脚本例子
+[bash]
+#! &#47;bin&#47;sh
+### BEGIN INIT INFO
+# Provides:          scriptName
+# Required-Start:    $all
+# Required-Stop:     $all
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: ...
+# Description:      ...
 ### END INIT INFO</p>
 <p># Author: Doni</p>
 <p># Do NOT "set -e"</p>
-<p>PATH=&#47;sbin:&#47;usr&#47;sbin:&#47;bin:&#47;usr&#47;bin<br />
-DESC="..."<br />
-NAME=binFileName<br />
-DAEMON=&#47;usr&#47;bin&#47;binFileName<br />
-PIDFILE=&#47;var&#47;run&#47;$NAME.pid<br />
-SCRIPTNAME=&#47;etc&#47;init.d&#47;$NAME<br />
+<p>PATH=&#47;sbin:&#47;usr&#47;sbin:&#47;bin:&#47;usr&#47;bin
+DESC="..."
+NAME=binFileName
+DAEMON=&#47;usr&#47;bin&#47;binFileName
+PIDFILE=&#47;var&#47;run&#47;$NAME.pid
+SCRIPTNAME=&#47;etc&#47;init.d&#47;$NAME
 CONFIG_FILE=&#47;etc&#47;path&#47;to&#47;configFile</p>
-<p># Exit if the package is not installed<br />
+<p># Exit if the package is not installed
 [ -x "$DAEMON" ] || exit 0</p>
-<p># Read configuration variable file if it is present<br />
+<p># Read configuration variable file if it is present
 [ -r &#47;etc&#47;default&#47;$NAME ] && . &#47;etc&#47;default&#47;$NAME</p>
-<p># Load the VERBOSE setting and other rcS variables<br />
+<p># Load the VERBOSE setting and other rcS variables
 . &#47;lib&#47;init&#47;vars.sh</p>
-<p># Define LSB log_* functions.<br />
-# Depend on lsb-base (>= 3.0-6) to ensure that this file is present.<br />
+<p># Define LSB log_* functions.
+# Depend on lsb-base (>= 3.0-6) to ensure that this file is present.
 . &#47;lib&#47;lsb&#47;init-functions</p>
-<p># If the daemon is not enabled, give the user a warning and then exit,<br />
-# unless we are stopping the daemon<br />
-if [ "$START" != "yes" -a "$1" != "stop" ]; then<br />
-        log_warning_msg "To enable $NAME, edit &#47;etc&#47;default&#47;$NAME and set START=yes"<br />
-        exit 0<br />
+<p># If the daemon is not enabled, give the user a warning and then exit,
+# unless we are stopping the daemon
+if [ "$START" != "yes" -a "$1" != "stop" ]; then
+        log_warning_msg "To enable $NAME, edit &#47;etc&#47;default&#47;$NAME and set START=yes"
+        exit 0
 fi</p>
-<p># Process configuration<br />
-export PHP_FCGI_CHILDREN PHP_FCGI_MAX_REQUESTS<br />
+<p># Process configuration
+export PHP_FCGI_CHILDREN PHP_FCGI_MAX_REQUESTS
 DAEMON_ARGS="-q -b $FCGI_HOST:$FCGI_PORT -c $CONFIG_FILE"</p>
-<p>do_start()<br />
-{<br />
-        # Return<br />
-        #   0 if daemon has been started<br />
-        #   1 if daemon was already running<br />
-        #   2 if daemon could not be started<br />
-        start-stop-daemon --start --quiet --pidfile $PIDFILE --exec $DAEMON --test > &#47;dev&#47;null \<br />
-                || return 1<br />
-        start-stop-daemon --start --quiet --pidfile $PIDFILE --exec $DAEMON \<br />
-                --background --make-pidfile --chuid $EXEC_AS_USER --startas $DAEMON -- \<br />
-                $DAEMON_ARGS \<br />
-                || return 2<br />
+<p>do_start()
+{
+        # Return
+        #   0 if daemon has been started
+        #   1 if daemon was already running
+        #   2 if daemon could not be started
+        start-stop-daemon --start --quiet --pidfile $PIDFILE --exec $DAEMON --test > &#47;dev&#47;null \
+                || return 1
+        start-stop-daemon --start --quiet --pidfile $PIDFILE --exec $DAEMON \
+                --background --make-pidfile --chuid $EXEC_AS_USER --startas $DAEMON -- \
+                $DAEMON_ARGS \
+                || return 2
 }</p>
-<p>do_stop()<br />
-{<br />
-        # Return<br />
-        #   0 if daemon has been stopped<br />
-        #   1 if daemon was already stopped<br />
-        #   2 if daemon could not be stopped<br />
-        #   other if a failure occurred<br />
-        start-stop-daemon --stop --quiet --retry=TERM&#47;30&#47;KILL&#47;5 --pidfile $PIDFILE > &#47;dev&#47;null # --name $DAEMON<br />
-        RETVAL="$?"<br />
-        [ "$RETVAL" = 2 ] && return 2<br />
-        # Wait for children to finish too if this is a daemon that forks<br />
-        # and if the daemon is only ever run from this initscript.<br />
-        # If the above conditions are not satisfied then add some other code<br />
-        # that waits for the process to drop all resources that could be<br />
-        # needed by services started subsequently.  A last resort is to<br />
-        # sleep for some time.<br />
-        start-stop-daemon --stop --quiet --oknodo --retry=0&#47;30&#47;KILL&#47;5 --exec $DAEMON<br />
-        [ "$?" = 2 ] && return 2<br />
-        # Many daemons don't delete their pidfiles when they exit.<br />
-        rm -f $PIDFILE<br />
-        return "$RETVAL"<br />
-}<br />
-case "$1" in<br />
-  start)<br />
-        [ "$VERBOSE" != no ] && log_daemon_msg "Starting $DESC" "$NAME"<br />
-        do_start<br />
-        case "$?" in<br />
-                0|1) [ "$VERBOSE" != no ] && log_end_msg 0 ;;<br />
-                2) [ "$VERBOSE" != no ] && log_end_msg 1 ;;<br />
-        esac<br />
-        ;;<br />
-  stop)<br />
-        [ "$VERBOSE" != no ] && log_daemon_msg "Stopping $DESC" "$NAME"<br />
-        do_stop<br />
-        case "$?" in<br />
-                0|1) [ "$VERBOSE" != no ] && log_end_msg 0 ;;<br />
-                2) [ "$VERBOSE" != no ] && log_end_msg 1 ;;<br />
-        esac<br />
-        ;;<br />
-  restart|force-reload)<br />
-        log_daemon_msg "Restarting $DESC" "$NAME"<br />
-        do_stop<br />
-        case "$?" in<br />
-          0|1)<br />
-                do_start<br />
-                case "$?" in<br />
-                        0) log_end_msg 0 ;;<br />
-                        1) log_end_msg 1 ;; # Old process is still running<br />
-                        *) log_end_msg 1 ;; # Failed to start<br />
-                esac<br />
-                ;;<br />
-          *)<br />
-                # Failed to stop<br />
-                log_end_msg 1<br />
-                ;;<br />
-        esac<br />
-        ;;<br />
-  *)<br />
-        echo "Usage: $SCRIPTNAME {start|stop|restart|force-reload}" >&2<br />
-        exit 3<br />
-        ;;<br />
-esac<br />
+<p>do_stop()
+{
+        # Return
+        #   0 if daemon has been stopped
+        #   1 if daemon was already stopped
+        #   2 if daemon could not be stopped
+        #   other if a failure occurred
+        start-stop-daemon --stop --quiet --retry=TERM&#47;30&#47;KILL&#47;5 --pidfile $PIDFILE > &#47;dev&#47;null # --name $DAEMON
+        RETVAL="$?"
+        [ "$RETVAL" = 2 ] && return 2
+        # Wait for children to finish too if this is a daemon that forks
+        # and if the daemon is only ever run from this initscript.
+        # If the above conditions are not satisfied then add some other code
+        # that waits for the process to drop all resources that could be
+        # needed by services started subsequently.  A last resort is to
+        # sleep for some time.
+        start-stop-daemon --stop --quiet --oknodo --retry=0&#47;30&#47;KILL&#47;5 --exec $DAEMON
+        [ "$?" = 2 ] && return 2
+        # Many daemons don't delete their pidfiles when they exit.
+        rm -f $PIDFILE
+        return "$RETVAL"
+}
+case "$1" in
+  start)
+        [ "$VERBOSE" != no ] && log_daemon_msg "Starting $DESC" "$NAME"
+        do_start
+        case "$?" in
+                0|1) [ "$VERBOSE" != no ] && log_end_msg 0 ;;
+                2) [ "$VERBOSE" != no ] && log_end_msg 1 ;;
+        esac
+        ;;
+  stop)
+        [ "$VERBOSE" != no ] && log_daemon_msg "Stopping $DESC" "$NAME"
+        do_stop
+        case "$?" in
+                0|1) [ "$VERBOSE" != no ] && log_end_msg 0 ;;
+                2) [ "$VERBOSE" != no ] && log_end_msg 1 ;;
+        esac
+        ;;
+  restart|force-reload)
+        log_daemon_msg "Restarting $DESC" "$NAME"
+        do_stop
+        case "$?" in
+          0|1)
+                do_start
+                case "$?" in
+                        0) log_end_msg 0 ;;
+                        1) log_end_msg 1 ;; # Old process is still running
+                        *) log_end_msg 1 ;; # Failed to start
+                esac
+                ;;
+          *)
+                # Failed to stop
+                log_end_msg 1
+                ;;
+        esac
+        ;;
+  *)
+        echo "Usage: $SCRIPTNAME {start|stop|restart|force-reload}" >&2
+        exit 3
+        ;;
+esac
 [&#47;bash]</p>
