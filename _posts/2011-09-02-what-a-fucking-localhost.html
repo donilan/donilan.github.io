@@ -1,0 +1,26 @@
+---
+layout: post
+status: publish
+published: true
+title: What a fucking localhost.
+author:
+  display_name: D
+  login: D
+  email: donilan.word@gmail.com
+  url: ''
+author_login: D
+author_email: donilan.word@gmail.com
+wordpress_id: 173
+wordpress_url: http://blog.sincerad.com/?p=173
+date: '2011-09-02 07:01:11 +0800'
+date_gmt: '2011-09-02 07:01:11 +0800'
+categories:
+- JAVA
+- Linux
+- Grails
+- database
+- MySQL
+tags: []
+comments: []
+---
+<p>事件原因，某日，部署一个Grails项目，DataConfig的url配置为jdbc:mysql:&#47;&#47;localhost:3306&#47;some_database，在本地正常，但部署到生产机上出问题了，怎么也链接不了数据库，启动的时候总是报链接数据库的错误。折腾了1天最后发现生产机上的localhost指向了生产机的IP，而非127.0.0.1。为了减少折腾应该尽量使用127.0.0.1。</p>

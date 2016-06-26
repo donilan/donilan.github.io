@@ -1,0 +1,63 @@
+---
+layout: post
+status: publish
+published: true
+title: Ubuntu使用mail&#47;mailx下通过smtp协议发送邮件
+author:
+  display_name: D
+  login: D
+  email: donilan.word@gmail.com
+  url: ''
+author_login: D
+author_email: donilan.word@gmail.com
+wordpress_id: 362
+wordpress_url: http://blog.sincerad.com/?p=361
+date: '2014-02-04 15:32:44 +0800'
+date_gmt: '2014-02-04 15:32:44 +0800'
+categories:
+- IDE
+tags: []
+comments:
+- id: 302
+  author: dreamers.yzy@gmail.com
+  author_email: dreamers.yzy@gmail.com
+  author_url: ''
+  date: '2014-07-31 16:40:24 +0800'
+  date_gmt: '2014-07-31 08:40:24 +0800'
+  content: 非常感谢你这篇文件，一直为sendmail发邮件的事折腾了一天，最后看到你这篇并解决了我的问题。Thanks。
+---
+<p>mail&#47;mailx这玩意网上的资料不是一般的少，而且都很简陋。因为在维护一个vps，而vps也有个小小的规定，不能乱发邮件，如果乱发的话直接把服务器Delete，真够狠。也就是说不要用sendmail服务来发。那好吧，运营商的霸王条款也只能接受了，就为了便宜的东西，忍了吧。那就用smtp服务通过邮件服务商来发。</p>
+<p>我怕中招，所以我把sendmail也删除了，因为上次已经中了一次了。<br />
+[bash]<br />
+# 停止服务<br />
+service sendmail stop<br />
+# 取消自启动<br />
+chkconfig sendmail off<br />
+# 删除你<br />
+apt-get remove sendmail<br />
+[&#47;bash]<br />
+OK，现在如果使用mail来发邮件的话，日志上应该会提示连接本地服务失败了。所以需要安装一个程序来改变发送邮件的配置，具体为什么要安装，而不是自身就能够使用SMTP这个问题，我也不知道（因为懒，所以没有追查这事）。文件地址是&#47;etc&#47;ssmtp&#47;ssmtp.conf<br />
+[bash]<br />
+apt-get install ssmtp<br />
+[&#47;bash]<br />
+然后就是配置ssmtp<br />
+[bash]<br />
+# SMTP服务器地址，后面可以加端口，如smtp.163.com:25<br />
+mailhub=smtp.163.com<br />
+# 服务器的域名<br />
+hostname=163.com<br />
+# 登陆用户，自家用的名字<br />
+AuthUser=auth_user_name<br />
+# 登陆密码<br />
+AuthPass=******<br />
+# 登陆方式，直接翻译法<br />
+AuthMethod=LOGIN<br />
+[&#47;bash]<br />
+如果没有错的话，以上配置已经是没有问题的，有问题应该也是人品了，如果是163的邮箱的话，还需要改一份别名的配置，因为163的邮件服务发送邮件的时候，发送地址必须要和登陆名字一样的，如我的邮件用户是doni那么发送地址必须是doni(@)163.com，不然网易会不让你发。配置地址是&#47;etc&#47;ssmtp&#47;revaliases<br />
+[bash]<br />
+root:auth_user_name@163.com:smtp.163.com<br />
+[&#47;bash]<br />
+OK，配置都搞掂了，来个Hello world试试看。<br />
+[bash]<br />
+echo hello world | mail -s "success!!!" some_test_email_address@163.com  -vv<br />
+[&#47;bash]</p>

@@ -1,0 +1,82 @@
+---
+layout: post
+status: publish
+published: true
+title: Linux下的一些脚本
+author:
+  display_name: D
+  login: D
+  email: donilan.word@gmail.com
+  url: ''
+author_login: D
+author_email: donilan.word@gmail.com
+wordpress_id: 223
+wordpress_url: http://blog.sincerad.com/?p=223
+date: '2011-11-29 02:02:45 +0800'
+date_gmt: '2011-11-29 02:02:45 +0800'
+categories:
+- Linux
+- Shell
+tags:
+- Shell
+- Linux
+- Script
+comments: []
+---
+<p>[bash]<br />
+#!&#47;bin&#47;bash<br />
+# 使用 script 來添加用户<br />
+groupadd groupName<br />
+for username in u1 u2 u3 u4 u5<br />
+do<br />
+	useradd -g groupName $username<br />
+	echo "password" | passwd --stdin $username<br />
+done<br />
+[&#47;bash]</p>
+<p>[bash]<br />
+#!&#47;bin&#47;sh<br />
+## 为svn初始化一个项目<br />
+if [ $# != 1 ]<br />
+then<br />
+    echo "Usage: $0
+<project name>"<br />
+    exit 1<br />
+fi</p>
+<p>BASE_DIR=$(dirname "$0")<br />
+JAVA_PROJECT_DIR=$BASE_DIR&#47;java<br />
+echo "Base java project dir is $JAVA_PROJECT_DIR"</p>
+<p>for i in "$1" "$1&#47;trunk" "$1&#47;tags" "$1&#47;branches"<br />
+do<br />
+    svn mkdir $i<br />
+done<br />
+svn -ci -m 'Create project $1 by $0'<br />
+[&#47;bash]</p>
+<p>[bash]<br />
+#!&#47;bin&#47;sh<br />
+# 利用sendmail发送html邮件.<br />
+#<br />
+(<br />
+echo "From: d@sincerad.com"<br />
+echo "To: d@sincerad.com"<br />
+echo "MIME-Version: 1.0"<br />
+echo "Content-Type: multipart&#47;mixed;"<br />
+echo ' boundary="BOUNDARY"'<br />
+echo "Subject: Test Message"<br />
+echo ""<br />
+echo "This is a MIME-encapsulated message"<br />
+echo "--BOUNDARY"<br />
+echo "Content-Type: text&#47;plain"<br />
+echo ""<br />
+echo "This is what someone would see without an HTML capable mail client."<br />
+echo ""<br />
+echo "--BOUNDARY"<br />
+echo "Content-Type: text&#47;html"<br />
+echo ""<br />
+echo "<html><br />
+<body bgcolor='black'></p>
+<blockquote><p><font color='green'>GREEN<&#47;font> <font color='white'>WHITE<&#47;font> <font color='red'>RED<&#47;font><&#47;blockquote><br />
+<&#47;body><br />
+<&#47;html>"<br />
+echo "--BOUNDARY"<br />
+) | sendmail -t<br />
+[&#47;bash]</p>

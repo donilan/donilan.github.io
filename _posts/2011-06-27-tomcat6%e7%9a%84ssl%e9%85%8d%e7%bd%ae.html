@@ -1,0 +1,76 @@
+---
+layout: post
+status: publish
+published: true
+title: Tomcat6的SSL配置
+author:
+  display_name: D
+  login: D
+  email: donilan.word@gmail.com
+  url: ''
+author_login: D
+author_email: donilan.word@gmail.com
+wordpress_id: 141
+wordpress_url: http://blog.sincerad.com/?p=141
+date: '2011-06-27 02:47:47 +0800'
+date_gmt: '2011-06-27 02:47:47 +0800'
+categories:
+- JAVA
+- Tomcat
+tags: []
+comments: []
+---
+<p>需要使用JDK自带的工具 <a href="http:&#47;&#47;download.oracle.com&#47;javase&#47;1.4.2&#47;docs&#47;tooldocs&#47;windows&#47;keytool.html" target="_blank">Keytool(点击进入工具使用方法)<&#47;a> <br &#47;><br />
+<a href="http:&#47;&#47;tomcat.apache.org&#47;tomcat-5.5-doc&#47;ssl-howto.html" target="_blank">Tomcat官方文档<&#47;a> <br &#47;><br />
+<br &#47;></p>
+<p>证书的基本信息<&#47;p><br />
+[bash]<br />
+$keytool -genkey -alias tomcat -keypass changeit -keyalg RSA</p>
+<p>Enter keystore password:  changeit<br />
+What is your first and last name?<br />
+  [Unknown]:  compA<br />
+What is the name of your organizational unit?<br />
+  [Unknown]:  Information Systems<br />
+What is the name of your organization?<br />
+  [Unknown]:  Pacific Disaster Center<br />
+What is the name of your City or Locality?<br />
+  [Unknown]:  Kihei<br />
+What is the name of your State or Province?<br />
+  [Unknown]:  HI<br />
+What is the two-letter country code for this unit?<br />
+  [Unknown]:  US<br />
+Is CN=localhost, OU=Information Systems, O=Pacific Disaster Center, L=Kihei, ST=HI, C=US correct?<br />
+  [no]:  yes</p>
+<p>[&#47;bash]</p>
+<p>输出证书文件<&#47;p><br />
+[bash]<br />
+$keytool -export -alias tomcat -keypass changeit -file server.crt</p>
+<p>Enter keystore password: changeit<br />
+Certificate stored in file <server.crt><br />
+[&#47;bash]</p>
+<p>生成公共密匙<&#47;p><br />
+[bash]<br />
+$keytool -import -file server.crt -keypass changeit -keystore cacerts</p>
+<p>Enter keystore password: changeit<br />
+Owner: CN=localhost, OU=Information Systems, O=Pacific Disaster Center, L=Kihei, ST=HI, C=US<br />
+Issuer: CN=localhost, OU=Information Systems, O=Pacific Disaster Center, L=Kihei, ST=HI, C=US<br />
+Serial number: 462030d8<br />
+Valid from: Fri Apr 13 15:39:36 HST 2007 until: Thu Jul 12 15:39:36 HST 2007<br />
+Certificate fingerprints:<br />
+MD5: CC:3B:FB:FB:AE:12:AD:FB:3E:D 5:98:CB:2E:3B:0A:AD<br />
+SHA1: A1:16:80:68:39:C7:58:EA:2F:48:59:AA:1D:73:5F:56:78:CE:A4:CE<br />
+Trust this certificate? [no]: yes<br />
+Certificate was added to keystore</p>
+<p>[&#47;bash]</p>
+<p>Tomcat配置<&#47;p><br />
+[xml]<br />
+<Connector protocol="org.apache.coyote.http11.Http11NioProtocol"<br />
+           port="8443" minSpareThreads="5" maxSpareThreads="75"<br />
+           enableLookups="true" disableUploadTimeout="true"<br />
+           acceptCount="100"  maxThreads="200"<br />
+           scheme="https" secure="true" SSLEnabled="true"<br />
+           clientAuth="false" sslProtocol="TLS"<br />
+           keystoreFile="&#47;path&#47;to&#47;.keystore"<br />
+           keystorePass="changeit"<br />
+           truststoreFile="&#47;path&#47;to&#47;cacerts" &#47;><br />
+[&#47;xml]</p>

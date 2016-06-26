@@ -1,0 +1,79 @@
+---
+layout: post
+status: publish
+published: true
+title: 一份基础的Log4J配置文件
+author:
+  display_name: D
+  login: D
+  email: donilan.word@gmail.com
+  url: ''
+author_login: D
+author_email: donilan.word@gmail.com
+wordpress_id: 37
+wordpress_url: http://blog.sincerad.com/?p=37
+date: '2010-11-22 15:24:29 +0800'
+date_gmt: '2010-11-22 15:24:29 +0800'
+categories:
+- JAVA
+tags:
+- JAVA
+- Log4j
+comments: []
+---
+<p>[text]<br />
+#------------------------------------------------------------------------------<br />
+#<br />
+#  The following properties set the logging levels and log appender.  The<br />
+#  log4j.rootCategory variable defines the default log level and one or more<br />
+#  appenders.  For the console, use 'S'.  For the daily rolling file, use 'R'.<br />
+#  For an HTML formatted log, use 'H'.<br />
+#<br />
+#  To override the default (rootCategory) log level, define a property of the<br />
+#  form (see below for available values):<br />
+#<br />
+#        log4j.logger. =<br />
+#<br />
+#    Available logger names:<br />
+#      TODO<br />
+#<br />
+#    Possible Log Levels:<br />
+#      FATAL, ERROR, WARN, INFO, DEBUG<br />
+#<br />
+#------------------------------------------------------------------------------<br />
+log4j.rootCategory=INFO, S</p>
+<p>log4j.logger.com.dappit.Dapper.parser=ERROR<br />
+log4j.logger.org.w3c.tidy=FATAL</p>
+<p>#------------------------------------------------------------------------------<br />
+#<br />
+#  The following properties configure the console (stdout) appender.<br />
+#  See http:&#47;&#47;logging.apache.org&#47;log4j&#47;docs&#47;api&#47;index.html for details.<br />
+#<br />
+#------------------------------------------------------------------------------<br />
+log4j.appender.S = org.apache.log4j.ConsoleAppender<br />
+log4j.appender.S.layout = org.apache.log4j.PatternLayout<br />
+log4j.appender.S.layout.ConversionPattern = %d{yyyy-MM-dd HH:mm:ss} %c{1} [%p] %m%n</p>
+<p>#------------------------------------------------------------------------------<br />
+#<br />
+#  The following properties configure the Daily Rolling File appender.<br />
+#  See http:&#47;&#47;logging.apache.org&#47;log4j&#47;docs&#47;api&#47;index.html for details.<br />
+#<br />
+#------------------------------------------------------------------------------<br />
+log4j.appender.R = org.apache.log4j.DailyRollingFileAppender<br />
+log4j.appender.R.File = logs&#47;bensApps.log<br />
+log4j.appender.R.Append = true<br />
+log4j.appender.R.DatePattern = '.'yyy-MM-dd<br />
+log4j.appender.R.layout = org.apache.log4j.PatternLayout<br />
+log4j.appender.R.layout.ConversionPattern = %d{yyyy-MM-dd HH:mm:ss} %c{1} [%p] %m%n</p>
+<p>#------------------------------------------------------------------------------<br />
+#<br />
+#  The following properties configure the Rolling File appender in HTML.<br />
+#  See http:&#47;&#47;logging.apache.org&#47;log4j&#47;docs&#47;api&#47;index.html for details.<br />
+#<br />
+#------------------------------------------------------------------------------<br />
+log4j.appender.H = org.apache.log4j.RollingFileAppender<br />
+log4j.appender.H.File = logs&#47;bensApps.html<br />
+log4j.appender.H.MaxFileSize = 100KB<br />
+log4j.appender.H.Append = false<br />
+log4j.appender.H.layout = org.apache.log4j.HTMLLayout<br />
+[&#47;text]</p>

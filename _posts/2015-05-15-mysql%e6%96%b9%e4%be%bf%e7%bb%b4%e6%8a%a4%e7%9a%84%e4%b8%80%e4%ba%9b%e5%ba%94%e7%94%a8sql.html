@@ -1,0 +1,44 @@
+---
+layout: post
+status: publish
+published: true
+title: Mysql方便维护的一些应用sql
+author:
+  display_name: D
+  login: D
+  email: donilan.word@gmail.com
+  url: ''
+author_login: D
+author_email: donilan.word@gmail.com
+wordpress_id: 390
+wordpress_url: http://blog.sincerad.com/?p=390
+date: '2015-05-15 11:39:51 +0800'
+date_gmt: '2015-05-15 03:39:51 +0800'
+categories:
+- database
+- MySQL
+tags:
+- SQL
+- mysql
+comments: []
+---
+<p>导出数据库db_a的table_1结构到db_b的table_1<br />
+[bash]<br />
+mysqldump -uusername -ppassword --no-data --compact \<br />
+ db_a table_1 | mysql -uusername -ppassword db_b table_1;<br />
+[&#47;bash]</p>
+<p>找出每个数据库的存放数据大小<br />
+[sql]<br />
+SELECT<br />
+ table_schema "Data Base Name",<br />
+ sum( data_length + index_length ) &#47; 1024 &#47; 1024 "Data Base Size in MB"<br />
+ FROM information_schema.TABLES<br />
+ GROUP BY table_schema;<br />
+[&#47;sql]</p>
+<p>找出指定的数据库"schema_name"的每一张表的存放数据大小<br />
+[sql]<br />
+SELECT<br />
+ TABLE_NAME, table_rows, data_length, index_length,<br />
+ round(((data_length + index_length) &#47; 1024 &#47; 1024),2) "Size in MB" FROM information_schema.TABLES<br />
+ WHERE table_schema = "schema_name";<br />
+[&#47;sql]</p>

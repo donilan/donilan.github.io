@@ -1,0 +1,34 @@
+---
+layout: post
+status: publish
+published: true
+title: Linux虚拟文件系统
+author:
+  display_name: D
+  login: D
+  email: donilan.word@gmail.com
+  url: ''
+author_login: D
+author_email: donilan.word@gmail.com
+wordpress_id: 237
+wordpress_url: http://blog.sincerad.com/?p=237
+date: '2011-11-27 09:51:02 +0800'
+date_gmt: '2011-11-27 09:51:02 +0800'
+categories:
+- Linux
+- Shell
+tags: []
+comments: []
+---
+<p>[bash]<br />
+##创建一个10M的空文件<br />
+$ dd if=&#47;dev&#47;zero of=&#47;tmp&#47;file.img bs=1M count=10<br />
+##将一个循环设备与这个文件关联起来<br />
+$ losetup &#47;dev&#47;loop0 &#47;tmp&#47;file.img<br />
+##创建文件系统<br />
+$ mke2fs -c &#47;dev&#47;loop0<br />
+##创建准备挂载的目录<br />
+$ mkdir &#47;mnt&#47;point<br />
+##挂载文件系统<br />
+$ mount -t ext2 &#47;dev&#47;loop0 &#47;mnt&#47;point<br />
+[&#47;bash]</p>

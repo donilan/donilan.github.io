@@ -1,0 +1,108 @@
+---
+layout: post
+status: publish
+published: true
+title: python中利用sphinx生成django项目的文档
+author:
+  display_name: D
+  login: D
+  email: donilan.word@gmail.com
+  url: ''
+author_login: D
+author_email: donilan.word@gmail.com
+wordpress_id: 365
+wordpress_url: http://blog.sincerad.com/?p=365
+date: '2014-02-17 02:23:21 +0800'
+date_gmt: '2014-02-17 02:23:21 +0800'
+categories:
+- Python
+- django
+tags:
+- Python
+- django
+- sphinx
+comments: []
+---
+<p>直接到重点，安装sphinx<br />
+[bash]<br />
+easy_install sphinx<br />
+[&#47;bash]<br />
+在安装的过程中，了解一下sphinx，简单来说是生成按照ReStructuredText格式文档，而sphinx提供自动根据代码生成ReStructuredText格式的工具。<br />
+依赖库有不少，在国内安装应该会比较慢，在装好之前先建个django项目。<br />
+[bash]<br />
+django-admin.py startproject mydocs<br />
+cd mydocs<br />
+tree<br />
+[&#47;bash]<br />
+没有意外的话，应该会看到<br />
+<code><br />
+.<br />
+|-- manage.py<br />
+`-- mydocs<br />
+    |-- __init__.py<br />
+    |-- settings.py<br />
+    |-- urls.py<br />
+    `-- wsgi.py</p>
+<p>1 directory, 5 files<br />
+<&#47;code><br />
+如果sphinx安装好以后，就可以初始化sphinx的文件了<br />
+[bash]<br />
+mkdir docs<br />
+cd docs<br />
+sphinx-quickstart<br />
+### 一堆提示，一堆y&#47;n选择，填项目名称，项目版本，作者之类的，一个个填吧。</p>
+<p>tree<br />
+[&#47;bash]<br />
+OK.也是，没有意外的话，会看到<br />
+<code><br />
+.<br />
+|-- _build<br />
+|-- conf.py<br />
+|-- index.rst<br />
+|-- make.bat<br />
+|-- Makefile<br />
+|-- _static<br />
+`-- _templates</p>
+<p>3 directories, 4 files<br />
+<&#47;code><br />
+这时候要编辑一下index.rst文件，添加一行内容，打开index.rst文件，找到有一行 :maxdepth: 2, 在下面添加 mydocs.rst(这个想项目的module名字)。<br />
+好了，接着写个脚本到项目的根目录，先回到项目的根目录，然后用编辑器建一个build_docs.sh脚本文件，并按照下面的内容编辑<br />
+[bash]<br />
+#!&#47;usr&#47;bin&#47;env bash                                                             </p>
+<p># django的配置模块<br />
+export DJANGO_SETTINGS_MODULE="mydocs.settings"<br />
+# 项目的路径<br />
+export PYTHONPATH=`dirname "$(readlink -f "$0")"`<br />
+# 输出的路径<br />
+OUT_DIR=docs</p>
+<p># 生成代码的文档<br />
+sphinx-apidoc -o $OUT_DIR -f $PYTHONPATH</p>
+<p># 生成html格式的文档<br />
+( cd $OUT_DIR && make html )<br />
+[&#47;bash]<br />
+先测试一下，是否可以运行<br />
+[bash]<br />
+chmod +x build_docs.sh</p>
+<p>.&#47;build_docs.sh<br />
+[&#47;bash]<br />
+好了，编辑个代码看看，编辑mydocs&#47;models.py。<br />
+[python]<br />
+# -*- coding: utf-8 -*-<br />
+"""<br />
+测试文档用的models<br />
+================<br />
+"""</p>
+<p>from django.db import models</p>
+<p>class User(models.Model):<br />
+    """用户类"""<br />
+    username = models.CharField()<br />
+    """用户名"""<br />
+    password = models.CharField()<br />
+    """密码"""</p>
+<p>[&#47;python]<br />
+到最后了，运行以下脚本，完成任务<br />
+[bash]<br />
+.&#47;build_docs.sh<br />
+chromium-browser docs&#47;_build&#47;html&#47;mydocs.html<br />
+[&#47;bash]<br />
+运气好的话，就可以看到文档了</p>

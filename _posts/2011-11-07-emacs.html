@@ -1,0 +1,98 @@
+---
+layout: post
+status: publish
+published: true
+title: Emacs
+author:
+  display_name: D
+  login: D
+  email: donilan.word@gmail.com
+  url: ''
+author_login: D
+author_email: donilan.word@gmail.com
+wordpress_id: 197
+wordpress_url: http://blog.sincerad.com/?p=197
+date: '2011-11-07 02:32:31 +0800'
+date_gmt: '2011-11-07 02:32:31 +0800'
+categories:
+- Emacs
+- Lisp
+tags:
+- Emacs
+- Emacs lisp
+comments: []
+---
+<p>一个让人折腾的编辑器，说错了，不应该说它是编辑器。<br />
+以下是emacs学习记录</p>
+<ol>
+<li>
+		<strong>Hello wolrd.<&#47;strong></p>
+<p>首先进入Emacs的*Backtrace*缓冲区, C-x C-b 选择它进入，输入以下代码。<&#47;p><br />
+		[text]<br />
+			(message "Hello world") ;; 可以用C-j 或者C-x C-e执行<br />
+		[&#47;text]<br />
+	<&#47;li></p>
+<li>
+		<strong>定义函数.<&#47;strong><br />
+		[text]<br />
+			(defun test-fun( a b )<br />
+				(+ a b))<br />
+			(message (test-fun 1 2) ;;结果为3<br />
+		[&#47;text]<br />
+	<&#47;li></p>
+<li>
+		<strong>选择并缩排<&#47;strong></p>
+<p>C-@为选择的开始，游动光标就可以选择某一区域，再用M-C-\就可以自动缩排。<&#47;p><br />
+	<&#47;li></p>
+<li>
+<p>函数buffer-name, buffer-file-name, 变量fill-column<&#47;p><br />
+		[text]<br />
+		(message "The name of this buffer is: %s \n and The name of this buffer file name is: %s \n and the value of fill-column is: %d"<br />
+			(buffer-name)<br />
+	 		(buffer-file-name)<br />
+	 		fill-column)<br />
+		[&#47;text]<br />
+	<&#47;li></p>
+<li>
+<p>判断变量是否为0，是否为列表.<&#47;p><br />
+		[text]<br />
+		(zerop 0) ; t<br />
+		(zerop 1) ; nil<br />
+		(listp ()) ; t<br />
+		(listp 1) ; nil<br />
+		[&#47;text]<br />
+	<&#47;li></p>
+<li>
+<p>设置变量，两个方法结果一样.<&#47;p><br />
+		[text]<br />
+		(set 'list-val '(val1 val2))<br />
+		(setq list-val '(val1 val2))<br />
+		[&#47;text]<br />
+	<&#47;li></p>
+<li>
+<p>buffer 操作, current-buffer(当前buffer), other-buffer(上次访问的buffer), switch-to-buffer(切换buffer), set-buffer(设置buffer).<&#47;p><br />
+		[text]<br />
+		(swithc-to-buffer (other-buffer))<br />
+		(set-buffer (current-buffer))<br />
+		[&#47;text]<br />
+	<&#47;li></p>
+<li>
+<p>光标位置<&#47;p><br />
+		[text]<br />
+		(point) ; 当前光标位置<br />
+		(point-min) ; 最小光标值，一般都会是1<br />
+		(point-max) ; 最大光标值<br />
+		[&#47;text]<br />
+	<&#47;li></p>
+<li>
+<p>定义函数和调用函数.<&#47;p><br />
+		[text]<br />
+		;; 定义函数<br />
+		(defun plus (number1 number2)<br />
+ 			"plus function"<br />
+  			(+ number1 number2))<br />
+		;;调用函数<br />
+		(plus 1 1)</p>
+<p>		[&#47;text]<br />
+	<&#47;li><br />
+<&#47;ol></p>

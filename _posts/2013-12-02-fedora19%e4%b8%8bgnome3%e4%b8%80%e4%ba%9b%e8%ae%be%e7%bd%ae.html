@@ -1,0 +1,32 @@
+---
+layout: post
+status: publish
+published: true
+title: Fedora19下Gnome3一些设置
+author:
+  display_name: D
+  login: D
+  email: donilan.word@gmail.com
+  url: ''
+author_login: D
+author_email: donilan.word@gmail.com
+wordpress_id: 355
+wordpress_url: http://d.ii2d.com/?p=355
+date: '2013-12-02 01:22:55 +0800'
+date_gmt: '2013-12-02 01:22:55 +0800'
+categories:
+- Linux
+tags:
+- Linux
+- Fedora
+- Gnome
+- Shortcuts
+comments: []
+---
+<p>其实是非常简单，只是感觉不好找，所以记录下来了。</p>
+<p><strong>快捷键设置<&#47;strong><br />
+Settings -> Keyboard -> Shortcuts -> Custom Shortcuts -> + -> 输入 Name 和 Command ，然后点击Apply，最后点击快捷键的位置，输入快捷键即可。</p>
+<p><strong>笔记本盖合上时的动作处理<&#47;strong><br />
+[bash]<br />
+sudo sed -i -e '&#47;#HandleLidSwitch.\+$&#47;aHandleLidSwitch=lock' -e 's&#47;HandleLidSwitch.\+$&#47;HandleLidSwitch=lock&#47;' &#47;etc&#47;systemd&#47;logind.conf<br />
+[&#47;bash]</p>

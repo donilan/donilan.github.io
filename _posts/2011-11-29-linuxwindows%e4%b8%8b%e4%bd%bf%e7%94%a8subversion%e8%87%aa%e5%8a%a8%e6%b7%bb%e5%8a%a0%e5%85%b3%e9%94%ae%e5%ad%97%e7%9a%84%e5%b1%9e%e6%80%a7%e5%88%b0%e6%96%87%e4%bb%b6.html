@@ -1,0 +1,47 @@
+---
+layout: post
+status: publish
+published: true
+title: Linux&#47;Windows下使用Subversion自动添加关键字的属性到文件
+author:
+  display_name: D
+  login: D
+  email: donilan.word@gmail.com
+  url: ''
+author_login: D
+author_email: donilan.word@gmail.com
+wordpress_id: 244
+wordpress_url: http://blog.sincerad.com/?p=244
+date: '2011-11-29 08:03:07 +0800'
+date_gmt: '2011-11-29 08:03:07 +0800'
+categories:
+- JAVA
+- Linux
+- Windows
+- 版本控制
+- Subversion
+tags:
+- Linux
+- svn
+- SubVersion
+- windows
+- svn:keywords
+- svn:ignore
+comments: []
+---
+<p>首先要找到配置文件的位置。<br />
+Linux下: &#47;home&#47;[username]&#47;.subversion&#47;config<br />
+Window下: C:\Documents and Settings\[username]\Application Data\Subversion\config</p>
+<p>找到# enable-auto-props = yes 属性把注释去掉<br />
+然后在底下（找到[auto-props]下面）添加要使用这个功能的文件<br />
+以java为例: *.java = svn:keywords=Author Date Id Rev URL</p>
+<p>还有全局忽略的设置<br />
+[bash]</p>
+<p>##全局无视<br />
+[miscellany]<br />
+global-ignores = *.o *.lo *.la *.al .libs *.so *.so.[0-9]* *.a *.pyc *.pyo *.class .classpath .project .settings target *.war</p>
+<p>enable-auto-props = yes</p>
+<p>[auto-props]</p>
+<p>*.java = svn:keywords=Author Date Id Rev URL<br />
+*.groovy = svn:keywords=Author Date Id Rev URL<br />
+[&#47;bash]</p>

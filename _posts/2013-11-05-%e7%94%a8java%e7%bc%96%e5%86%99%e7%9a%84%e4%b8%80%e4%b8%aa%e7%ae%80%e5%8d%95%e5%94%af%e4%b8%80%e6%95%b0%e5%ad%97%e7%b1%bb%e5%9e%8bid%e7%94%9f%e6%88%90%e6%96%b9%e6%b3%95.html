@@ -1,0 +1,101 @@
+---
+layout: post
+status: publish
+published: true
+title: 用Java编写的一个简单唯一数字ID生成方法
+author:
+  display_name: D
+  login: D
+  email: donilan.word@gmail.com
+  url: ''
+author_login: D
+author_email: donilan.word@gmail.com
+wordpress_id: 345
+wordpress_url: http://blog.sincerad.com/?p=345
+date: '2013-11-05 03:11:39 +0800'
+date_gmt: '2013-11-05 03:11:39 +0800'
+categories:
+- JAVA
+tags:
+- JAVA
+comments: []
+---
+<p>原理很简单，用当前的毫秒数减去过去43年的毫秒数，目的是为了不让生成的数值那么大，然后再加上一个原子操作的自增数，即可实现。<br />
+[java]<br />
+public static long FORTY_THREE_YEAR = 1000l * 60l * 60l * 24l * 365l * 43l;<br />
+public static java.util.concurrent.atomic.AtomicInteger increment = new java.util.concurrent.atomic.AtomicInteger(0);<br />
+public static int MAX_INCREMENT = 99999;<br />
+&#47;**<br />
+ * 生成唯一id<br />
+ *&#47;<br />
+public static synchronized long generateId() {<br />
+	&#47;&#47; 减去43年<br />
+	long prefix = (System.currentTimeMillis() - FORTY_THREE_YEAR) * MAX_INCREMENT;<br />
+	&#47;&#47; 加上自增值<br />
+	prefix += increment.getAndIncrement();<br />
+	if(increment.get() > MAX_INCREMENT)<br />
+		increment.set(0);<br />
+	return prefix;<br />
+}<br />
+[&#47;java]</p>
+<p>再附上一个单元测试方法<br />
+[java]<br />
+@Test<br />
+public final void testUnique() throws InterruptedException {<br />
+	&#47;&#47; 性能计算<br />
+	long startTime = System.currentTimeMillis();<br />
+	&#47;&#47; 线程数<br />
+	final int threadLen = 20;<br />
+	&#47;&#47; 每个线程生成的id数<br />
+	final int genernateIdPreThread = 200000;<br />
+	&#47;&#47; 使用map记录重复的id<br />
+	final Map<Long, Integer> counter = new ConcurrentHashMap<Long, Integer>();<br />
+	&#47;&#47; 处理线程<br />
+	Thread threads[] = new Thread[threadLen];<br />
+	for(int i = 0 ; i < threadLen; ++i) {<br />
+		threads[i] = new Thread(new Runnable() {</p>
+<p>			@Override<br />
+			public void run() {<br />
+				for(int y = 0; y < genernateIdPreThread; ++y) {<br />
+					long id = DBUtils.generateId();<br />
+					Integer coun = counter.get(id);<br />
+					if(coun != null) {<br />
+						Assert.fail(String.format("测试失败，在线程id为 [%d]发现重复id\n", Thread.currentThread().getId()));<br />
+						break;<br />
+					} else {<br />
+						counter.put(id, 1);<br />
+					}</p>
+<p>				}<br />
+				System.out.printf("线程[%d]已经执行完毕，没有发现重复id\n", Thread.currentThread().getId());<br />
+			}<br />
+		});<br />
+		threads[i].start();<br />
+	}<br />
+	&#47;&#47;等待所有线程结束<br />
+	for(Thread t: threads)<br />
+		t.join();<br />
+	System.out.printf("总耗时 %d ms, 一共生成了[%d]个id\n", System.currentTimeMillis() - startTime, counter.size());<br />
+}<br />
+[&#47;java]</p>
+<p>测试结果如下：<br />
+线程[16]已经执行完毕，没有发现重复id<br />
+线程[30]已经执行完毕，没有发现重复id<br />
+线程[26]已经执行完毕，没有发现重复id<br />
+线程[17]已经执行完毕，没有发现重复id<br />
+线程[15]已经执行完毕，没有发现重复id<br />
+线程[20]已经执行完毕，没有发现重复id<br />
+线程[13]已经执行完毕，没有发现重复id<br />
+线程[18]已经执行完毕，没有发现重复id<br />
+线程[14]已经执行完毕，没有发现重复id<br />
+线程[28]已经执行完毕，没有发现重复id<br />
+线程[31]已经执行完毕，没有发现重复id<br />
+线程[21]已经执行完毕，没有发现重复id<br />
+线程[22]已经执行完毕，没有发现重复id<br />
+线程[25]已经执行完毕，没有发现重复id<br />
+线程[12]已经执行完毕，没有发现重复id<br />
+线程[29]已经执行完毕，没有发现重复id<br />
+线程[23]已经执行完毕，没有发现重复id<br />
+线程[19]已经执行完毕，没有发现重复id<br />
+线程[24]已经执行完毕，没有发现重复id<br />
+线程[27]已经执行完毕，没有发现重复id<br />
+总耗时 4594 ms, 一共生成了[4000000]个id</p>

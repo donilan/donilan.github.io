@@ -1,0 +1,72 @@
+---
+layout: post
+status: publish
+published: true
+title: Linux下开启SFTP的chroot jail
+author:
+  display_name: D
+  login: D
+  email: donilan.word@gmail.com
+  url: ''
+author_login: D
+author_email: donilan.word@gmail.com
+wordpress_id: 364
+wordpress_url: http://blog.sincerad.com/?p=364
+date: '2014-02-12 01:37:57 +0800'
+date_gmt: '2014-02-12 01:37:57 +0800'
+categories:
+- Linux
+tags:
+- Linux
+- Chroot jail
+- SCP
+- SFTP
+- SSH
+- SSHD
+comments: []
+---
+<p>Chroot jail(根目录监狱)，感觉这个名字不是一般的霸气，实际用途也是很厉害，它是用来限制登陆的用户只能访问指定的一个根目录，而不能往回退，也就是说CD ..无效。</p>
+<p>在服务器端必须安装sshd服务，应该没有Linux不开启的吧（按我目前了解的，几乎没有），最好检查一下有没有nologin这个功能。<br />
+[bash]<br />
+# 我的服务器是在&#47;usr&#47;sbin&#47;nologin<br />
+whereis nologin<br />
+[&#47;bash]<br />
+先修改服务器的sshd配置，一般地址在&#47;etc&#47;ssh&#47;sshd_config，按以下的配置代码修改即可<br />
+[bash]<br />
+# 原来的配置应该是这样子的，不同的Linux发行版可能有点不一样<br />
+# Subsystem sftp &#47;usr&#47;lib&#47;openssh&#47;sftp-server<br />
+# 改为以下的样子<br />
+Subsystem sftp internal-sftp</p>
+<p># 这个Match配置可以是接着Group，也可以是User，我这里的组名是group1,用户名是user1<br />
+# Match Group group1<br />
+# 以下是我现在用的配置<br />
+Match User user1<br />
+# 这里可以使用变量%u代表登陆的用户<br />
+#      ChrootDirectory &#47;home&#47;%u<br />
+# 以下是我现在用的配置<br />
+      ChrootDirectory &#47;home&#47;user1<br />
+      ForceCommand internal-sftp<br />
+      AllowTCPForwarding no<br />
+      X11Forwarding no<br />
+[&#47;bash]<br />
+配置搞定了，重启sshd服务<br />
+[bash]<br />
+# debin类型<br />
+service ssh restart<br />
+# fedora之类的<br />
+systemctl restart sshd<br />
+[&#47;bash]<br />
+再创建一个用户，然后修改目录权限<br />
+[bash]<br />
+# 创建用户<br />
+useradd -s &#47;usr&#47;sbin&#47;nologin -d &#47;home&#47;user1 user1<br />
+# 修改目录权限，Chroot jail中的目录拥有着必须是root，并且组和其它是不能写入<br />
+chown root:root &#47;home&#47;user1<br />
+chmod 755 &#47;home&#47;user1<br />
+# 建立一个可读写的目录<br />
+mkdir &#47;home&#47;user1&#47;writable<br />
+chown user1:group1 &#47;home&#47;user1&#47;writable<br />
+chmod ug+rwx &#47;home&#47;user1&#47;writable<br />
+[&#47;bash]</p>
+<p>另外还可以使用rssh和scponly来实现，它们也各自有有缺点，目前还没有一种觉得最好的方案。</p>
+<p>全文完。</p>

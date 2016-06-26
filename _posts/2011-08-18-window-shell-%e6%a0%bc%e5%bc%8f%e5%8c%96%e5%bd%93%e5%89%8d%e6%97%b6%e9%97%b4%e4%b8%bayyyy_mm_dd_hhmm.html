@@ -1,0 +1,26 @@
+---
+layout: post
+status: publish
+published: true
+title: Window shell 格式化当前时间为YYYY_MM_DD_HHmm
+author:
+  display_name: D
+  login: D
+  email: donilan.word@gmail.com
+  url: ''
+author_login: D
+author_email: donilan.word@gmail.com
+wordpress_id: 164
+wordpress_url: http://blog.sincerad.com/?p=164
+date: '2011-08-18 08:57:18 +0800'
+date_gmt: '2011-08-18 08:57:18 +0800'
+categories:
+- Windows
+tags: []
+comments: []
+---
+<p>[bash]<br />
+SET _date=%date: =0%<br />
+SET _time=%time: =0%<br />
+SET CURRENT_DATE=%_date:~0,4%_%_date:~5,2%_%_date:~8,2%_%_time:~0,2%%_time:~3,2%<br />
+[&#47;bash]</p>

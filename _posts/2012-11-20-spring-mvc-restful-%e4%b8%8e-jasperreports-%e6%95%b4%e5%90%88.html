@@ -1,0 +1,261 @@
+---
+layout: post
+status: publish
+published: true
+title: Spring mvc RESTful 与 JasperReports 整合
+author:
+  display_name: D
+  login: D
+  email: donilan.word@gmail.com
+  url: ''
+author_login: D
+author_email: donilan.word@gmail.com
+wordpress_id: 289
+wordpress_url: http://blog.sincerad.com/?p=289
+date: '2012-11-20 09:09:29 +0800'
+date_gmt: '2012-11-20 09:09:29 +0800'
+categories:
+- JAVA
+- Spring
+tags:
+- JAVA
+- Spring
+- Spring MVC
+- JasperReports
+comments: []
+---
+<p>    首先来一份Maven的依赖配置，以下是本人用到的jasperReports版本和依赖。<br />
+[xml]</p>
+<project xmlns="http:&#47;&#47;maven.apache.org&#47;POM&#47;4.0.0" xmlns:xsi="http:&#47;&#47;www.w3.org&#47;2001&#47;XMLSchema-instance"<br />
+	xsi:schemaLocation="http:&#47;&#47;maven.apache.org&#47;POM&#47;4.0.0 http:&#47;&#47;maven.apache.org&#47;maven-v4_0_0.xsd">
+<properties>
+		<jasper.version>4.8.0<&#47;jasper.version><br />
+		<groovy.version>1.8.8<&#47;groovy.version><br />
+	<&#47;properties><br />
+	<dependencies><br />
+		<dependency><br />
+			<groupId>com.lowagie<&#47;groupId><br />
+			<artifactId>itextasian<&#47;artifactId><br />
+			<version>1.0<&#47;version><br />
+		<&#47;dependency><br />
+		<dependency><br />
+			<groupId>org.codehaus.groovy<&#47;groupId><br />
+			<artifactId>groovy-all<&#47;artifactId><br />
+			<version>${groovy.version}<&#47;version><br />
+		<&#47;dependency><br />
+		<dependency><br />
+			<groupId>net.sf.jasperreports<&#47;groupId><br />
+			<artifactId>jasperreports<&#47;artifactId><br />
+			<version>${jasper.version}<&#47;version><br />
+		<&#47;dependency><br />
+	<&#47;dependencies><br />
+<&#47;project><br />
+[&#47;xml]</p>
+<p>    其中为了解决中文问题还需要一个itextasian的中文字库包，网上有很多介绍中文问题的解决方案，千篇一律的，本人不断去尝试，最后发现问题在于这个中文包上，这个中文包有多个版本，由不同组织维护，不是每个都合适JasperReports用。下面附上一个能正常的itextasian包和一个maven安装这个包到本地的脚本。<br />
+<a href='http:&#47;&#47;blog.sincerad.com&#47;wp-content&#47;uploads&#47;2012&#47;11&#47;itextasian.zip'>下载itextasian-1.0<&#47;a><br />
+[bash]<br />
+mvn install:install-file -Dfile=&#47;path&#47;to&#47;itextasian-1.0.jar -DgroupId=com.lowagie -DartifactId=itextasian -Dversion=1.0 -Dpackaging=jar<br />
+[&#47;bash]</p>
+<p>    接着就是Spring mvc了，因为本人本来只是用spring mvc没有把jasperReports加入到项目，为了保留原来的配置和最少更改代码来加入JasperReports，所以可能用了一些不太好的整合方式，废话还是少说，先发一个org.springframework.web.servlet.View的实现类。<br />
+[java]<br />
+package com.createw.scs.utils;</p>
+<p>import java.util.HashMap;<br />
+import java.util.Map;</p>
+<p>import org.springframework.web.servlet.view.jasperreports.AbstractJasperReportsView;<br />
+import org.springframework.web.servlet.view.jasperreports.JasperReportsCsvView;<br />
+import org.springframework.web.servlet.view.jasperreports.JasperReportsHtmlView;<br />
+import org.springframework.web.servlet.view.jasperreports.JasperReportsMultiFormatView;<br />
+import org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView;<br />
+import org.springframework.web.servlet.view.jasperreports.JasperReportsXlsView;</p>
+<p>public class JasperView extends JasperReportsMultiFormatView {</p>
+<p>	public JasperView() {<br />
+		super();<br />
+		Map<String, Class<? extends AbstractJasperReportsView>> map = new HashMap<String, Class<? extends AbstractJasperReportsView>>(4);<br />
+		map.put("csv", JasperReportsCsvView.class);<br />
+		map.put("xhtml", JasperReportsHtmlView.class);<br />
+		map.put("pdf", JasperReportsPdfView.class);<br />
+		map.put("xls", JasperReportsXlsView.class);<br />
+		super.setFormatMappings(map);<br />
+	}<br />
+}<br />
+[&#47;java]<br />
+    其实和JasperReportsMultiFormatView源码里面的构造函数代码差不多，其中差别在于map.put("xhtml", JasperReportsHtmlView.class),本人把原来的html换成xhtml了，这样做的目的是为了防止和Spring mvc的org.springframework.web.servlet.view.ContentNegotiatingViewResolver的处理起冲突。下面再附上部分JasperReportsMultiFormatView的源码。<br />
+[java]<br />
+&#47;**<br />
+ * Creates a new <code>JasperReportsMultiFormatView<&#47;code> instance<br />
+ * with a default set of mappings.<br />
+ *&#47;<br />
+public JasperReportsMultiFormatView() {<br />
+	this.formatMappings = new HashMap<String, Class<? extends AbstractJasperReportsView>>(4);<br />
+	this.formatMappings.put("csv", JasperReportsCsvView.class);<br />
+	this.formatMappings.put("html", JasperReportsHtmlView.class);<br />
+	this.formatMappings.put("pdf", JasperReportsPdfView.class);<br />
+	this.formatMappings.put("xls", JasperReportsXlsView.class);<br />
+}</p>
+<p>&#47;**<br />
+ * Set the mappings of format discriminators to view class names.<br />
+ * The default mappings are:<br />
+ *
+<ul>
+ *
+<li><code>csv<&#47;code> - <code>JasperReportsCsvView<&#47;code><&#47;li><br />
+ *
+<li><code>html<&#47;code> - <code>JasperReportsHtmlView<&#47;code><&#47;li><br />
+ *
+<li><code>pdf<&#47;code> - <code>JasperReportsPdfView<&#47;code><&#47;li><br />
+ *
+<li><code>xls<&#47;code> - <code>JasperReportsXlsView<&#47;code><&#47;li><br />
+ * <&#47;ul><br />
+ *&#47;<br />
+public void setFormatMappings(Map<String, Class<? extends AbstractJasperReportsView>> formatMappings) {<br />
+	if (CollectionUtils.isEmpty(formatMappings)) {<br />
+		throw new IllegalArgumentException("'formatMappings' must not be empty");<br />
+	}<br />
+	this.formatMappings = formatMappings;<br />
+}<br />
+[&#47;java]<br />
+     好了，关键部分了，就是spring mvc的配置了。<br />
+[xml]<br />
+<beans><br />
+	<!-- Jasper Report --><br />
+    <bean id="jasperReportsViewResolver" class="org.springframework.web.servlet.view.jasperreports.JasperReportsViewResolver"></p>
+<property name="requestContextAttribute" value="rc"&#47;>
+<p>        <!-- 这是原来应该用的配置 --><br />
+        <!--
+<property name="viewClass" value="org.springframework.web.servlet.view.jasperreports.JasperReportsMultiFormatView"&#47;>--><br />
+        <!-- 换成上面写的继承类 --></p>
+<property name="viewClass" value="com.createw.scs.utils.JasperView" &#47;>
+<p>        <!-- 查找编译好的jasperReports文件 --></p>
+<property name="prefix" value="&#47;WEB-INF&#47;report&#47;"&#47;>
+<property name="suffix" value=".jasper"&#47;>
+<p>        <!-- dataSources参数的key --></p>
+<property name="reportDataKey"><value>datasource<&#47;value><&#47;property></p>
+<property name="exporterParameters">
+<map>
+            <!-- 这个参数比较重要，对于生成html时，jasperReport查找图片的位置 --><br />
+            <entry key="net.sf.jasperreports.engine.export.JRHtmlExporterParameter.IMAGES_URI"><br />
+                <value>&#47;url&#47;paht&#47;to&#47;your&#47;images&#47;dir<&#47;value><br />
+            <&#47;entry><br />
+            <entry key="net.sf.jasperreports.engine.export.JRHtmlExporterParameter.CHARACTER_ENCODING"><br />
+                <value>UTF-8<&#47;value><br />
+            <&#47;entry><br />
+            <entry key="net.sf.jasperreports.engine.export.JRXlsExporterParameter.IS_ONE_PAGE_PER_SHEET"><br />
+                <bean id="java.lang.Boolean.TRUE" class="org.springframework.beans.factory.config.FieldRetrievingFactoryBean"&#47;><br />
+            <&#47;entry><br />
+        <&#47;map><br />
+        <&#47;property><br />
+    <&#47;bean></p>
+<p>	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver"></p>
+<property name="mediaTypes">
+<map>
+				<entry key="json" value="application&#47;json" &#47;><br />
+				<entry key="xml" value="application&#47;xml" &#47;><br />
+				<entry key="html" value="text&#47;html" &#47;><br />
+				<!-- 这个也是一个关键点，因为访问地址默认会转为.html去查找view，而设置了这个的时候，当访问到xxx.xhtml的时候，默认的view就不会处理了。 --><br />
+				<entry key="xhtml" value="text&#47;xhtml" &#47;><br />
+			<&#47;map><br />
+		<&#47;property></p>
+<property name="defaultViews">
+<list>
+				<!-- JSON处理,处理xxx.json view --><br />
+				<bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" &#47;><br />
+			<&#47;list><br />
+		<&#47;property></p>
+<property name="viewResolvers">
+<list>
+				<bean class="org.springframework.web.servlet.view.BeanNameViewResolver" &#47;><br />
+				<!-- 默认处理 --><br />
+				<bean class="org.springframework.web.servlet.view.UrlBasedViewResolver"></p>
+<property name="viewClass"<br />
+						value="org.springframework.web.servlet.view.JstlView" &#47;>
+<property name="prefix" value="&#47;WEB-INF&#47;jsp&#47;" &#47;>
+<property name="suffix" value=".jsp" &#47;>
+				<&#47;bean><br />
+			<&#47;list><br />
+		<&#47;property><br />
+	<&#47;bean><br />
+<&#47;beans><br />
+[&#47;xml]</p>
+<p>好了，配置大致就这样完成了。最后加多份Controller代码。<br />
+[java]<br />
+package com.ii2d.controller;</p>
+<p>import java.lang.reflect.Array;<br />
+import java.util.HashMap;<br />
+import java.util.Map;</p>
+<p>import javax.annotation.Resource;<br />
+import javax.servlet.http.HttpServletRequest;</p>
+<p>import org.apache.commons.dbcp.BasicDataSource;<br />
+import org.apache.commons.lang3.StringUtils;<br />
+import org.springframework.stereotype.Controller;<br />
+import org.springframework.web.bind.annotation.PathVariable;<br />
+import org.springframework.web.bind.annotation.RequestMapping;<br />
+import org.springframework.web.bind.annotation.RequestMethod;<br />
+import org.springframework.web.servlet.ModelAndView;</p>
+<p>import com.ii2d.dbase.util.DDateUtils;</p>
+<p>&#47;**<br />
+ * JasperReports Controller，用户处理JasperReports的请求，<br />
+ * 请求会根据用户访问的后缀来判断使用哪种生成方式，可接受的<br />
+ * 请问方式有xhtml(因为html已经被默认的view处理了。)、pdf、xls。<br><br />
+ * @author Doni<br />
+ * @version 1.0.0 2012-11-20<br />
+ *&#47;<br />
+@RequestMapping("&#47;jasper")<br />
+@Controller<br />
+public class JasperController {</p>
+<p>	@Resource<br />
+	private BasicDataSource scsDataSource;</p>
+<p>	&#47;**<br />
+	 * 主要的处理类<br />
+	 * 请求例子: <br><br />
+	 * http:&#47;&#47;example.com&#47;jasper&#47;reports&#47;someReport.xhtml<br><br />
+	 * http:&#47;&#47;example.com&#47;jasper&#47;reports&#47;someReport.pdf<br><br />
+	 * http:&#47;&#47;example.com&#47;jasper&#47;reports&#47;someReport.xls<br><br />
+	 *&#47;<br />
+	@SuppressWarnings({ "rawtypes", "unchecked" })<br />
+	@RequestMapping(method = RequestMethod.GET, value="reports&#47;{reportName}")<br />
+	public ModelAndView handleSimpleReportMulti(@PathVariable("reportName") String reportName,<br />
+			HttpServletRequest request) throws Exception {<br />
+		Map param = _getParam(request);<br />
+		String uri = request.getRequestURI();<br />
+		String format = uri.substring(uri.lastIndexOf(".") + 1);<br />
+		param.put("format", format);<br />
+		param.put("datasource", scsDataSource);<br />
+		return new ModelAndView(reportName, param);<br />
+	}</p>
+<p>	&#47;**<br />
+	 * 这个方法主要是把一些请求参数的类型转换。<br><br />
+	 * 例如:<br><br />
+	 * 10000会自动转换为java.lang.Long<br><br />
+	 * 2012-11-20会自动转换为java.util.Date<br><br />
+	 * @param request 当前的http请求对象<br />
+	 * @return 处理后的HashMap<br />
+	 *&#47;<br />
+	@SuppressWarnings("rawtypes")<br />
+	private Map<String, Object> _getParam(HttpServletRequest request) {<br />
+		Map<String, Object> param = new HashMap<String, Object>();<br />
+		for(Object obj: request.getParameterMap().entrySet()) {<br />
+			Map.Entry en = (Map.Entry) obj;<br />
+			String key = (String)en.getKey();<br />
+			Object valueObj = en.getValue();</p>
+<p>			if(valueObj instanceof String[]) {<br />
+				valueObj = Array.get(valueObj, 0);<br />
+			}</p>
+<p>			if(valueObj instanceof String) {<br />
+				String valueStr = (String)valueObj;<br />
+				if(StringUtils.isNumeric(valueStr)) {<br />
+					valueObj = Long.valueOf(valueStr);<br />
+				} else {<br />
+					&#47;&#47; 自己写的时间处理包<br />
+					Object d = DDateUtils.safeParse(valueStr);<br />
+					if(d != null) {<br />
+						valueObj = d;<br />
+					}<br />
+				}<br />
+			}</p>
+<p>			param.put(key, valueObj);<br />
+		}<br />
+		return param;<br />
+	}<br />
+}<br />
+[&#47;java]</p>
+<p>全文完。</p>

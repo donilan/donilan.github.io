@@ -1,0 +1,58 @@
+---
+layout: post
+status: publish
+published: true
+title: Linux下mount(映射)Windows共享目录
+author:
+  display_name: D
+  login: D
+  email: donilan.word@gmail.com
+  url: ''
+author_login: D
+author_email: donilan.word@gmail.com
+wordpress_id: 193
+wordpress_url: http://blog.sincerad.com/?p=193
+date: '2011-11-03 02:25:33 +0800'
+date_gmt: '2011-11-03 02:25:33 +0800'
+categories:
+- Linux
+- Shell
+tags:
+- Shell
+- Linux
+- mount
+- windows
+- smbfs
+comments: []
+---
+<p><strong>假设环境：<&#47;strong></p>
+<ol>
+<li>windows系统为：windows xp<&#47;li>
+<li>Window ip 地址: 192.168.1.2<&#47;li>
+<li>共享的目录名称为：share<&#47;li>
+<li>假设window下的用户名和密码为：admin&#47;pass<&#47;li>
+<li>Linux环境为:Ubuntu Linux<&#47;li>
+<li>当前在Linux下使用的用户为：doni<&#47;li><br />
+<&#47;ol><br />
+首先我们需要安装smbfs<br />
+[bash]<br />
+$sudo apt-get install smbfs<br />
+[&#47;bash]<br />
+然后挂载<br />
+[bash]<br />
+$sudo mount &#47;&#47;192.168.1.2&#47;share &#47;path&#47;to&#47;your&#47;mount&#47;dir -o uid=doni,username=admin,password=pass,iocharset=utf8<br />
+[&#47;bash]<br />
+下面是-o参数详解，-o是附加参数</p>
+<ol>
+<li>其中uid的作用，设置挂载后用哪个linux用户为此挂载的拥有者，非常重要，如果我们用sudo挂载，一般拥有者就是root。<&#47;li>
+<li>username,password这个应该不需要解析了，就是windows的用户，如果共享没有设置用户的话，可以不加这两个参数。<&#47;li>
+<li>iocharset设置字符集，主要用来解决乱码问题。<&#47;li><br />
+<&#47;ol><br />
+[bash]<br />
+#取消挂载<br />
+$sudo umount &#47;&#47;192.168.1.2&#47;share<br />
+[&#47;bash]</p>
+<p><strong>另外一种方法<&#47;strong><br />
+[bash]<br />
+$sudo mount -t cifs -o uid=doni &#47;&#47;192.168.1.2&#47;share &#47;path&#47;to&#47;your&#47;mount&#47;dir<br />
+[&#47;bash]</p>

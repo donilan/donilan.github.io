@@ -1,0 +1,28 @@
+---
+layout: post
+status: publish
+published: true
+title: Eclipse下令JBOSS可被其它计算机访问
+author:
+  display_name: D
+  login: D
+  email: donilan.word@gmail.com
+  url: ''
+author_login: D
+author_email: donilan.word@gmail.com
+wordpress_id: 268
+wordpress_url: http://blog.sincerad.com/?p=268
+date: '2012-04-26 08:07:42 +0800'
+date_gmt: '2012-04-26 08:07:42 +0800'
+categories:
+- IDE
+- Eclipse
+tags: []
+comments: []
+---
+<p>前提是正在使用JBOSS容器，并正确地安装到Eclipse下，打开Servers View就可以看到，下图。</p>
+<p><a href="http:&#47;&#47;blog.sincerad.com&#47;wp-content&#47;uploads&#47;2012&#47;04&#47;let-jboss-allow-remote-connect-step1.png"><img class="alignnone size-medium wp-image-269" title="let-jboss-allow-remote-connect-step1" src="http:&#47;&#47;blog.sincerad.com&#47;wp-content&#47;uploads&#47;2012&#47;04&#47;let-jboss-allow-remote-connect-step1-300x67.png" alt="" width="300" height="67" &#47;><&#47;a></p>
+<p>双击上图的JBoss 5.0则可以编辑其配置，并且找到下图的选项，勾上即可。</p>
+<p><a href="http:&#47;&#47;blog.sincerad.com&#47;wp-content&#47;uploads&#47;2012&#47;04&#47;let-jboss-allow-remote-connect-step2.png"><img class="alignnone size-medium wp-image-270" title="let-jboss-allow-remote-connect-step2" src="http:&#47;&#47;blog.sincerad.com&#47;wp-content&#47;uploads&#47;2012&#47;04&#47;let-jboss-allow-remote-connect-step2-300x84.png" alt="" width="300" height="84" &#47;><&#47;a></p>
+<p>还有一个需要注意的地方，估计正常不会碰到的问题，就是操作了ECLIPSE的部署功能到JBOSS上，但无论怎样都没有看到项目发布到JBOSS得目录下，这时可以看看下图这个配置，可能会有用。</p>
+<p><a href="http:&#47;&#47;blog.sincerad.com&#47;wp-content&#47;uploads&#47;2012&#47;04&#47;let-jboss-allow-remote-connect-step3.png"><img class="alignnone size-medium wp-image-271" title="let-jboss-allow-remote-connect-step3" src="http:&#47;&#47;blog.sincerad.com&#47;wp-content&#47;uploads&#47;2012&#47;04&#47;let-jboss-allow-remote-connect-step3-252x300.png" alt="" width="252" height="300" &#47;><&#47;a></p>

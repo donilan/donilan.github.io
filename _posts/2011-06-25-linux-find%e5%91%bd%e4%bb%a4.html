@@ -1,0 +1,40 @@
+---
+layout: post
+status: publish
+published: true
+title: Linux find命令
+author:
+  display_name: D
+  login: D
+  email: donilan.word@gmail.com
+  url: ''
+author_login: D
+author_email: donilan.word@gmail.com
+wordpress_id: 137
+wordpress_url: http://blog.sincerad.com/?p=137
+date: '2011-06-25 05:42:23 +0800'
+date_gmt: '2011-06-25 05:42:23 +0800'
+categories:
+- Linux
+- Shell
+tags: []
+comments: []
+---
+<ul>
+<li>
+		[bash]$find &#47;tmp -size +1m -print0 | xargs -0 ls -l[&#47;bash]</p>
+<p>在目录&#47;tmp找出大于1M的文件并以\0为结束符，作为参数集合调用ls列出.<&#47;p><br />
+	<&#47;li></p>
+<li>
+		[bash]$find . -type f -newermt "2011-06-26" ! -newermt "2011-06-27"[&#47;bash]</p>
+<p>找出当前目录下日期在2011-06-26至2011-06-27之间修改过的文件<&#47;p><br />
+	<&#47;li></p>
+<li>
+		[bash]$find . -type f -newermt "3 years ago" ! -newermt "2 years ago"[&#47;bash]</p>
+<p>找出当前目录下3年前至两年前修改过的文件<&#47;p><br />
+	<&#47;li></p>
+<li>
+		[bash]$find . -type f -printf %s\\n | numsum[&#47;bash]</p>
+<p>找出当前目录下的文件并打印它们的字节数，然后计算总和<&#47;p><br />
+	<&#47;li><br />
+<&#47;ul></p>

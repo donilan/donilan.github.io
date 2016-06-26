@@ -1,0 +1,71 @@
+---
+layout: post
+status: publish
+published: true
+title: Ubuntu下的Synergy服务器共享鼠标键盘
+author:
+  display_name: D
+  login: D
+  email: donilan.word@gmail.com
+  url: ''
+author_login: D
+author_email: donilan.word@gmail.com
+wordpress_id: 219
+wordpress_url: http://blog.sincerad.com/?p=219
+date: '2011-11-13 04:04:16 +0800'
+date_gmt: '2011-11-13 04:04:16 +0800'
+categories:
+- Linux
+tags:
+- Linux
+- windows
+- Synergy
+- Ubuntu
+comments: []
+---
+<p><strong>环境<&#47;strong><br />
+计算机1: ubuntu 11.x, 计算机名称: d-notebook, ip: 192.168.1.1<br />
+计算机2: window xp, 计算机名称: d-netbook, ip: 192.168.1.2</p>
+<p><strong>说明<&#47;strong><br />
+synergy在Linux下的服务器运行名称是synergys</p>
+<p>[bash]<br />
+section: screens<br />
+d-notebook:<br />
+d-netbook:<br />
+end</p>
+<p>section: aliases<br />
+d-netbook:<br />
+192.168.1.2<br />
+d-notebook:<br />
+192.168.1.1<br />
+end</p>
+<p>section: links<br />
+d-netbook:<br />
+left = d-notebook<br />
+d-notebook:<br />
+right = d-netbook<br />
+end</p>
+<p>section: options<br />
+screenSaverSync = false<br />
+keystroke(f12) = lockCursorToScreen(toggle)<br />
+endsection: screens<br />
+d-notebook:<br />
+d-netbook:<br />
+end</p>
+<p>section: aliases<br />
+d-netbook:<br />
+192.168.1.2<br />
+d-notebook:<br />
+192.168.1.1<br />
+end</p>
+<p>section: links<br />
+d-netbook:<br />
+left = d-notebook<br />
+d-notebook:<br />
+right = d-netbook<br />
+end</p>
+<p>section: options<br />
+screenSaverSync = false<br />
+keystroke(f12) = lockCursorToScreen(toggle)<br />
+end<br />
+[&#47;bash]</p>

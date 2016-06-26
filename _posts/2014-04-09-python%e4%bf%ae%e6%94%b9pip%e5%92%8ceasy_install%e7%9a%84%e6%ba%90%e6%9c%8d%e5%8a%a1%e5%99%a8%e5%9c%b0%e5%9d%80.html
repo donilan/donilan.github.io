@@ -1,0 +1,33 @@
+---
+layout: post
+status: publish
+published: true
+title: python修改pip和easy_install的源服务器地址
+author:
+  display_name: D
+  login: D
+  email: donilan.word@gmail.com
+  url: ''
+author_login: D
+author_email: donilan.word@gmail.com
+wordpress_id: 375
+wordpress_url: http://blog.sincerad.com/?p=375
+date: '2014-04-09 10:08:42 +0800'
+date_gmt: '2014-04-09 10:08:42 +0800'
+categories:
+- IDE
+tags: []
+comments: []
+---
+<p>官网因为XXX原因弄得慢得不像个样，简直不是网络，和雾霾天气没二样。所以必须要切换到我们敬爱的豆瓣官网提供的pypi源，谢谢豆瓣。<br />
+修改就简单了，easy_install需要建个文件， ~&#47;.pydistutils.cfg<br />
+然后加入以下内容即可。<br />
+[bash]<br />
+[easy_install]<br />
+index_url = http:&#47;&#47;pypi.douban.com&#47;simple<br />
+[&#47;bash]<br />
+pip需要个~&#47;.pip&#47;pip.conf，加入内容。<br />
+[bash]<br />
+[global]<br />
+index-url = http:&#47;&#47;pypi.douban.com&#47;simple<br />
+[&#47;bash]</p>

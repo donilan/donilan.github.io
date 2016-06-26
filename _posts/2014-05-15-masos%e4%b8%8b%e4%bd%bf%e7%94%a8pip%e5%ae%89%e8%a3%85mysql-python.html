@@ -1,0 +1,41 @@
+---
+layout: post
+status: publish
+published: true
+title: OSX下使用pip安装mysql-python
+author:
+  display_name: D
+  login: D
+  email: donilan.word@gmail.com
+  url: ''
+author_login: D
+author_email: donilan.word@gmail.com
+wordpress_id: 380
+wordpress_url: http://blog.sincerad.com/?p=380
+date: '2014-05-15 01:19:36 +0800'
+date_gmt: '2014-05-14 17:19:36 +0800'
+categories:
+- MySQL
+- Python
+tags:
+- Python
+- macos
+- osx
+- mysql
+- mysql-python
+- clang
+comments: []
+---
+<p>安装这个库的时候发现有一个警告导致安装不能进行下去，google了一下发现这个警告可以忽略的，所以就记下来以备以后有机会再看。</p>
+<p>下面是我遇到的错误信息:<br />
+[bash]<br />
+cc -fno-strict-aliasing -fno-common -dynamic -arch x86_64 -arch i386 -g -Os -pipe -fno-common -fno-strict-aliasing -fwrapv -mno-fused-madd -DENABLE_DTRACE -DMACOSX -DNDEBUG -Wall -Wstrict-prototypes -Wshorten-64-to-32 -DNDEBUG -g -fwrapv -Os -Wall -Wstrict-prototypes -DENABLE_DTRACE -arch x86_64 -arch i386 -pipe -Dversion_info=(1,2,5,'final',1) -D__version__=1.2.5 -I&#47;usr&#47;local&#47;Cellar&#47;mysql&#47;5.6.17_1&#47;include&#47;mysql -I&#47;System&#47;Library&#47;Frameworks&#47;Python.framework&#47;Versions&#47;2.7&#47;include&#47;python2.7 -c _mysql.c -o build&#47;temp.macosx-10.9-intel-2.7&#47;_mysql.o -Os -g -fno-strict-aliasing</p>
+<p>clang: error: unknown argument: '-mno-fused-madd' [-Wunused-command-line-argument-hard-error-in-future]</p>
+<p>clang: note: this will be a hard error (cannot be downgraded to a warning) in the future</p>
+<p>error: command 'cc' failed with exit status 1</p>
+<p>[&#47;bash]<br />
+只要在终端设置以下的环境变量，编译就能通过。<br />
+[bash]<br />
+export CFLAGS=-Qunused-arguments<br />
+export CPPFLAGS=-Qunused-arguments<br />
+[&#47;bash]</p>

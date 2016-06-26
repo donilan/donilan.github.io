@@ -1,0 +1,39 @@
+---
+layout: post
+status: publish
+published: true
+title: 不用密码的SSH登录
+author:
+  display_name: D
+  login: D
+  email: donilan.word@gmail.com
+  url: ''
+author_login: D
+author_email: donilan.word@gmail.com
+wordpress_id: 248
+wordpress_url: http://blog.sincerad.com/?p=248
+date: '2011-12-06 06:32:42 +0800'
+date_gmt: '2011-12-06 06:32:42 +0800'
+categories:
+- IDE
+tags: []
+comments: []
+---
+<p>[bash]<br />
+$ ssh-keygen<br />
+Generating public&#47;private rsa key pair.<br />
+Enter file in which to save the key (&#47;home&#47;user&#47;.ssh&#47;id_rsa):[输入一个用来保存key的文件]<br />
+Enter passphrase (empty for no passphrase): [口令]<br />
+Enter same passphrase again: [确认口令]<br />
+Your identification has been saved in &#47;home&#47;user&#47;.ssh&#47;id_rsa.<br />
+Your public key has been saved in &#47;home&#47;user&#47;.ssh&#47;id_rsa.pub.<br />
+The key fingerprint is:<br />
+b2:ad:a0:80:85:ad:6c:16:bd:1c:e7:63:4f:a0:00:15 user@host<br />
+The key's randomart image is:<br />
+##生成的图片码</p>
+<p>##添加私有密匙<br />
+$ ssh-add </p>
+<p>$ ssh-copy-id 用户名@服务器主机地址<br />
+用户名@服务器主机地址's password:[登录密码]</p>
+<p>$ ssh 用户名@服务器主机地址<br />
+[&#47;bash]</p>

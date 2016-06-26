@@ -1,0 +1,46 @@
+---
+layout: post
+status: publish
+published: true
+title: WGet与cURL
+author:
+  display_name: D
+  login: D
+  email: donilan.word@gmail.com
+  url: ''
+author_login: D
+author_email: donilan.word@gmail.com
+wordpress_id: 76
+wordpress_url: http://blog.sincerad.com/?p=76
+date: '2010-11-30 06:33:38 +0800'
+date_gmt: '2010-11-30 06:33:38 +0800'
+categories:
+- Shell
+tags:
+- Shell
+- WGet
+- cURL
+comments: []
+---
+<p><strong>WGet<&#47;strong><br />
+GNU Wget是一个在网络上进行下载的简单而强大的自由软件，其本身也是GNU计划的一部分。它的名字是&ldquo;World Wide Web&rdquo;和&ldquo;Get&rdquo;的结合，同时也隐含了软件的主要功能。目前它支持通过HTTP、HTTPS，以及FTP这三个最常见的TCP&#47;IP协议协议下载。</p>
+<p>它的主要特点包括：</p>
+<ul>
+<li>支持递归下载<&#47;li>
+<li>恰当的转换页面中的链接<&#47;li>
+<li>生成可在本地浏览的页面镜像<&#47;li>
+<li>支持代理服务器<&#47;li><br />
+<&#47;ul></p>
+<p><strong>cURL<&#47;strong><br />
+cURL是一个利用URL语法在命令行下工作的文件传输工具。它支持文件的上传和下载，所以是综合传输工具，但按传统，习惯称cURL为下载工具。<br />
+cURL支援的通訊協定有FTP、FTPS、HTTP、HTTPS、TFTP、Telnet、DICT、FILE和LDAP。<br />
+[bash]<br />
+#POST数据<br />
+curl --data-urlencode "name=I am Daniel" [URL]<br />
+#POST文件<br />
+ curl --form upload=@localfilename --form press=OK [URL]<br />
+ #调试连接头<br />
+ curl --request HEAD --verbose [URL]<br />
+[&#47;bash]</p>
+<p><a href="http:&#47;&#47;curl.haxx.se&#47;">cURL官方地址<&#47;a><br />
+<a href="http:&#47;&#47;curl.haxx.se&#47;docs&#47;httpscripting.html">一些例子<&#47;a></p>

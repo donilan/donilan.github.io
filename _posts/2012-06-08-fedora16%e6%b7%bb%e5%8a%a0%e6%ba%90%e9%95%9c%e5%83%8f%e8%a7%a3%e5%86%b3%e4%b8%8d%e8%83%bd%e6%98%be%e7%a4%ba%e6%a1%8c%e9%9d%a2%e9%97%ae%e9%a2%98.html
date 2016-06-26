@@ -1,0 +1,29 @@
+---
+layout: post
+status: publish
+published: true
+title: Fedora16添加源镜像解决不能显示桌面问题
+author:
+  display_name: D
+  login: D
+  email: donilan.word@gmail.com
+  url: ''
+author_login: D
+author_email: donilan.word@gmail.com
+wordpress_id: 282
+wordpress_url: http://blog.sincerad.com/?p=282
+date: '2012-06-08 01:02:03 +0800'
+date_gmt: '2012-06-08 01:02:03 +0800'
+categories:
+- Linux
+tags: []
+comments: []
+---
+<p>163源镜像说明 http:&#47;&#47;mirrors.163.com&#47;.help&#47;fedora.html</p>
+<p>[bash]<br />
+## 更新源的缓存，更新库<br />
+sudo yum makecache && yum update &ndash;y && yum upgrade &ndash;y</p>
+<p>## 解决不能显示桌面问题<br />
+sudo yum install gnome-tweak-tool &ndash;y<br />
+[&#47;bash]</p>
+<p>安装完后打开gnome-tweak-tool设置一下就可以显示桌面了。</p>
