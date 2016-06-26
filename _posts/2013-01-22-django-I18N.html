@@ -32,8 +32,8 @@ if [ -d $PROJECT_NAME ]
 then
     read -p "Do you want to delete $PROJECT_NAME?" yn
     case $yn in
-	[yY]* ) rm $PROJECT_NAME -rf;;
-	* ) exit 0;;
+  [yY]* ) rm $PROJECT_NAME -rf;;
+  * ) exit 0;;
     esac
 fi
 ## Create project
@@ -42,14 +42,14 @@ django-admin.py startproject $PROJECT_NAME
 cd $PROJECT_NAME
 ## Create an app and add to settings file.
 django-admin.py startapp app
-sed -i "/'django.contrib.admindocs'/a\	'app'," $SETTINGS_FILE
+sed -i "/'django.contrib.admindocs'/a\  'app'," $SETTINGS_FILE
 ## Add sqlite3 support for session use.
 ## 增加数据库配置，使用sqlite3,数据库文件名为test.db
 sed -i -e "s/django.db.backends./&sqlite3/g " \
     -e "s/'NAME':\s*'/&test.db/g" $SETTINGS_FILE
 ## Add locale middleware for i18n.
 ## 加入i18n的middleware，一定要在Session middleware之后
-sed -i "/SessionMiddleware/a\	'django.middleware.locale.LocaleMiddleware'," \
+sed -i "/SessionMiddleware/a\  'django.middleware.locale.LocaleMiddleware'," \
     $SETTINGS_FILE
 ## Add url pattern for app view name index.
 sed -i "/admin.site.urls/a\    url(r'^$', 'app.views.index')," $URLS_FILE

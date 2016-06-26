@@ -25,52 +25,52 @@ public static int MAX_INCREMENT = 99999;
  * 生成唯一id
  */
 public static synchronized long generateId() {
-	// 减去43年
-	long prefix = (System.currentTimeMillis() - FORTY_THREE_YEAR) * MAX_INCREMENT;
-	// 加上自增值
-	prefix += increment.getAndIncrement();
-	if(increment.get() > MAX_INCREMENT)
-		increment.set(0);
-	return prefix;
+  // 减去43年
+  long prefix = (System.currentTimeMillis() - FORTY_THREE_YEAR) * MAX_INCREMENT;
+  // 加上自增值
+  prefix += increment.getAndIncrement();
+  if(increment.get() > MAX_INCREMENT)
+    increment.set(0);
+  return prefix;
 }
 {% endhighlight %}
 再附上一个单元测试方法
 {% highlight java %}
 @Test
 public final void testUnique() throws InterruptedException {
-	// 性能计算
-	long startTime = System.currentTimeMillis();
-	// 线程数
-	final int threadLen = 20;
-	// 每个线程生成的id数
-	final int genernateIdPreThread = 200000;
-	// 使用map记录重复的id
-	final Map<Long, Integer> counter = new ConcurrentHashMap<Long, Integer>();
-	// 处理线程
-	Thread threads[] = new Thread[threadLen];
-	for(int i = 0 ; i < threadLen; ++i) {
-		threads[i] = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				for(int y = 0; y < genernateIdPreThread; ++y) {
-					long id = DBUtils.generateId();
-					Integer coun = counter.get(id);
-					if(coun != null) {
-						Assert.fail(String.format("测试失败，在线程id为 [%d]发现重复id\n", Thread.currentThread().getId()));
-						break;
-					} else {
-						counter.put(id, 1);
-					}
-				}
-				System.out.printf("线程[%d]已经执行完毕，没有发现重复id\n", Thread.currentThread().getId());
-			}
-		});
-		threads[i].start();
-	}
-	//等待所有线程结束
-	for(Thread t: threads)
-		t.join();
-	System.out.printf("总耗时 %d ms, 一共生成了[%d]个id\n", System.currentTimeMillis() - startTime, counter.size());
+  // 性能计算
+  long startTime = System.currentTimeMillis();
+  // 线程数
+  final int threadLen = 20;
+  // 每个线程生成的id数
+  final int genernateIdPreThread = 200000;
+  // 使用map记录重复的id
+  final Map<Long, Integer> counter = new ConcurrentHashMap<Long, Integer>();
+  // 处理线程
+  Thread threads[] = new Thread[threadLen];
+  for(int i = 0 ; i < threadLen; ++i) {
+    threads[i] = new Thread(new Runnable() {
+      @Override
+      public void run() {
+        for(int y = 0; y < genernateIdPreThread; ++y) {
+          long id = DBUtils.generateId();
+          Integer coun = counter.get(id);
+          if(coun != null) {
+            Assert.fail(String.format("测试失败，在线程id为 [%d]发现重复id\n", Thread.currentThread().getId()));
+            break;
+          } else {
+            counter.put(id, 1);
+          }
+        }
+        System.out.printf("线程[%d]已经执行完毕，没有发现重复id\n", Thread.currentThread().getId());
+      }
+    });
+    threads[i].start();
+  }
+  //等待所有线程结束
+  for(Thread t: threads)
+    t.join();
+  System.out.printf("总耗时 %d ms, 一共生成了[%d]个id\n", System.currentTimeMillis() - startTime, counter.size());
 }
 {% endhighlight %}
 测试结果如下：

@@ -23,28 +23,28 @@ comments: []
     首先来一份Maven的依赖配置，以下是本人用到的jasperReports版本和依赖。
 {% highlight xml %}
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 <properties>
-		<jasper.version>4.8.0</jasper.version>
-		<groovy.version>1.8.8</groovy.version>
-	</properties>
-	<dependencies>
-		<dependency>
-			<groupId>com.lowagie</groupId>
-			<artifactId>itextasian</artifactId>
-			<version>1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.codehaus.groovy</groupId>
-			<artifactId>groovy-all</artifactId>
-			<version>${groovy.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>net.sf.jasperreports</groupId>
-			<artifactId>jasperreports</artifactId>
-			<version>${jasper.version}</version>
-		</dependency>
-	</dependencies>
+    <jasper.version>4.8.0</jasper.version>
+    <groovy.version>1.8.8</groovy.version>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>com.lowagie</groupId>
+      <artifactId>itextasian</artifactId>
+      <version>1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.groovy</groupId>
+      <artifactId>groovy-all</artifactId>
+      <version>${groovy.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>net.sf.jasperreports</groupId>
+      <artifactId>jasperreports</artifactId>
+      <version>${jasper.version}</version>
+    </dependency>
+  </dependencies>
 </project>
 {% endhighlight %}
     其中为了解决中文问题还需要一个itextasian的中文字库包，网上有很多介绍中文问题的解决方案，千篇一律的，本人不断去尝试，最后发现问题在于这个中文包上，这个中文包有多个版本，由不同组织维护，不是每个都合适JasperReports用。下面附上一个能正常的itextasian包和一个maven安装这个包到本地的脚本。
@@ -64,15 +64,15 @@ import org.springframework.web.servlet.view.jasperreports.JasperReportsMultiForm
 import org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView;
 import org.springframework.web.servlet.view.jasperreports.JasperReportsXlsView;
 public class JasperView extends JasperReportsMultiFormatView {
-	public JasperView() {
-		super();
-		Map<String, Class<? extends AbstractJasperReportsView>> map = new HashMap<String, Class<? extends AbstractJasperReportsView>>(4);
-		map.put("csv", JasperReportsCsvView.class);
-		map.put("xhtml", JasperReportsHtmlView.class);
-		map.put("pdf", JasperReportsPdfView.class);
-		map.put("xls", JasperReportsXlsView.class);
-		super.setFormatMappings(map);
-	}
+  public JasperView() {
+    super();
+    Map<String, Class<? extends AbstractJasperReportsView>> map = new HashMap<String, Class<? extends AbstractJasperReportsView>>(4);
+    map.put("csv", JasperReportsCsvView.class);
+    map.put("xhtml", JasperReportsHtmlView.class);
+    map.put("pdf", JasperReportsPdfView.class);
+    map.put("xls", JasperReportsXlsView.class);
+    super.setFormatMappings(map);
+  }
 }
 {% endhighlight %}
     其实和JasperReportsMultiFormatView源码里面的构造函数代码差不多，其中差别在于map.put("xhtml", JasperReportsHtmlView.class),本人把原来的html换成xhtml了，这样做的目的是为了防止和Spring mvc的org.springframework.web.servlet.view.ContentNegotiatingViewResolver的处理起冲突。下面再附上部分JasperReportsMultiFormatView的源码。
@@ -82,11 +82,11 @@ public class JasperView extends JasperReportsMultiFormatView {
  * with a default set of mappings.
  */
 public JasperReportsMultiFormatView() {
-	this.formatMappings = new HashMap<String, Class<? extends AbstractJasperReportsView>>(4);
-	this.formatMappings.put("csv", JasperReportsCsvView.class);
-	this.formatMappings.put("html", JasperReportsHtmlView.class);
-	this.formatMappings.put("pdf", JasperReportsPdfView.class);
-	this.formatMappings.put("xls", JasperReportsXlsView.class);
+  this.formatMappings = new HashMap<String, Class<? extends AbstractJasperReportsView>>(4);
+  this.formatMappings.put("csv", JasperReportsCsvView.class);
+  this.formatMappings.put("html", JasperReportsHtmlView.class);
+  this.formatMappings.put("pdf", JasperReportsPdfView.class);
+  this.formatMappings.put("xls", JasperReportsXlsView.class);
 }
 /**
  * Set the mappings of format discriminators to view class names.
@@ -104,16 +104,16 @@ public JasperReportsMultiFormatView() {
  * </ul>
  */
 public void setFormatMappings(Map<String, Class<? extends AbstractJasperReportsView>> formatMappings) {
-	if (CollectionUtils.isEmpty(formatMappings)) {
-		throw new IllegalArgumentException("'formatMappings' must not be empty");
-	}
-	this.formatMappings = formatMappings;
+  if (CollectionUtils.isEmpty(formatMappings)) {
+    throw new IllegalArgumentException("'formatMappings' must not be empty");
+  }
+  this.formatMappings = formatMappings;
 }
 {% endhighlight %}
      好了，关键部分了，就是spring mvc的配置了。
 {% highlight xml %}
 <beans>
-	<!-- Jasper Report -->
+  <!-- Jasper Report -->
     <bean id="jasperReportsViewResolver" class="org.springframework.web.servlet.view.jasperreports.JasperReportsViewResolver">
 <property name="requestContextAttribute" value="rc"/>
         <!-- 这是原来应该用的配置 -->
@@ -141,35 +141,35 @@ public void setFormatMappings(Map<String, Class<? extends AbstractJasperReportsV
         </map>
         </property>
     </bean>
-	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+  <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
 <property name="mediaTypes">
 <map>
-				<entry key="json" value="application/json" />
-				<entry key="xml" value="application/xml" />
-				<entry key="html" value="text/html" />
-				<!-- 这个也是一个关键点，因为访问地址默认会转为.html去查找view，而设置了这个的时候，当访问到xxx.xhtml的时候，默认的view就不会处理了。 -->
-				<entry key="xhtml" value="text/xhtml" />
-			</map>
-		</property>
+        <entry key="json" value="application/json" />
+        <entry key="xml" value="application/xml" />
+        <entry key="html" value="text/html" />
+        <!-- 这个也是一个关键点，因为访问地址默认会转为.html去查找view，而设置了这个的时候，当访问到xxx.xhtml的时候，默认的view就不会处理了。 -->
+        <entry key="xhtml" value="text/xhtml" />
+      </map>
+    </property>
 <property name="defaultViews">
 <list>
-				<!-- JSON处理,处理xxx.json view -->
-				<bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" />
-			</list>
-		</property>
+        <!-- JSON处理,处理xxx.json view -->
+        <bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" />
+      </list>
+    </property>
 <property name="viewResolvers">
 <list>
-				<bean class="org.springframework.web.servlet.view.BeanNameViewResolver" />
-				<!-- 默认处理 -->
-				<bean class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+        <bean class="org.springframework.web.servlet.view.BeanNameViewResolver" />
+        <!-- 默认处理 -->
+        <bean class="org.springframework.web.servlet.view.UrlBasedViewResolver">
 <property name="viewClass"
-						value="org.springframework.web.servlet.view.JstlView" />
+            value="org.springframework.web.servlet.view.JstlView" />
 <property name="prefix" value="/WEB-INF/jsp/" />
 <property name="suffix" value=".jsp" />
-				</bean>
-			</list>
-		</property>
-	</bean>
+        </bean>
+      </list>
+    </property>
+  </bean>
 </beans>
 {% endhighlight %}
 好了，配置大致就这样完成了。最后加多份Controller代码。
@@ -198,60 +198,60 @@ import com.ii2d.dbase.util.DDateUtils;
 @RequestMapping("/jasper")
 @Controller
 public class JasperController {
-	@Resource
-	private BasicDataSource scsDataSource;
-	/**
-	 * 主要的处理类
-	 * 请求例子: <br>
-	 * http://example.com/jasper/reports/someReport.xhtml<br>
-	 * http://example.com/jasper/reports/someReport.pdf<br>
-	 * http://example.com/jasper/reports/someReport.xls<br>
-	 */
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@RequestMapping(method = RequestMethod.GET, value="reports/{reportName}")
-	public ModelAndView handleSimpleReportMulti(@PathVariable("reportName") String reportName,
-			HttpServletRequest request) throws Exception {
-		Map param = _getParam(request);
-		String uri = request.getRequestURI();
-		String format = uri.substring(uri.lastIndexOf(".") + 1);
-		param.put("format", format);
-		param.put("datasource", scsDataSource);
-		return new ModelAndView(reportName, param);
-	}
-	/**
-	 * 这个方法主要是把一些请求参数的类型转换。<br>
-	 * 例如:<br>
-	 * 10000会自动转换为java.lang.Long<br>
-	 * 2012-11-20会自动转换为java.util.Date<br>
-	 * @param request 当前的http请求对象
-	 * @return 处理后的HashMap
-	 */
-	@SuppressWarnings("rawtypes")
-	private Map<String, Object> _getParam(HttpServletRequest request) {
-		Map<String, Object> param = new HashMap<String, Object>();
-		for(Object obj: request.getParameterMap().entrySet()) {
-			Map.Entry en = (Map.Entry) obj;
-			String key = (String)en.getKey();
-			Object valueObj = en.getValue();
-			if(valueObj instanceof String[]) {
-				valueObj = Array.get(valueObj, 0);
-			}
-			if(valueObj instanceof String) {
-				String valueStr = (String)valueObj;
-				if(StringUtils.isNumeric(valueStr)) {
-					valueObj = Long.valueOf(valueStr);
-				} else {
-					// 自己写的时间处理包
-					Object d = DDateUtils.safeParse(valueStr);
-					if(d != null) {
-						valueObj = d;
-					}
-				}
-			}
-			param.put(key, valueObj);
-		}
-		return param;
-	}
+  @Resource
+  private BasicDataSource scsDataSource;
+  /**
+   * 主要的处理类
+   * 请求例子: <br>
+   * http://example.com/jasper/reports/someReport.xhtml<br>
+   * http://example.com/jasper/reports/someReport.pdf<br>
+   * http://example.com/jasper/reports/someReport.xls<br>
+   */
+  @SuppressWarnings({ "rawtypes", "unchecked" })
+  @RequestMapping(method = RequestMethod.GET, value="reports/{reportName}")
+  public ModelAndView handleSimpleReportMulti(@PathVariable("reportName") String reportName,
+      HttpServletRequest request) throws Exception {
+    Map param = _getParam(request);
+    String uri = request.getRequestURI();
+    String format = uri.substring(uri.lastIndexOf(".") + 1);
+    param.put("format", format);
+    param.put("datasource", scsDataSource);
+    return new ModelAndView(reportName, param);
+  }
+  /**
+   * 这个方法主要是把一些请求参数的类型转换。<br>
+   * 例如:<br>
+   * 10000会自动转换为java.lang.Long<br>
+   * 2012-11-20会自动转换为java.util.Date<br>
+   * @param request 当前的http请求对象
+   * @return 处理后的HashMap
+   */
+  @SuppressWarnings("rawtypes")
+  private Map<String, Object> _getParam(HttpServletRequest request) {
+    Map<String, Object> param = new HashMap<String, Object>();
+    for(Object obj: request.getParameterMap().entrySet()) {
+      Map.Entry en = (Map.Entry) obj;
+      String key = (String)en.getKey();
+      Object valueObj = en.getValue();
+      if(valueObj instanceof String[]) {
+        valueObj = Array.get(valueObj, 0);
+      }
+      if(valueObj instanceof String) {
+        String valueStr = (String)valueObj;
+        if(StringUtils.isNumeric(valueStr)) {
+          valueObj = Long.valueOf(valueStr);
+        } else {
+          // 自己写的时间处理包
+          Object d = DDateUtils.safeParse(valueStr);
+          if(d != null) {
+            valueObj = d;
+          }
+        }
+      }
+      param.put(key, valueObj);
+    }
+    return param;
+  }
 }
 {% endhighlight %}
 全文完。

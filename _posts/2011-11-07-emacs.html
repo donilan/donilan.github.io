@@ -22,73 +22,73 @@ comments: []
 以下是emacs学习记录
 <ol>
 <li>
-		<strong>Hello wolrd.</strong>
+    <strong>Hello wolrd.</strong>
 首先进入Emacs的*Backtrace*缓冲区, C-x C-b 选择它进入，输入以下代码。
-		[text]
-			(message "Hello world") ;; 可以用C-j 或者C-x C-e执行
-		[/text]
-	</li>
+    [text]
+      (message "Hello world") ;; 可以用C-j 或者C-x C-e执行
+    [/text]
+  </li>
 <li>
-		<strong>定义函数.</strong>
-		[text]
-			(defun test-fun( a b )
-				(+ a b))
-			(message (test-fun 1 2) ;;结果为3
-		[/text]
-	</li>
+    <strong>定义函数.</strong>
+    [text]
+      (defun test-fun( a b )
+        (+ a b))
+      (message (test-fun 1 2) ;;结果为3
+    [/text]
+  </li>
 <li>
-		<strong>选择并缩排</strong>
+    <strong>选择并缩排</strong>
 C-@为选择的开始，游动光标就可以选择某一区域，再用M-C-\就可以自动缩排。
-	</li>
+  </li>
 <li>
 函数buffer-name, buffer-file-name, 变量fill-column
-		[text]
-		(message "The name of this buffer is: %s \n and The name of this buffer file name is: %s \n and the value of fill-column is: %d"
-			(buffer-name)
-	 		(buffer-file-name)
-	 		fill-column)
-		[/text]
-	</li>
+    [text]
+    (message "The name of this buffer is: %s \n and The name of this buffer file name is: %s \n and the value of fill-column is: %d"
+      (buffer-name)
+       (buffer-file-name)
+       fill-column)
+    [/text]
+  </li>
 <li>
 判断变量是否为0，是否为列表.
-		[text]
-		(zerop 0) ; t
-		(zerop 1) ; nil
-		(listp ()) ; t
-		(listp 1) ; nil
-		[/text]
-	</li>
+    [text]
+    (zerop 0) ; t
+    (zerop 1) ; nil
+    (listp ()) ; t
+    (listp 1) ; nil
+    [/text]
+  </li>
 <li>
 设置变量，两个方法结果一样.
-		[text]
-		(set 'list-val '(val1 val2))
-		(setq list-val '(val1 val2))
-		[/text]
-	</li>
+    [text]
+    (set 'list-val '(val1 val2))
+    (setq list-val '(val1 val2))
+    [/text]
+  </li>
 <li>
 buffer 操作, current-buffer(当前buffer), other-buffer(上次访问的buffer), switch-to-buffer(切换buffer), set-buffer(设置buffer).
-		[text]
-		(swithc-to-buffer (other-buffer))
-		(set-buffer (current-buffer))
-		[/text]
-	</li>
+    [text]
+    (swithc-to-buffer (other-buffer))
+    (set-buffer (current-buffer))
+    [/text]
+  </li>
 <li>
 光标位置
-		[text]
-		(point) ; 当前光标位置
-		(point-min) ; 最小光标值，一般都会是1
-		(point-max) ; 最大光标值
-		[/text]
-	</li>
+    [text]
+    (point) ; 当前光标位置
+    (point-min) ; 最小光标值，一般都会是1
+    (point-max) ; 最大光标值
+    [/text]
+  </li>
 <li>
 定义函数和调用函数.
-		[text]
-		;; 定义函数
-		(defun plus (number1 number2)
- 			"plus function"
-  			(+ number1 number2))
-		;;调用函数
-		(plus 1 1)
-		[/text]
-	</li>
+    [text]
+    ;; 定义函数
+    (defun plus (number1 number2)
+       "plus function"
+        (+ number1 number2))
+    ;;调用函数
+    (plus 1 1)
+    [/text]
+  </li>
 </ol>

@@ -23,33 +23,33 @@ comments: []
 先要解决的是依赖包，spring的可以在maven上找到，但jms和ibm的mq就要找回来了。
 {% highlight xml %}
 <dependencies>
-	<dependency>
-		<groupId>org.springframework</groupId>
-		<artifactId>spring-jms</artifactId>
-		<version>${spring.version}</version>
-	</dependency>
-	<dependency>
-		<groupId>org.springframework</groupId>
-		<artifactId>spring-context</artifactId>
-		<version>${spring.version}</version>
-	</dependency>
-	<dependency>
-		<groupId>org.springframework</groupId>
-		<artifactId>spring-beans</artifactId>
-		<version>${spring.version}</version>
-	</dependency>
-	<dependency>
-		<groupId>junit</groupId>
-		<artifactId>junit</artifactId>
-		<version>4.10</version>
-		<scope>test</scope>
-	</dependency>
-	<dependency>
-		<groupId>org.springframework</groupId>
-		<artifactId>spring-test</artifactId>
-		<version>${spring.version}</version>
-		<scope>test</scope>
-	</dependency>
+  <dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-jms</artifactId>
+    <version>${spring.version}</version>
+  </dependency>
+  <dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-context</artifactId>
+    <version>${spring.version}</version>
+  </dependency>
+  <dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-beans</artifactId>
+    <version>${spring.version}</version>
+  </dependency>
+  <dependency>
+    <groupId>junit</groupId>
+    <artifactId>junit</artifactId>
+    <version>4.10</version>
+    <scope>test</scope>
+  </dependency>
+  <dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-test</artifactId>
+    <version>${spring.version}</version>
+    <scope>test</scope>
+  </dependency>
 </dependencies>
 {% endhighlight %}
 然后就是MQ和jms，可以在MQServiesSDK rpm包安装后得到，路径一般会在/opt/mqm/java/lib/下。
@@ -71,71 +71,71 @@ import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.TextMessage;
 public class MessageListenerForTest implements MessageListener {
-	@Override
-	public void onMessage(Message message) {
-		if (message instanceof TextMessage) {
-			try {
-				System.out.println(((TextMessage) message).getText());
-			} catch (JMSException ex) {
-				throw new RuntimeException(ex);
-			}
-		} else {
-			throw new IllegalArgumentException(
-					"Message must be of type TextMessage");
-		}
-	}
+  @Override
+  public void onMessage(Message message) {
+    if (message instanceof TextMessage) {
+      try {
+        System.out.println(((TextMessage) message).getText());
+      } catch (JMSException ex) {
+        throw new RuntimeException(ex);
+      }
+    } else {
+      throw new IllegalArgumentException(
+          "Message must be of type TextMessage");
+    }
+  }
 }
 {% endhighlight %}
 接着是Spring上的配置，我这里把配置写入到application-context-mq.xml。
 {% highlight xml %}
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:jms="http://www.springframework.org/schema/jms" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:p="http://www.springframework.org/schema/p"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans
-			   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-			   http://www.springframework.org/schema/jms
+  xmlns:jms="http://www.springframework.org/schema/jms" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:p="http://www.springframework.org/schema/p"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+         http://www.springframework.org/schema/jms
                http://www.springframework.org/schema/jms/spring-jms.xsd">
-	<!-- MQ链接工厂对象 -->
-	<bean id="topicConnectionFactory" class="com.ibm.mq.jms.MQTopicConnectionFactory">
-		<!-- MQ服务器地址 -->
+  <!-- MQ链接工厂对象 -->
+  <bean id="topicConnectionFactory" class="com.ibm.mq.jms.MQTopicConnectionFactory">
+    <!-- MQ服务器地址 -->
 <property name="hostName" value="127.0.0.1" />
-		<!-- 端口 -->
+    <!-- 端口 -->
 <property name="port" value="1414" />
-		<!-- MQ消息队列管理器 -->
+    <!-- MQ消息队列管理器 -->
 <property name="queueManager" value="QM1" />
-		<!-- MQ通道 -->
+    <!-- MQ通道 -->
 <property name="channel" value="SYSTEM.DEF.SVRCONN" />
-		<!-- 链接方式 -->
+    <!-- 链接方式 -->
 <property name="transportType" value="1" /><!-- TCP -->
-	</bean>
-	<!-- MQ Topic模板 -->
-	<!-- 发布消息 jmsTopicTemplate.convertAndSend("topic://test", "Hello world!"); -->
-	<bean id="jmsTopicTemplate" class="org.springframework.jms.core.JmsTemplate">
-		<constructor-arg ref="topicConnectionFactory" />
-		<!-- Topic 需要加入 -->
+  </bean>
+  <!-- MQ Topic模板 -->
+  <!-- 发布消息 jmsTopicTemplate.convertAndSend("topic://test", "Hello world!"); -->
+  <bean id="jmsTopicTemplate" class="org.springframework.jms.core.JmsTemplate">
+    <constructor-arg ref="topicConnectionFactory" />
+    <!-- Topic 需要加入 -->
 <property name="pubSubDomain" value="true" />
-	</bean>
-	<!-- 消息监听器1 -->
-	<bean id="messageListener" class="com.ii2d.mq.MessageListenerForTest" />
-	<!-- 消息监听器2 -->
-	<bean id="messageListener2" class="com.ii2d.mq.MessageListenerForTest" />
-	<!-- 把监听器加入到Spring消息监听管理容器 -->
-	<bean id="jmsContainer"
-		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+  </bean>
+  <!-- 消息监听器1 -->
+  <bean id="messageListener" class="com.ii2d.mq.MessageListenerForTest" />
+  <!-- 消息监听器2 -->
+  <bean id="messageListener2" class="com.ii2d.mq.MessageListenerForTest" />
+  <!-- 把监听器加入到Spring消息监听管理容器 -->
+  <bean id="jmsContainer"
+    class="org.springframework.jms.listener.DefaultMessageListenerContainer">
 <property name="connectionFactory" ref="topicConnectionFactory" />
 <property name="destinationName" value="topic://test" />
 <property name="messageListener" ref="messageListener" />
 <property name="pubSubDomain" value="true" />
-	</bean>
-	<!-- 把监听器加入到Spring消息监听管理容器 -->
-	<bean id="jmsContainer2"
-		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+  </bean>
+  <!-- 把监听器加入到Spring消息监听管理容器 -->
+  <bean id="jmsContainer2"
+    class="org.springframework.jms.listener.DefaultMessageListenerContainer">
 <property name="connectionFactory" ref="topicConnectionFactory" />
 <property name="destinationName" value="topic://test" />
 <property name="messageListener" ref="messageListener2" />
 <property name="pubSubDomain" value="true" />
-	</bean>
+  </bean>
 </beans>
 {% endhighlight %}
 然后我们建立一个单元测试，来测试一下是否成功。
@@ -152,11 +152,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:application-context-mq.xml")
 public class TemplateTopicTests {
-	@Resource
-	JmsTemplate template;
-	@Test
-	public void testPubSub() throws JmsException, JMSException {
-		template.convertAndSend("topic://topic1", "Hello world");
-	}
+  @Resource
+  JmsTemplate template;
+  @Test
+  public void testPubSub() throws JmsException, JMSException {
+    template.convertAndSend("topic://topic1", "Hello world");
+  }
 }
 {% endhighlight %}
