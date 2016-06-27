@@ -11,7 +11,7 @@ email: doni.leong@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
 
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "http://yourdomain.com" # the base hostname & protocol for your site
+url: "http://www.sincerad.com" # the base hostname & protocol for your site
 twitter_username: donilan
 github_username:  donilan
 twitter_name: Doni
